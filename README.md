@@ -56,7 +56,6 @@ MacOS cannot run Windows games natively. If you are playing the game through a t
 ./launch_macos.sh
 ```
 
----
 
 ## Customizing Cheat Values
 
@@ -72,3 +71,6 @@ std::vector<CheatTarget> targetStats = {
 };
 ```
 After making changes, remember to re-run `cmake --build build` to compile the new values into the executable!
+
+## LICENSE
+This Project under [MIT LICENSE](License)
