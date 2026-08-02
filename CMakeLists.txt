@@ -44,9 +44,12 @@ set(CPACK_GENERATOR "ZIP")
 install(TARGETS ${EXE_NAME} DESTINATION .)
 install(FILES 
     "${CMAKE_BINARY_DIR}/launch.bat"
+    "${CMAKE_SOURCE_DIR}/README.md"
+    DESTINATION .
+)
+install(PROGRAMS 
     "${CMAKE_BINARY_DIR}/launch_linux.sh"
     "${CMAKE_BINARY_DIR}/launch_macos.sh"
-    "${CMAKE_SOURCE_DIR}/README.md"
     DESTINATION .
 )
 
