@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install MinGW
+        run: sudo apt-get update && sudo apt-get install -y mingw-w64 cmake
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake
+
+      - name: Build and Generate Scripts
+        run: cmake --build build
+
+      - name: Package with CPack
+        run: |
+          cd build
+          cpack
+          
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/TBH-GodMode-Release.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Keep Only Last 2 Releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tags=$(gh release list --limit 100 --json tagName -q '.[].tagName')
+          count=0
+          for tag in $tags; do
+            count=$((count+1))
+            if [ $count -gt 2 ]; then
+              echo "Deleting old release: $tag"
+              gh release delete "$tag" -y --cleanup-tag
+            fi
+          done
