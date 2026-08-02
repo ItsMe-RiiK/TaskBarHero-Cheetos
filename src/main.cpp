@@ -112,9 +112,5 @@ int main(int argc, char** argv)
       }
     }
   }
-
-  std::cout << "\n[Tip] If values look wrong (e.g. base instead of buffed, or vice versa), "
-               "re-run with useStatsDictB=false to try the other dictionary field.\n";
-
   return 0;
 }
