@@ -1,0 +1,14 @@
+Dump/
+fake_windows/
+build/
+.cache/
+.vscode/
+.config/
+
+# Graphify
+graphify-out/
+
+compile_flags.txt
+executeCommand.txt
+HeroStatsFinder.exe
+compile_commands.json
