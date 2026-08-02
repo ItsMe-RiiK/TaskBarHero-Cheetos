@@ -28,7 +28,7 @@ We use CMake to build the project. To ensure the memory scanner runs at maximum 
    cmake -B build -DCMAKE_BUILD_TYPE=Release
    cmake --build build
    ```
-3. The executable will be generated at `./build/HeroStatsFinder.exe`.
+3. The executable will be generated at `./build/TBH-GodMode.exe` along with the launcher scripts (`launch.bat`, `launch_linux.sh`, `launch_macos.sh`).
 
 ---
 
@@ -36,23 +36,24 @@ We use CMake to build the project. To ensure the memory scanner runs at maximum 
 
 You must run the tool while the **TaskBarHero** game is open and running.
 
+**We provide wrapper scripts to make launching as easy as possible!** If you compiled from source, the scripts are in your `build/` folder. If you downloaded a Release `.zip`, the scripts are right next to the executable.
+
 ### Windows
-Run the executable directly from your command prompt or PowerShell. **Note:** You may need to run it as Administrator so it has permission to write to the game's memory.
+Double-click `launch.bat` or run it from your command prompt. **Note:** You may need to run it as Administrator so it has permission to write to the game's memory.
 ```powershell
-cd build
-.\HeroStatsFinder.exe
+.\launch.bat
 ```
 
 ### Linux (Steam Proton / Wine)
-If you are playing the game on Linux via Steam (Proton), you need to run the tool inside the exact same Proton container/prefix as the game so they share the same memory space. You can use `protontricks` (replace `3678970` with the actual Steam App ID if different).
+If you are playing the game on Linux via Steam (Proton), our script automatically handles `protontricks` for you.
 ```bash
-protontricks -c "wine ./build/HeroStatsFinder.exe" 3678970
+./launch_linux.sh
 ```
 
 ### macOS (Wine / Whisky / CrossOver)
-MacOS cannot run Windows games natively. If you are playing the game through a translation layer like Wine, Whisky, or CrossOver, you must run the tool inside that same environment.
+MacOS cannot run Windows games natively. If you are playing the game through a translation layer like Wine, Whisky, or CrossOver, our script will launch the tool inside that same environment.
 ```bash
-wine ./build/HeroStatsFinder.exe
+./launch_macos.sh
 ```
 
 ---
