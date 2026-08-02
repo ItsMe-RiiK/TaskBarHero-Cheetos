@@ -118,8 +118,15 @@ public:
         hr.heroInfoDataAddr = hiAddr;
         hr.vhInstanceAddr   = vhBase;
         hr.zeInstanceAddr   = *zePtr;
-        hr.statsDictAddr    = *dictPtr;
-        hr.stats            = m_statDict.ReadAll(*dictPtr);
+
+        hr.statsDictAddr = *dictPtr;
+        hr.stats         = m_statDict.ReadAll(*dictPtr);
+
+        // Mimic the original Lua script's safety check: the correct vh instance
+        // will actually have a populated stats dictionary. If it's empty, this is
+        // a dummy/UI instance, so keep looking.
+        if (hr.stats.empty())
+          continue;
 
         results.push_back(hr);
         break;  // first valid vh instance wins
