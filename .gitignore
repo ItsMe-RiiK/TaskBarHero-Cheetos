@@ -1,9 +1,12 @@
-Dump/
+dump/
 fake_windows/
 build/
 .cache/
 .vscode/
 .config/
+analysis/
+tests/
+minhook/
 
 # Graphify
 graphify-out/
@@ -12,3 +15,6 @@ compile_flags.txt
 executeCommand.txt
 HeroStatsFinder.exe
 compile_commands.json
+
+*.exe
+*_test
