@@ -34,3 +34,6 @@ compile_commands.json
 
 # prevent cache being uploaded
 .cache/
+
+# archive folder
+archive/
