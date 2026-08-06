@@ -1,12 +1,15 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
 
 jobs:
-  build-and-release:
+  release:
+    name: Manage GitHub Release
+    if: ${{ github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v') }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -15,39 +18,53 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install MinGW
-        run: sudo apt-get update && sudo apt-get install -y mingw-w64 cmake
-
-      - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake
-
-      - name: Build and Generate Scripts
-        run: cmake --build build
-
-      - name: Package with CPack
-        run: |
-          cd build
-          cpack
-          
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Download Release Artifact
+        uses: actions/download-artifact@v4
         with:
-          files: build/TBH-GodMode-Release.zip
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Keep Only Last 2 Releases
+          name: cheetos-release-zip
+          path: build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Manage Major Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          tags=$(gh release list --limit 100 --json tagName -q '.[].tagName')
-          count=0
-          for tag in $tags; do
-            count=$((count+1))
-            if [ $count -gt 2 ]; then
-              echo "Deleting old release: $tag"
-              gh release delete "$tag" -y --cleanup-tag
+          # In workflow_run events, the head_branch is the name of the tag (e.g. v2.1.3)
+          TAG="${{ github.event.workflow_run.head_branch }}"
+          # Extract major version e.g. "v2" from "v2.1.3"
+          MAJOR_VERSION=$(echo "$TAG" | cut -d'.' -f1)
+          
+          echo "Processing for Major Version: $MAJOR_VERSION"
+          
+          # Generate automated release notes for the new tag
+          NOTES=$(gh api --method POST -H "Accept: application/vnd.github+json" /repos/${{ github.repository }}/releases/generate-notes -f tag_name="$TAG" --jq '.body')
+          
+          # Construct the new release body
+          BODY="Latest rolling build for **$MAJOR_VERSION** (Currently tracking \`$TAG\`)
+
+          ## 📝 Changelog for $TAG
+          $NOTES"
+          
+          # Create the release for this major version (fails gracefully if it already exists)
+          gh release create "$MAJOR_VERSION" --title "Version $MAJOR_VERSION" --notes "$BODY" || true
+          
+          # Update release notes to reflect the latest tag and changelog
+          gh release edit "$MAJOR_VERSION" --notes "$BODY"
+          
+          # Upload the new binaries, overwriting old ones
+          gh release upload "$MAJOR_VERSION" build/TBH-Cheetos-Release.zip --clobber
+          
+          # Archive older major versions
+          ALL_RELEASES=$(gh release list --limit 100 --json tagName -q '.[].tagName')
+          for rel in $ALL_RELEASES; do
+            # Skip the current major version
+            if [ "$rel" != "$MAJOR_VERSION" ]; then
+              # Check if it doesn't contain 'Archived'
+              TITLE=$(gh release view "$rel" --json name -q '.name')
+              if [[ "$TITLE" != *"Archived"* ]]; then
+                echo "Archiving older major release: $rel"
+                gh release edit "$rel" --title "$rel (Archived)"
+              fi
             fi
           done
