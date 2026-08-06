@@ -74,8 +74,7 @@ public:
       if (buf.size() < pattern.size())
         continue;
 
-      size_t last = buf.size() - pattern.size();
-      for (size_t i = 0; i <= last; i++) {
+      for (size_t i = 0; i + pattern.size() <= buf.size(); i++) {
         bool match = true;
         for (size_t j = 0; j < pattern.size(); j++) {
           if (!pattern[j].wildcard && buf[i + j] != pattern[j].value) {
@@ -116,7 +115,7 @@ public:
       if (buf.size() < 24)
         continue;
 
-      for (size_t i = 8; i <= buf.size() - 24; i += 8) {
+      for (size_t i = 8; i + 24 <= buf.size(); i += 8) {
         int64_t hidden;
         int64_t key;
         std::memcpy(&hidden, &buf[i], sizeof(int64_t));
@@ -167,7 +166,7 @@ public:
       if (buf.size() < 24)
         continue;
 
-      for (size_t i = 0; i <= buf.size() - 24; i += 8) {
+      for (size_t i = 0; i + 24 <= buf.size(); i += 8) {
         int64_t hidden;
         int64_t key;
         std::memcpy(&hidden, &buf[i], sizeof(int64_t));
