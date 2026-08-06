@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install MinGW
         run: sudo apt-get update && sudo apt-get install -y mingw-w64 cmake
@@ -29,7 +31,9 @@ jobs:
           fi
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DAPP_VERSION="${{ steps.version.outputs.version }}"
+        run: |
+          ./vcpkg/bootstrap-vcpkg.sh
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DAPP_VERSION="${{ steps.version.outputs.version }}"
 
       - name: Build and Generate Scripts
         run: cmake --build build
