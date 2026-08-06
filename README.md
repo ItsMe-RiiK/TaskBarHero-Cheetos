@@ -95,7 +95,7 @@ If you downloaded the `.zip` release, simply execute the launch script from the 
 
 ## 🤝 Support & Contributing
 
-Suggestions and contributions are always welcome! If you encounter any issues, bugs, or have a brilliant idea for a new feature, please use the **Issues** tab. If you enjoy using this tool and want to support its development, consider [buying me a coffee via PayPal](https://www.paypal.com/paypalme/MuhamadSyakir) 💖
+Suggestions and contributions are always welcome! If you encounter any issues, bugs, or have a brilliant idea for a new feature, please use the **Issues** tab. If you enjoy using this tool and want to support its development, consider buying me a coffee via [PayPal](https://www.paypal.com/paypalme/MuhamadSyakir)
 
 - **[Report a Bug](../../issues/new?template=bug-report.yml)**
 - **[Request a Feature](../../issues/new?template=feature-request.yml)**
