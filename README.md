@@ -6,7 +6,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/MuhamadSyakir)
 
 A feature-rich, interactive graphical memory tool for **TaskBarHero**. 
 
