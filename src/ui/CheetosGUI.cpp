@@ -1,4 +1,9 @@
 #include "CheetosGUI.h"
+#include "../tools/Security.h"
+
+#ifndef EXPECTED_DLL_HASH
+  #define EXPECTED_DLL_HASH ""
+#endif
 #include <thread>
 
 #ifndef APP_VERSION
@@ -437,6 +442,11 @@ void CheetosGUI::InjectSpeedhack()
   size_t      lastSlash  = path.find_last_of("\\/");
   std::string dllPathStr = path.substr(0, lastSlash) + "\\speedhack.dll";
   const char* dllPath    = dllPathStr.c_str();
+
+  if (!Security::VerifyFileHashSha256(dllPathStr, EXPECTED_DLL_HASH)) {
+    AddLog("[Security] speedhack.dll hash mismatch! Injection aborted.");
+    return;
+  }
 
   LPVOID pRemoteMem =
     VirtualAllocEx(m_mem.Handle(), NULL, strlen(dllPath) + 1, MEM_COMMIT, PAGE_READWRITE);
