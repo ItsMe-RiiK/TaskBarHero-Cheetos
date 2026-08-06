@@ -8,6 +8,7 @@ obj/
 # Vcpkg
 vcpkg_installed/
 .vcpkg/
+vcpkg/
 
 # Visual Studio & IDEs
 .vs/
@@ -30,4 +31,6 @@ CheatEngine/
 
 # custom local
 compile_commands.json
-executeCommand.txt
+
+# prevent cache being uploaded
+.cache/
