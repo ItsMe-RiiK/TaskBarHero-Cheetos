@@ -6,9 +6,9 @@ A feature-rich, interactive graphical memory Cheetos for **TaskBarHero**. This t
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| **Bypass anticheat** | Automatically neutralizes ACTk detector methods (SpeedHack, Injection, etc.) | ✅ Automatic |
-| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, Movement Speed into all active heroes | ✅ Interactive |
-| **Rune Unlocker** | Safely unlock and max-level all runes up to their legitimate hardcaps | ✅ Interactive |
+| **Bypass anticheat** | Neutralizes ANti-cheat detector methods when attached | ✅ Automatic |
+| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, Movement Speed into all active heroes | ✅ Repeatable |
+| **Rune Unlocker** | Safely unlock and max-level all runes for free | ✅ Interactive |
 | **Speedhack** | Increases the speed of the game | ✅ Toggle ON/OFF |
 
 ### Additional Capabilities
@@ -67,7 +67,7 @@ cd build && cpack
 2. Extract the ZIP file to a folder on your computer.
 
 ### Option B: Build from Source
-*(Follow the [How to Build](#how-to-build) instructions below, then proceed).*
+*(Follow this [How to Build](#how-to-build) instructions).*
 
 ---
 
@@ -88,6 +88,14 @@ The launch scripts are generated inside the `build/` directory. Run them from th
 - **macOS (Wine):** `./build/launch_macos.sh`
 
 > **Note for Linux Users:** Ensure `protontricks` is installed for the script to successfully inject into the game's Steam Proton container.
+
+## Support & Bug Reporting
+
+If you encounter any issues, bugs, or have a feature request, please use the **Issues** tab on GitHub.
+
+1. Go to the [Issues](../../issues) tab.
+2. Click **New issue**.
+3. Select **Report issue** and fill out the provided template.
 
 ---
 
