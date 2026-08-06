@@ -1,20 +1,33 @@
-dump/
-fake_windows/
+# Build directories
 build/
-.cache/
+build-*/
+out/
+bin/
+obj/
+
+# Vcpkg
+vcpkg_installed/
+.vcpkg/
+
+# Visual Studio & IDEs
+.vs/
+*.user
+*.suo
+*.db
+*.opendb
 .vscode/
-.config/
+
+# ImGui & Settings
+imgui.ini
+
+# Scratch / Debug files
+*.log
+
+# local resources folder
 analysis/
-tests/
-minhook/
+dump
+CheatEngine/
 
-# Graphify
-graphify-out/
-
-compile_flags.txt
-executeCommand.txt
-HeroStatsFinder.exe
+# custom local
 compile_commands.json
-
-*.exe
-*_test
+executeCommand.txt
