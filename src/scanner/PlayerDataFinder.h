@@ -11,8 +11,7 @@
 /* -----------------------------------------------------------------------
  * Finds the PlayerSaveData instance in memory by locating known
  * HeroSaveData objects and tracing the pointer chain back up.
- *
- * Strategy:
+ * 
  *   1. Scan for HeroSaveData instances by looking for known hero key
  *      patterns (101, 201, 301, etc.) at the expected offset.
  *   2. Scan for pointers to those HeroSaveData instances → these live

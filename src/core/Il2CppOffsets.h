@@ -13,7 +13,7 @@
  * ----------------------------------------------------------------------- */
 
 // =========================================================================
-// Runtime Hero Stats Chain (combat objects)
+// Runtime Hero Stats Chain
 // =========================================================================
 
 struct HeroInfoDataOffsets
@@ -53,14 +53,13 @@ struct Il2CppOffsets
   static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // -> HeroInfoData*
   static constexpr int32_t Vh_HeroBackRef     = 0x88;  // -> Hero*
 
-  // ze stat container — confirmed
+  // ze stat container - confirmed
   static constexpr int32_t Ze_StatsDictA = 0x18;  // Dictionary<StatType,float>*
   static constexpr int32_t Ze_StatsDictB = 0x20;  // Dictionary<StatType,float>*
-                                                  // (original CE script read THIS one)
 };
 
 // =========================================================================
-// Save Data Offsets (serialized / persistent data)
+// Save Data Offsets
 // =========================================================================
 
 // Save Manager (class bbb : ns<bbb>, TypeDefIndex: 1503)

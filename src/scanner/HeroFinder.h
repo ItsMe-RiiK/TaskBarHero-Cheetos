@@ -22,10 +22,10 @@ struct HeroResult
 };
 
 /* -----------------------------------------------------------------------
- * Rewritten hero-finder using the fully confirmed IL2CPP chain:
+ * Confirmed IL2CPP chain:
  *
- *   HeroInfoData (found via ID pattern, same as original script Phase 1)
- *     <- pointer found at vh+0x30 (found via original script Phase 2 AOB)
+ *   HeroInfoData (found via ID pattern)
+ *     <- pointer found at vh+0x30 (found via AOB)
  *   vh instance
  *     +0x10 (inherited from vo) -> ze* (stat container)
  *   ze instance

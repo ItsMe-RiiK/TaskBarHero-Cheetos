@@ -17,7 +17,6 @@
  * All detectors inherit from ACTkDetectorBase<T> which inherits from
  * dfh<T> (Unity MonoBehaviour singleton).
  *
- * Bypass strategy:
  *   1. Find GameAssembly.dll in memory
  *   2. Locate detector Start/Update methods via known RVAs
  *   3. Patch the first byte to RET (0xC3) to disable them
