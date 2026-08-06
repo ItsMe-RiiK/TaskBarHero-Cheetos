@@ -1,0 +1,24 @@
+@EXE_NAME@
+=====================
+
+HOW TO USE
+----------
+1. Start the game (TaskBarHero).
+2. Once the game is running, double-click the launch script for your operating system:
+   
+   - WINDOWS: Double click `launch.bat` (It may ask for Administrator privileges so it can read the game's memory).
+   - LINUX: Run `./launch_linux.sh` (Requires `protontricks` to be installed on your system).
+   - MACOS: Run `./launch_macos.sh` (Requires `wine` to be installed).
+
+3. The GUI will pop up on your screen. You can use it to enable God Mode, Speedhacks, Rune Unlocks, and more!
+
+TROUBLESHOOTING
+---------------
+- The tool isn't opening? 
+  Make sure you extracted the ENTIRE .zip file into a normal folder first. Do not try to run the launch scripts from inside the Windows zip viewer.
+  
+- Getting an error on Linux? 
+  Ensure `protontricks` is installed via your package manager or flatpak.
+
+Found a bug or need help?
+Visit: https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/issues
