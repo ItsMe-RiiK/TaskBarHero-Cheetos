@@ -1,0 +1,55 @@
+name: Report issue
+description: Create a report to help us fix issues with the app
+body:
+
+- type: textarea
+  attributes:
+    label: Describe the issue
+    description: A clear and concise description of what you're experiencing.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Expected behavior
+    description: A clear and concise description of what you expected to happen.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Anything that will give us more context about the issue you are encountering.
+      You can also use this section to propose ideas on how to solve the issue. 
+  validations:
+    required: false
+
+- type: dropdown
+  attributes:
+    label: Operating system
+    options:
+      - Windows
+      - Linux
+      - MacOS
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Cheetos Version
+    description: |
+      This can be found on the gui title window
+    placeholder: Cheetos v1.0.0
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Game Version
+    description: |
+      What version of the game are you currently running? 
+      (Right-click the game on Steam -> Manage -> Browse local files -> open the "Version.txt" file)
+    placeholder: e.g., 1.01.04
+  validations:
+    required: true
