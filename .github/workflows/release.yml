@@ -47,7 +47,7 @@ jobs:
           $NOTES"
           
           # Create the release for this major version (fails gracefully if it already exists)
-          gh release create "$MAJOR_VERSION" --title "Version $MAJOR_VERSION" --notes "$BODY" || true
+          gh release create "$MAJOR_VERSION" --title "Cheetos $MAJOR_VERSION" --notes "$BODY" || true
           
           # Update release notes to reflect the latest tag and changelog
           gh release edit "$MAJOR_VERSION" --notes "$BODY"

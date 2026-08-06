@@ -70,7 +70,7 @@ set(CPACK_PACKAGE_FILE_NAME "TBH-Cheetos-Release")
 set(CPACK_GENERATOR "ZIP")
 
 # Install instructions (CPack uses these to know what to zip)
-install(TARGETS ${EXE_NAME} speedhack DESTINATION .)
+install(TARGETS ${EXE_NAME} speedhack RUNTIME DESTINATION .)
 install(FILES 
     "${CMAKE_BINARY_DIR}/launch.bat"
     "${CMAKE_SOURCE_DIR}/README.md"
