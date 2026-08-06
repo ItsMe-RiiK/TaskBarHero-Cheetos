@@ -1,103 +1,106 @@
+<div align="center">
+  
 # TaskBarHero - Cheetos
 
-A feature-rich, interactive graphical memory Cheetos for **TaskBarHero**. This tool directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of cheats—all from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
+[![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
+[![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
 
-## Features
+A feature-rich, interactive graphical memory tool for **TaskBarHero**. 
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Bypass anticheat** | Neutralizes ANti-cheat detector methods when attached | ✅ Automatic |
-| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, Movement Speed into all active heroes | ✅ Repeatable |
-| **Rune Unlocker** | Safely unlock and max-level all runes for free | ✅ Interactive |
-| **Speedhack** | Increases the speed of the game | ✅ Toggle ON/OFF |
-
-### Additional Capabilities
-- **Seamless GUI** — A beautifully rendered floating window (via OpenGL3/GLFW) for real-time interaction.
-- **Hot-Pluggable** — Connect and disconnect from the game instantly without restarting the Cheetos.
-- **Cross-Platform** — Native Windows `.exe` that runs flawlessly on Linux and macOS via Proton/Wine.
-- **Automated Offset Updating** — Ships with Python scripting to effortlessly upgrade IL2CPP offsets after game patches.
-
-
-## Preview
-
-![the menu](resources/images/preview.png)
-
-## Prerequisites (For Source Building)
-To compile from source, you will need:
-- [CMake](https://cmake.org/) (v3.10 or higher)
-- [vcpkg](https://github.com/microsoft/vcpkg) (dependencies are managed automatically via `vcpkg.json`)
-- **Windows:** Visual Studio (MSVC) or MinGW-w64
-- **Linux/macOS:** MinGW-w64 (for cross-compiling to Windows `.exe`)
+</div>
 
 ---
 
-## How to Build
+## 📖 Overview
 
-First, ensure you clone the repository with its `vcpkg` submodule:
+**TaskBarHero - Cheetos** directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of enhancements. Everything is controlled from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
+
+> **Note:** This project has been tested and verified on game version **1.01.04**. The project will be updated if changes to the game affect the memory offsets.
+
+---
+
+## ✨ Features
+
+| Feature | Description | Status | Type |
+|---------|-------------|--------|-------|
+| **Bypass Anti-Cheat** | Neutralizes anticheat detector methods when attached. | ✅ Works | Automatic |
+| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, and Movement Speed into all active heroes. | ✅ Works | Repeatable |
+| **Rune Unlocker** | Safely unlock and max-level all runes for free. | ✅ Works | Interactive |
+| **Speedhack** | Increases the global speed of the game. | ✅ Works | Toggle |
+
+### Technical Capabilities
+- **Seamless GUI:** A beautifully rendered floating window (via OpenGL3/GLFW) for real-time interaction.
+- **Hot-Pluggable:** Connect and disconnect from the game instantly without restarting the tool.
+- **Cross-Platform:** Native Windows `.exe` that runs flawlessly on Linux and macOS via Proton/Wine.
+- **Automated Offset Updating:** Ships with Python scripting to effortlessly upgrade IL2CPP offsets after game patches.
+
+---
+
+## 🚀 Getting Started
+
+### Option A: Download Pre-compiled Release (Recommended)
+1. Navigate to the **[Releases](../../releases)** page.
+2. Download the latest `TBH-Cheetos-Release.zip`.
+3. Extract the ZIP file to a folder on your computer.
+
+### Option B: Build from Source
+<details>
+<summary>Click here for build instructions</summary>
+
+#### Prerequisites
+- [CMake](https://cmake.org/) (v3.10 or higher)
+- [vcpkg](https://github.com/microsoft/vcpkg) (dependencies are managed automatically)
+- **Windows:** Visual Studio (MSVC) or MinGW-w64
+- **Linux/macOS:** MinGW-w64 (for cross-compiling to Windows `.exe`)
+
+#### 1. Clone the repository
 ```bash
 git clone --recursive https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos.git
 cd TaskBarHero-Cheetos
 ```
 
-### Windows (MSVC)
-Bootstrap the local vcpkg instance and configure CMake using the vcpkg toolchain:
+#### 2. Windows (MSVC)
 ```powershell
 .\vcpkg\bootstrap-vcpkg.bat
 cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
 
-### Linux / macOS (Cross-compiling via MinGW)
-Bootstrap vcpkg for Unix, then use the vcpkg toolchain while *chainloading* the provided MinGW toolchain (which handles cross-compiling the Windows `.exe`):
+#### 3. Linux / macOS (Cross-compiling via MinGW)
 ```bash
 ./vcpkg/bootstrap-vcpkg.sh
 cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=$PWD/cmake/mingw-toolchain.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
-
-If you wish to create the neat release package locally, simply run:
-```bash
-cd build && cpack
-```
-
-## Getting Started
-
-### Option A: Download Pre-compiled Release (Recommended)
-1. Go to the **[Releases](../../releases)** page and download the latest `TBH-Cheetos-Release.zip`.
-2. Extract the ZIP file to a folder on your computer.
-
-### Option B: Build from Source
-*(Follow this [How to Build](#how-to-build) instructions).*
+*(To create a release package locally, run `cd build && cpack`)*
+</details>
 
 ---
 
-## Usage
+## 🎮 Usage
 
-Run the Cheetos while **the game** is open.
+Run the tool while **the game** is actively running. 
 
-### If you downloaded the Release (.zip)
-Simply run the launch script from the root of the extracted folder:
-- **Windows:** `.\launch.bat` (Run as Administrator)
-- **Linux (Steam Proton):** `./launch_linux.sh`
-- **macOS (Wine):** `./launch_macos.sh`
+If you downloaded the `.zip` release, simply execute the launch script from the root folder:
+- **Windows:** `.\launch.bat` *(Run as Administrator)*
+- **Linux:** `./launch_linux.sh` *(Requires `protontricks` to inject into the Steam Proton container)*
+- **macOS:** `./launch_macos.sh` *(Requires Wine)*
 
-### If you built from Source
-The launch scripts are generated inside the `build/` directory. Run them from the project root:
-- **Windows:** `.\build\launch.bat` (Run as Administrator)
-- **Linux (Steam Proton):** `./build/launch_linux.sh`
-- **macOS (Wine):** `./build/launch_macos.sh`
-
-> **Note for Linux Users:** Ensure `protontricks` is installed for the script to successfully inject into the game's Steam Proton container.
-
-## Support & Bug Reporting
-
-If you encounter any issues, bugs, or have a feature request, please use the **Issues** tab on GitHub.
-
-1. Go to the [Issues](../../issues) tab.
-2. Click **New issue**.
-3. Select **Report issue** and fill out the provided template.
+*(Note: If you built from source, these scripts will be located inside your `build/` directory.)*
 
 ---
 
-## LICENSE
-This Project is under the [MIT LICENSE](license).
+## 🤝 Support & Contributing
+
+Suggestions and contributions are always welcome! If you encounter any issues, bugs, or have a brilliant idea for a new feature, please use the **Issues** tab.
+
+- **[Report a Bug](../../issues/new?template=bug-report.yml)**
+- **[Request a Feature](../../issues/new?template=feature-request.yml)**
+- **[Ask a Question](../../discussions)**
+
+---
+
+## ⚖️ License
+This project is licensed under the [MIT License](license).
