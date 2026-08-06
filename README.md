@@ -2,10 +2,12 @@
   
 # TaskBarHero - Cheetos
 
+[![Cheetos Version](https://img.shields.io/badge/version-1.0.1-blue)](#)
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
+[![Latest Version](https://img.shields.io/badge/latest-1.01.04.-blue)](#)
 
 A feature-rich, interactive graphical memory tool for **TaskBarHero**. 
 
@@ -13,7 +15,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 ---
 
-## 📖 Overview
+## Overview
 
 **TaskBarHero - Cheetos** directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of enhancements. Everything is controlled from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
 
@@ -21,7 +23,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description | Status | Type |
 |---------|-------------|--------|-------|
@@ -38,7 +40,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Option A: Download Pre-compiled Release (Recommended)
 1. Navigate to the **[Releases](../../releases)** page.
@@ -79,7 +81,7 @@ cmake --build build -j
 
 ---
 
-## 🎮 Usage
+## Usage
 
 Run the tool while **the game** is actively running. 
 
@@ -96,7 +98,7 @@ The launch scripts are located inside the `scripts/` directory. Run them from th
 
 ---
 
-## 🤝 Support & Contributing
+## Support & Contributing
 
 Suggestions and contributions are always welcome! If you encounter any issues, bugs, or have any idea for a new feature, please use the **Issues** tab below. If you enjoy using this tool and want to support its development, consider buying me a coffee via [PayPal](https://www.paypal.com/paypalme/MuhamadSyakir)
 
@@ -106,5 +108,5 @@ Suggestions and contributions are always welcome! If you encounter any issues, b
 
 ---
 
-## ⚖️ License
+## License
 This project is licensed under the [MIT License](license).
