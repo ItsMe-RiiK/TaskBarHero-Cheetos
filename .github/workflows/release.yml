@@ -50,7 +50,7 @@ jobs:
           gh release create "$MAJOR_VERSION" --title "Cheetos $MAJOR_VERSION" --notes "$BODY" || true
           
           # Update release notes to reflect the latest tag and changelog
-          gh release edit "$MAJOR_VERSION" --notes "$BODY"
+          gh release edit "$MAJOR_VERSION" --title "Cheetos $MAJOR_VERSION" --notes "$BODY"
           
           # Upload the new binaries, overwriting old ones
           gh release upload "$MAJOR_VERSION" build/TBH-Cheetos-Release.zip --clobber
