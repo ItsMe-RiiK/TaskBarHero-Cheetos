@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(TBH_Cheetos VERSION 1.0.1 LANGUAGES CXX C)
+project(TBH_Cheetos VERSION 1.1.1 LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,6 +18,7 @@ add_executable(${EXE_NAME}
     src/main.cpp
     src/features/RuneUnlocker.cpp
     src/scanner/PlayerDataFinder.cpp
+    src/tools/Security.cpp
     src/ui/CheetosGUI.cpp
     resources/resources.rc
 )
