@@ -88,7 +88,11 @@ If you downloaded the `.zip` release, simply execute the launch script from the 
 - **Linux:** `./launch_linux.sh` *(Requires `protontricks` to inject into the Steam Proton container)*
 - **macOS:** `./launch_macos.sh` *(Requires Wine)*
 
-*(Note: If you built from source, these scripts will be located inside your `build/` directory.)*
+### If you built from Source
+The launch scripts are located inside the `scripts/` directory. Run them from the project root:
+- **Windows:** `.\scripts\launch.bat` *(Run as Administrator)*
+- **Linux:** `./scripts/launch_linux.sh` *(Requires `protontricks` to inject into the Steam Proton container)*
+- **macOS:** `./scripts/launch_macos.sh` *(Requires Wine)*
 
 ---
 
