@@ -33,7 +33,7 @@ jobs:
       - name: Configure CMake
         run: |
           ./vcpkg/bootstrap-vcpkg.sh
-          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DAPP_VERSION="${{ steps.version.outputs.version }}"
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DAPP_VERSION="${{ steps.version.outputs.version }}"
 
       - name: Build and Generate Scripts
         run: cmake --build build
