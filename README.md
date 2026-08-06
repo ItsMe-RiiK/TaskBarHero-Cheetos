@@ -51,7 +51,7 @@ cmake --build build -j
 Bootstrap vcpkg for Unix, then use the vcpkg toolchain while *chainloading* the provided MinGW toolchain (which handles cross-compiling the Windows `.exe`):
 ```bash
 ./vcpkg/bootstrap-vcpkg.sh
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=$PWD/cmake/mingw-toolchain.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
 
