@@ -1,76 +1,95 @@
-# TaskBarHero - GodMode
+# TaskBarHero - Cheetos
 
-A lightweight, lightning-fast C++ memory scanner and trainer for **TaskBarHero**. This tool bypasses the need for Cheat Engine or Lua scripts by directly interacting with the game's memory (using the Win32 API) to find IL2CPP objects and inject "God Mode" stats in real-time.
+A feature-rich, interactive graphical memory Cheetos for **TaskBarHero**. This tool directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of cheats—all from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
 
 ## Features
-- **No GUI Required:** Runs directly from the terminal.
-- **IL2CPP Exact Pointer Chaining:** Follows the exact object pointers instead of blindly guessing memory boundaries.
-- **Instant Injection:** Continuously injects max stats (Max HP, Attack Speed, Crit, Armor, Movement Speed) into the live game memory.
-- **Cross-Platform Compatibility:** Can be compiled and run on Windows natively, or on Linux/macOS via Wine/Proton.
 
----
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Bypass anticheat** | Automatically neutralizes ACTk detector methods (SpeedHack, Injection, etc.) | ✅ Automatic |
+| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, Movement Speed into all active heroes | ✅ Interactive |
+| **Rune Unlocker** | Safely unlock and max-level all runes up to their legitimate hardcaps | ✅ Interactive |
+| **Speedhack** | Increases the speed of the game | ✅ Toggle ON/OFF |
 
-## Prerequisites
-To compile the source code, you need:
+### Additional Capabilities
+- **Seamless GUI** — A beautifully rendered floating window (via OpenGL3/GLFW) for real-time interaction.
+- **Hot-Pluggable** — Connect and disconnect from the game instantly without restarting the Cheetos.
+- **Cross-Platform** — Native Windows `.exe` that runs flawlessly on Linux and macOS via Proton/Wine.
+- **Automated Offset Updating** — Ships with Python scripting to effortlessly upgrade IL2CPP offsets after game patches.
+
+
+## Preview
+
+![the menu](resources/images/preview.png)
+
+## Prerequisites (For Source Building)
+To compile from source, you will need:
 - [CMake](https://cmake.org/) (v3.10 or higher)
-- **Windows:** Visual Studio (MSVC) or MinGW
+- [vcpkg](https://github.com/microsoft/vcpkg) (dependencies are managed automatically via `vcpkg.json`)
+- **Windows:** Visual Studio (MSVC) or MinGW-w64
 - **Linux/macOS:** MinGW-w64 (for cross-compiling to Windows `.exe`)
 
 ---
 
 ## How to Build
 
-We use CMake to build the project. To ensure the memory scanner runs at maximum speed, **always build in Release mode**.
+First, ensure you clone the repository with its `vcpkg` submodule:
+```bash
+git clone --recursive https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos.git
+cd TaskBarHero-Cheetos
+```
 
-1. Clone the repository and navigate to the folder.
-2. Generate the build files and compile the executable:
-   ```bash
-   cmake -B build -DCMAKE_BUILD_TYPE=Release
-   cmake --build build
-   ```
-3. The executable will be generated at `./build/TBH-GodMode.exe` along with the launcher scripts (`launch.bat`, `launch_linux.sh`, `launch_macos.sh`).
+### Windows (MSVC)
+Bootstrap the local vcpkg instance and configure CMake using the vcpkg toolchain:
+```powershell
+.\vcpkg\bootstrap-vcpkg.bat
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+### Linux / macOS (Cross-compiling via MinGW)
+Bootstrap vcpkg for Unix, then use the vcpkg toolchain while *chainloading* the provided MinGW toolchain (which handles cross-compiling the Windows `.exe`):
+```bash
+./vcpkg/bootstrap-vcpkg.sh
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=cmake/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+If you wish to create the neat release package locally, simply run:
+```bash
+cd build && cpack
+```
+
+## Getting Started
+
+### Option A: Download Pre-compiled Release (Recommended)
+1. Go to the **[Releases](../../releases)** page and download the latest `TBH-Cheetos-Release.zip`.
+2. Extract the ZIP file to a folder on your computer.
+
+### Option B: Build from Source
+*(Follow the [How to Build](#how-to-build) instructions below, then proceed).*
 
 ---
 
 ## Usage
 
-You must run the tool while the **TaskBarHero** game is open and running.
+Run the Cheetos while **the game** is open.
 
-**We provide wrapper scripts to make launching as easy as possible!** If you compiled from source, the scripts are in your `build/` folder. If you downloaded a Release `.zip`, the scripts are right next to the executable.
+### If you downloaded the Release (.zip)
+Simply run the launch script from the root of the extracted folder:
+- **Windows:** `.\launch.bat` (Run as Administrator)
+- **Linux (Steam Proton):** `./launch_linux.sh`
+- **macOS (Wine):** `./launch_macos.sh`
 
-### Windows
-Double-click `launch.bat` or run it from your command prompt. **Note:** You may need to run it as Administrator so it has permission to write to the game's memory.
-```powershell
-.\launch.bat
-```
+### If you built from Source
+The launch scripts are generated inside the `build/` directory. Run them from the project root:
+- **Windows:** `.\build\launch.bat` (Run as Administrator)
+- **Linux (Steam Proton):** `./build/launch_linux.sh`
+- **macOS (Wine):** `./build/launch_macos.sh`
 
-### Linux (Steam Proton / Wine)
-If you are playing the game on Linux via Steam (Proton), our script automatically handles `protontricks` for you.
-```bash
-./launch_linux.sh
-```
+> **Note for Linux Users:** Ensure `protontricks` is installed for the script to successfully inject into the game's Steam Proton container.
 
-### macOS (Wine / Whisky / CrossOver)
-MacOS cannot run Windows games natively. If you are playing the game through a translation layer like Wine, Whisky, or CrossOver, our script will launch the tool inside that same environment.
-```bash
-./launch_macos.sh
-```
-
-
-## Customizing Cheat Values
-
-If you want to modify which stats are injected or change the values (e.g., enable DPS modification), open `src/main.cpp` and locate the `targetStats` vector:
-
-```cpp
-std::vector<CheatTarget> targetStats = {
-  {"MHP", StatType::MaxHp, 999999999.0f},
-  // Uncomment and change the value below to modify DPS
-  // {"DPS", StatType::AttackDamage, 999999999.0f}, 
-  {"ATK_SPD", StatType::AttackSpeed, 999999999.0f},
-  // ...
-};
-```
-After making changes, remember to re-run `cmake --build build` to compile the new values into the executable!
+---
 
 ## LICENSE
-This Project under [MIT LICENSE](License)
+This Project is under the [MIT LICENSE](license).
