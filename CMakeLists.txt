@@ -56,9 +56,7 @@ elseif(MINGW)
 endif()
 
 # Wrapper Scripts Generation
-configure_file(scripts/launch.bat.in launch.bat @ONLY)
-configure_file(scripts/launch_linux.sh.in launch_linux.sh @ONLY)
-configure_file(scripts/launch_macos.sh.in launch_macos.sh @ONLY)
+configure_file(resources/templates/README.txt.in README.txt @ONLY)
 
 # --- CPack Configuration for Release Packaging ---
 include(InstallRequiredSystemLibraries)
@@ -72,13 +70,13 @@ set(CPACK_GENERATOR "ZIP")
 # Install instructions (CPack uses these to know what to zip)
 install(TARGETS ${EXE_NAME} speedhack RUNTIME DESTINATION .)
 install(FILES 
-    "${CMAKE_BINARY_DIR}/launch.bat"
-    "${CMAKE_SOURCE_DIR}/README.md"
+    "${CMAKE_SOURCE_DIR}/scripts/launch.bat"
+    "${CMAKE_BINARY_DIR}/README.txt"
     DESTINATION .
 )
 install(PROGRAMS 
-    "${CMAKE_BINARY_DIR}/launch_linux.sh"
-    "${CMAKE_BINARY_DIR}/launch_macos.sh"
+    "${CMAKE_SOURCE_DIR}/scripts/launch_linux.sh"
+    "${CMAKE_SOURCE_DIR}/scripts/launch_macos.sh"
     DESTINATION .
 )
 
