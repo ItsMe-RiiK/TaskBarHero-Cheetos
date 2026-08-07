@@ -70,78 +70,109 @@ public:
 
     static const PatchTarget targets[] = {
       // InjectionDetector
-      {"InjectionDetector.yri", 0x6E9B70},  // @RVA[InjectionDetector.yri]  // internal override detect
+      {"InjectionDetector.yri",
+       0x6E9B70},  // @RVA[InjectionDetector.yri]  // internal override detect
       {"InjectionDetector.yrn", 0x6E9CF0},  // @RVA[InjectionDetector.yrn]  // static start
 
       // SpeedHackDetector
-      {"SpeedHackDetector.yso", 0x6EFAF0},  // @RVA[SpeedHackDetector.yso]  // static start
-      {"SpeedHackDetector.ysp", 0x6EFB20},  // @RVA[SpeedHackDetector.ysp]
-      {"SpeedHackDetector.ysq", 0x6EFD90},  // @RVA[SpeedHackDetector.ysq]
-      {"SpeedHackDetector.ysr", 0x6EFEB0},  // @RVA[SpeedHackDetector.ysr]
-      {"SpeedHackDetector.yss", 0x6EFFA0},  // @RVA[SpeedHackDetector.yss]
-      {"SpeedHackDetector.yst", 0x6F0060},  // @RVA[SpeedHackDetector.yst]
-      {"SpeedHackDetector.ysu", 0x6F00F0},  // @RVA[SpeedHackDetector.ysu]
-      {"SpeedHackDetector.ysv", 0x6F0200},  // @RVA[SpeedHackDetector.ysv]
-      {"SpeedHackDetector.ysw", 0x6F0310},  // @RVA[SpeedHackDetector.ysw]
-      {"SpeedHackDetector.ysx", 0x6F0470},  // @RVA[SpeedHackDetector.ysx]
-      {"SpeedHackDetector.ysy", 0x6F05B0},  // @RVA[SpeedHackDetector.ysy]
-      {"SpeedHackDetector.ysz", 0x6F06E0},  // @RVA[SpeedHackDetector.ysz]
-      {"SpeedHackDetector.yta", 0x6F0800},  // @RVA[SpeedHackDetector.yta]
-      {"SpeedHackDetector.ytb", 0x6F08F0},  // @RVA[SpeedHackDetector.ytb]
-      {"SpeedHackDetector.ytc", 0x6F0B60},  // @RVA[SpeedHackDetector.ytc]
-      {"SpeedHackDetector.ytd", 0x6F0C20},  // @RVA[SpeedHackDetector.ytd]
-      {"SpeedHackDetector.yte", 0x6F0C70},  // @RVA[SpeedHackDetector.yte]
-      {"SpeedHackDetector.ytf", 0x6F0D10},  // @RVA[SpeedHackDetector.ytf]
+      {"SpeedHackDetector.yso", 0x6EFAF0},     // @RVA[SpeedHackDetector.yso]  // static start
+      {"SpeedHackDetector.ysp", 0x6EFB20},     // @RVA[SpeedHackDetector.ysp]
+      {"SpeedHackDetector.ysq", 0x6EFD90},     // @RVA[SpeedHackDetector.ysq]
+      {"SpeedHackDetector.ysr", 0x6EFEB0},     // @RVA[SpeedHackDetector.ysr]
+      {"SpeedHackDetector.yss", 0x6EFFA0},     // @RVA[SpeedHackDetector.yss]
+      {"SpeedHackDetector.yst", 0x6F0060},     // @RVA[SpeedHackDetector.yst]
+      {"SpeedHackDetector.ysu", 0x6F00F0},     // @RVA[SpeedHackDetector.ysu]
+      {"SpeedHackDetector.ysv", 0x6F0200},     // @RVA[SpeedHackDetector.ysv]
+      {"SpeedHackDetector.ysw", 0x6F0310},     // @RVA[SpeedHackDetector.ysw]
+      {"SpeedHackDetector.ysx", 0x6F0470},     // @RVA[SpeedHackDetector.ysx]
+      {"SpeedHackDetector.ysy", 0x6F05B0},     // @RVA[SpeedHackDetector.ysy]
+      {"SpeedHackDetector.ysz", 0x6F06E0},     // @RVA[SpeedHackDetector.ysz]
+      {"SpeedHackDetector.yta", 0x6F0800},     // @RVA[SpeedHackDetector.yta]
+      {"SpeedHackDetector.ytb", 0x6F08F0},     // @RVA[SpeedHackDetector.ytb]
+      {"SpeedHackDetector.ytc", 0x6F0B60},     // @RVA[SpeedHackDetector.ytc]
+      {"SpeedHackDetector.ytd", 0x6F0C20},     // @RVA[SpeedHackDetector.ytd]
+      {"SpeedHackDetector.yte", 0x6F0C70},     // @RVA[SpeedHackDetector.yte]
+      {"SpeedHackDetector.ytf", 0x6F0D10},     // @RVA[SpeedHackDetector.ytf]
       {"SpeedHackDetector.Update", 0x6EF560},  // @RVA[SpeedHackDetector.Update]
-      {"SpeedHackDetector.yri", 0x6EFA40},  // @RVA[SpeedHackDetector.yri]
-      {"SpeedHackDetector.yre", 0x6EF9E0},  // @RVA[SpeedHackDetector.yre]
+      {"SpeedHackDetector.yri", 0x6EFA40},     // @RVA[SpeedHackDetector.yri]
+      {"SpeedHackDetector.yre", 0x6EF9E0},     // @RVA[SpeedHackDetector.yre]
 
       // TimeCheatingDetector
       {"TimeCheatingDetector.Update", 0x6EF9A0},  // @RVA[TimeCheatingDetector.Update]
-      {"TimeCheatingDetector.yuw", 0x6F0180},  // @RVA[TimeCheatingDetector.yuw]
-      {"TimeCheatingDetector.yux", 0x6F01B0},  // @RVA[TimeCheatingDetector.yux]
-      {"TimeCheatingDetector.yuz", 0x6F0400},  // @RVA[TimeCheatingDetector.yuz]
-      {"TimeCheatingDetector.yvs", 0x6F2E60},  // @RVA[TimeCheatingDetector.yvs]
-      {"TimeCheatingDetector.yvy", 0x6F33D0},  // @RVA[TimeCheatingDetector.yvy]
+      {"TimeCheatingDetector.yuw", 0x6F0180},     // @RVA[TimeCheatingDetector.yuw]
+      {"TimeCheatingDetector.yux", 0x6F01B0},     // @RVA[TimeCheatingDetector.yux]
+      {"TimeCheatingDetector.yuz", 0x6F0400},     // @RVA[TimeCheatingDetector.yuz]
+      {"TimeCheatingDetector.yvs", 0x6F2E60},     // @RVA[TimeCheatingDetector.yvs]
+      {"TimeCheatingDetector.yvy", 0x6F33D0},     // @RVA[TimeCheatingDetector.yvy]
 
       // ObscuredCheatingDetector
-      {"ObscuredCheatingDetector.yri", 0x6E9F60},  // @RVA[ObscuredCheatingDetector.yri]  // internal override detect
+      {"ObscuredCheatingDetector.yri",
+       0x6E9F60},  // @RVA[ObscuredCheatingDetector.yri]  // internal override detect
       {"ObscuredCheatingDetector.yrx", 0x6EA020},  // @RVA[ObscuredCheatingDetector.yrx]
       {"ObscuredCheatingDetector.yry", 0x6EA170},  // @RVA[ObscuredCheatingDetector.yry]
-      {"ObscuredCheatingDetector.yrz", 0x6EA1C0},  // @RVA[ObscuredCheatingDetector.yrz]  // static start method
+      {"ObscuredCheatingDetector.yrz",
+       0x6EA1C0},  // @RVA[ObscuredCheatingDetector.yrz]  // static start method
       {"ObscuredCheatingDetector.ysa", 0x6EA2D0},  // @RVA[ObscuredCheatingDetector.ysa]  // stop?
       {"ObscuredCheatingDetector.ysb", 0x6EA3E0},  // @RVA[ObscuredCheatingDetector.ysb]
-      {"ObscuredCheatingDetector.ysd", 0x6EA650},  // @RVA[ObscuredCheatingDetector.ysd]  // some internal detect logic
-      {"ObscuredCheatingDetector.yse", 0x6EA7E0},  // @RVA[ObscuredCheatingDetector.yse]  // obsolete
-      {"ObscuredCheatingDetector.ysf", 0x6EA8C0},  // @RVA[ObscuredCheatingDetector.ysf]  // more logic
+      {"ObscuredCheatingDetector.ysd",
+       0x6EA650},  // @RVA[ObscuredCheatingDetector.ysd]  // some internal detect logic
+      {"ObscuredCheatingDetector.yse",
+       0x6EA7E0},  // @RVA[ObscuredCheatingDetector.yse]  // obsolete
+      {"ObscuredCheatingDetector.ysf",
+       0x6EA8C0},  // @RVA[ObscuredCheatingDetector.ysf]  // more logic
+
+      // Direct Obscured Types Bypass (Bypass op_Implicit completely)
+      {"ObscuredInt.op_Implicit", 0x6DA210},    // @RVA[ObscuredInt.op_Implicit(ObscuredInt)]
+      {"ObscuredFloat.op_Implicit", 0x6D8440},  // @RVA[ObscuredFloat.op_Implicit(ObscuredFloat)]
 
       // WallHackDetector
-      {"WallHackDetector.Update", 0x6F7A20},  // @RVA[WallHackDetector.Update]
+      {"WallHackDetector.Update", 0x6F7A20},       // @RVA[WallHackDetector.Update]
       {"WallHackDetector.FixedUpdate", 0x6F6DD0},  // @RVA[WallHackDetector.FixedUpdate]
-      {"WallHackDetector.yxf", 0x6F8310},  // @RVA[WallHackDetector.yxf]
-      {"WallHackDetector.yxg", 0x6F8340},  // @RVA[WallHackDetector.yxg]
-      {"WallHackDetector.yxh", 0x6F8570},  // @RVA[WallHackDetector.yxh]
-      {"WallHackDetector.yri", 0x6F7ED0},  // @RVA[WallHackDetector.yri]
+      {"WallHackDetector.yxf", 0x6F8310},          // @RVA[WallHackDetector.yxf]
+      {"WallHackDetector.yxg", 0x6F8340},          // @RVA[WallHackDetector.yxg]
+      {"WallHackDetector.yxh", 0x6F8570},          // @RVA[WallHackDetector.yxh]
+      {"WallHackDetector.yri", 0x6F7ED0},          // @RVA[WallHackDetector.yri]
     };
 
     for (const auto& t : targets) {
       uintptr_t addr = gaBase + t.rva;
 
-      // Read original bytes first (for potential restore)
-      m_mem.ReadBytes(addr, &m_origBytes[patchCount * 3], 3);
+      // Check if it's a direct bypass for Obscured types
+      bool isDirectBypass = (std::string(t.name).find("op_Implicit") != std::string::npos);
 
-      // Write XOR EAX, EAX; RET instruction (31 C0 C3)
-      uint8_t retInstr[3] = {0x31, 0xC0, 0xC3};
-      DWORD   oldProtect  = 0;
+      // Write instructions
+      uint8_t retInstr[7];
+      size_t  instrSize = 3;
+
+      if (isDirectBypass) {
+        // mov eax, dword ptr [rcx + 4] (8B 41 04)
+        // xor eax, dword ptr [rcx + 8] (33 41 08)
+        // ret (C3)
+        // This completely bypasses hash checks and immediately returns decrypted value
+        uint8_t bypassInstr[7] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08, 0xC3};
+        memcpy(retInstr, bypassInstr, 7);
+        instrSize = 7;
+      }
+      else {
+        // XOR EAX, EAX; RET instruction (31 C0 C3)
+        uint8_t nullRet[3] = {0x31, 0xC0, 0xC3};
+        memcpy(retInstr, nullRet, 3);
+      }
+
+      DWORD oldProtect = 0;
 
       // Need to change memory protection first since code pages are typically RX
-      if (VirtualProtectEx(m_mem.Handle(), (LPVOID) addr, 3, PAGE_EXECUTE_READWRITE, &oldProtect)) {
-        if (m_mem.WriteBytes(addr, retInstr, 3)) {
+      if (
+        VirtualProtectEx(
+          m_mem.Handle(), (LPVOID) addr, instrSize, PAGE_EXECUTE_READWRITE, &oldProtect
+        )
+      ) {
+        if (m_mem.WriteBytes(addr, retInstr, instrSize)) {
           patchCount++;
           details += "  Patched " + std::string(t.name) + " @ 0x" + ToHex(addr) + "\n";
         }
         // Restore original protection
-        VirtualProtectEx(m_mem.Handle(), (LPVOID) addr, 3, oldProtect, &oldProtect);
+        VirtualProtectEx(m_mem.Handle(), (LPVOID) addr, instrSize, oldProtect, &oldProtect);
       }
     }
 
