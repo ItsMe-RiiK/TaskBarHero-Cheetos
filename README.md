@@ -3,7 +3,7 @@
 # TaskBarHero - Cheetos
 
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
-[![Cheetos Version](https://img.shields.io/badge/version-1.1.2-blue)](#)
+[![Cheetos Version](https://img.shields.io/badge/version-2.0.0-blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
@@ -31,6 +31,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 | **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, and Movement Speed into all active heroes. | ✅ Works | Repeatable |
 | **Rune Unlocker** | Safely unlock and max-level all runes for free. | ✅ Works | Interactive |
 | **Speedhack** | Increases the global speed of the game. | ✅ Works | Toggle |
+| **EXP Multiplier** | Multiplies the EXP earned from killing monsters. | ✅ Works | Interactive |
 
 ### Technical Capabilities
 - **Seamless GUI:** A beautifully rendered floating window (via OpenGL3/GLFW) for real-time interaction.
