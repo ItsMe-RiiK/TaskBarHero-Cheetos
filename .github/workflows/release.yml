@@ -56,7 +56,7 @@ jobs:
           fi
           
           # Construct the new release body
-          BODY="Latest rolling build for **$MAJOR_VERSION** (Currently tracking \`$TAG\`)
+          BODY="Latest build for **$MAJOR_VERSION** (Currently tracking \`$TAG\`)
 
           ## Changelog for $TAG
           $NOTES"
