@@ -8,13 +8,6 @@
 #include <vector>
 #include <set>
 
-/* -----------------------------------------------------------------------
- * God Mode -- One-shot stat injection into all active heroes.
- *
- * The user selects which stats to max, then presses "Apply God Mode".
- * Values are written once. The game may overwrite them later (e.g. when
- * upgrading in-game), so the user can re-apply at any time.
- * ----------------------------------------------------------------------- */
 class GodMode
 {
 public:
@@ -81,7 +74,6 @@ public:
          + std::to_string(results.size()) + " heroes.";
   }
 
-  // Get all available cheat targets (for building the UI)
   static const std::vector<CheatTarget>& GetAllTargets()
   {
     static const std::vector<CheatTarget> targets = {

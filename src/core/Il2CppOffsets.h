@@ -1,17 +1,6 @@
 #pragma once
 #include <cstdint>
 
-/* -----------------------------------------------------------------------
- * IL2CPP metadata offsets extracted from Il2CppDumper output (dump.cs).
- * These are exact for the dumped game version.
- *
- * Workflow per game update:
- *   1. Re-run Il2CppDumper against the new GameAssembly.dll +
- *      global-metadata.dat.
- *   2. Diff the new dump.cs field offsets against this table.
- *   3. Update the constants here, rebuild.
- * ----------------------------------------------------------------------- */
-
 // =========================================================================
 // Runtime Hero Stats Chain
 // =========================================================================

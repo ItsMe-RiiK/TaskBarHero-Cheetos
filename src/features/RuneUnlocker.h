@@ -14,8 +14,6 @@
  *   0x10: int RuneKey
  *   0x14: int Level   (0 = locked, >0 = unlocked+leveled)
  *
- * Strategy: iterate the flat list and set Level to the target value
- * for all entries.
  * ----------------------------------------------------------------------- */
 class RuneUnlocker
 {
