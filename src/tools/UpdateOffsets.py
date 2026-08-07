@@ -4,108 +4,157 @@ import re
 import os
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python3 UpdateOffsets.py <path_to_dump.cs> <path_to_Il2CppOffsets.h>")
+    if len(sys.argv) < 3:
+        print("Usage: python3 UpdateOffsets.py <path_to_dump.cs> <header1.h> [header2.h ...]")
         sys.exit(1)
 
     dump_path = sys.argv[1]
-    header_path = sys.argv[2]
+    header_paths = sys.argv[2:]
 
     if not os.path.exists(dump_path):
         print(f"Error: {dump_path} not found.")
         sys.exit(1)
-    if not os.path.exists(header_path):
-        print(f"Error: {header_path} not found.")
-        sys.exit(1)
 
-    print(f"[*] Reading header file: {header_path}")
-    with open(header_path, 'r', encoding='utf-8') as f:
-        header_content = f.read()
+    for h in header_paths:
+        if not os.path.exists(h):
+            print(f"Error: {h} not found.")
+            sys.exit(1)
 
-    # Find all tags like: @[ClassName.FieldName]
-    # We want to extract ClassName and FieldName.
-    # regex matches: // @[ClassName.FieldName]
-    tag_re = re.compile(r"//\s*@\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]")
-    
-    needed_offsets = {} # (ClassName, FieldName) -> None (to be filled with hex)
-    for match in tag_re.finditer(header_content):
-        cls_name = match.group(1)
-        fld_name = match.group(2)
-        needed_offsets[(cls_name, fld_name)] = None
+    # Regexes for extracting tags from headers
+    tag_field_re = re.compile(r"//\s*@\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]")
+    tag_rva_re = re.compile(r"//\s*@RVA\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]")
 
-    if not needed_offsets:
-        print("[-] No @[Class.Field] tags found in header file.")
+    needed_offsets = {} # (ClassName, FieldName) -> None
+    needed_rvas = {}    # (ClassName, MethodName) -> None
+
+    # Step 1: Read all headers and collect required tags
+    for h in header_paths:
+        print(f"[*] Reading header file: {h}")
+        with open(h, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        for match in tag_field_re.finditer(content):
+            needed_offsets[(match.group(1), match.group(2))] = None
+            
+        for match in tag_rva_re.finditer(content):
+            needed_rvas[(match.group(1), match.group(2))] = None
+
+    if not needed_offsets and not needed_rvas:
+        print("[-] No @[Class.Field] or @RVA[Class.Method] tags found in header files.")
         sys.exit(0)
 
-    print(f"[*] Found {len(needed_offsets)} tags. Scanning dump.cs...")
+    print(f"[*] Found {len(needed_offsets)} field tags and {len(needed_rvas)} RVA tags. Scanning dump.cs...")
 
+    # Step 2: Scan dump.cs
     with open(dump_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     current_class = None
-    class_def_re = re.compile(r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract)?\s*class\s+([A-Za-z0-9_]+)")
-    
-    # Matches: public int HeroKey; // 0x30
-    # Also handles JsonProperty and other attributes above fields.
+    last_rva = None
+
+    class_def_re = re.compile(r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*class\s+([A-Za-z0-9_]+)")
     field_re = re.compile(r"^\s*(?:public|private|protected|internal|static|readonly)*\s+(?:[A-Za-z0-9_<>\[\], ]+)\s+([A-Za-z0-9_]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)")
+    rva_comment_re = re.compile(r"//\s*RVA:\s*(0x[0-9A-Fa-f]+)")
+    method_re = re.compile(r"\s+([A-Za-z0-9_]+)\s*\(")
 
     for line in lines:
         c_match = class_def_re.search(line)
         if c_match:
             current_class = c_match.group(1)
+            last_rva = None
             continue
         
         if current_class:
+            # Check for field
             f_match = field_re.search(line)
             if f_match:
                 fname = f_match.group(1)
                 offset = f_match.group(2)
-                
                 if (current_class, fname) in needed_offsets:
                     needed_offsets[(current_class, fname)] = offset
+                last_rva = None
+                continue
+                
+            # Check for RVA comment
+            r_match = rva_comment_re.search(line)
+            if r_match:
+                last_rva = r_match.group(1)
+                continue
+                
+            # Check for method if we have an RVA
+            if last_rva:
+                m_match = method_re.search(line)
+                if m_match:
+                    mname = m_match.group(1)
+                    if (current_class, mname) in needed_rvas:
+                        # If a class has multiple overloads, take the first one found.
+                        if needed_rvas[(current_class, mname)] is None:
+                            needed_rvas[(current_class, mname)] = last_rva
+                last_rva = None
 
-    # Verify if we found all
+    # Step 3: Verify missing
     missing = False
     for (cls, fld), off in needed_offsets.items():
         if off is None:
-            print(f"  [!] Missing offset for {cls}.{fld}")
+            print(f"  [!] Missing field offset for {cls}.{fld}")
             missing = True
         else:
-            print(f"  [+] {cls}.{fld} -> {off}")
+            print(f"  [+] Field {cls}.{fld} -> {off}")
+            
+    for (cls, mth), rva in needed_rvas.items():
+        if rva is None:
+            print(f"  [!] Missing RVA for {cls}.{mth}")
+            missing = True
+        else:
+            print(f"  [+] RVA {cls}.{mth} -> {rva}")
 
     if missing:
-        print("[-] Not all offsets were found. Make sure class and field names match exactly.")
+        print("[-] Not all offsets/RVAs were found. Make sure names match exactly.")
     
-    # Now patch the header file
-    # We replace: = 0x123;  // @[Class.Field]
-    # with:       = NEW_HEX;  // @[Class.Field]
-    print("[*] Updating header file...")
+    # Step 4: Patch headers
+    print("[*] Updating header files...")
     
-    def replacer(match):
-        hex_val = match.group(1)
-        tag_content = match.group(2)
-        
-        # parse the class and field out of the tag
-        m = re.match(r"([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)", tag_content)
+    # regex matches: = 0xABC; // @[Class.Field]
+    field_replace_re = re.compile(r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])(?: \[(?:CHANGED|UNCHANGED)\])?")
+    
+    # regex matches: , 0xABC}, // @RVA[Class.Method]
+    rva_replace_re = re.compile(r"(,\s*)(0x[0-9A-Fa-f]+)(\s*\}\s*,\s*//\s*@RVA\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])(?: \[(?:CHANGED|UNCHANGED)\])?")
+
+    def field_replacer(match):
+        prefix = match.group(1)
+        old_hex = match.group(2)
+        suffix = match.group(3)
+        m = re.search(r"@\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]", suffix)
         if m:
-            cls = m.group(1)
-            fld = m.group(2)
-            new_hex = needed_offsets.get((cls, fld))
+            new_hex = needed_offsets.get((m.group(1), m.group(2)))
             if new_hex:
-                # return the new line with the updated hex, keeping formatting
-                return match.group(0).replace(hex_val, new_hex)
+                status = "CHANGED" if old_hex.lower() != new_hex.lower() else "UNCHANGED"
+                return f"{prefix}{new_hex}{suffix} [{status}]"
         return match.group(0)
 
-    # Regex to capture the hex value before the // @[tag]
-    # Matches: = 0xABC; // @[Class.Field]
-    full_line_re = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\s*;\s*//\s*@\[([A-Za-z0-9_]+\.[A-Za-z0-9_]+)\]")
-    
-    new_header_content = full_line_re.sub(replacer, header_content)
+    def rva_replacer(match):
+        prefix = match.group(1)
+        old_hex = match.group(2)
+        suffix = match.group(3)
+        m = re.search(r"@RVA\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]", suffix)
+        if m:
+            new_hex = needed_rvas.get((m.group(1), m.group(2)))
+            if new_hex:
+                status = "CHANGED" if old_hex.lower() != new_hex.lower() else "UNCHANGED"
+                return f"{prefix}{new_hex}{suffix} [{status}]"
+        return match.group(0)
 
-    with open(header_path, 'w', encoding='utf-8') as f:
-        f.write(new_header_content)
-
-    print("[*] Successfully updated Il2CppOffsets.h!")
+    for h in header_paths:
+        with open(h, 'r', encoding='utf-8') as f:
+            content = f.read()
+            
+        new_content = field_replace_re.sub(field_replacer, content)
+        new_content = rva_replace_re.sub(rva_replacer, new_content)
+        
+        with open(h, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+            
+        print(f"[*] Successfully updated {h}!")
 
 if __name__ == "__main__":
     main()
