@@ -7,26 +7,29 @@
 
 struct HeroInfoDataOffsets
 {
-  static constexpr int32_t HeroKey            = 0x30;  // @[HeroInfoData.HeroKey]
-  static constexpr int32_t HeroNameKey        = 0x38;  // @[HeroInfoData.HeroNameKey]
-  static constexpr int32_t DescriptionKey     = 0x40;  // @[HeroInfoData.DescriptionKey]
-  static constexpr int32_t ClassType          = 0x48;  // @[HeroInfoData.ClassType]
-  static constexpr int32_t MainWeaponGearType = 0x4C;  // @[HeroInfoData.MainWeaponGearType]
-  static constexpr int32_t SubWeaponGearType  = 0x50;  // @[HeroInfoData.SubWeaponGearType]
-  static constexpr int32_t SkillKey           = 0x54;  // @[HeroInfoData.SkillKey]
-  static constexpr int32_t AttackDamage       = 0x58;  // @[HeroInfoData.AttackDamage]
-  static constexpr int32_t AttackSpeed        = 0x5C;  // @[HeroInfoData.AttackSpeed]
-  static constexpr int32_t CastSpeed          = 0x60;  // @[HeroInfoData.CastSpeed]
-  static constexpr int32_t CriticalChance     = 0x64;  // @[HeroInfoData.CriticalChance]
-  static constexpr int32_t CriticalDamage     = 0x68;  // @[HeroInfoData.CriticalDamage]
-  static constexpr int32_t CooldownReduction  = 0x6C;  // @[HeroInfoData.CooldownReduction]
-  static constexpr int32_t MaxHp              = 0x70;  // @[HeroInfoData.MaxHp]
-  static constexpr int32_t Armor              = 0x74;  // @[HeroInfoData.Armor]
-  static constexpr int32_t MovementSpeed      = 0x78;  // @[HeroInfoData.MovementSpeed]
-  static constexpr int32_t UnlockCost         = 0x7C;  // @[HeroInfoData.UnlockCost]
-  static constexpr int32_t IsMeleeHero        = 0x80;  // @[HeroInfoData.IsMeleeHero]
-  static constexpr int32_t IsAvailable        = 0x81;  // @[HeroInfoData.IsAvailable]
-  static constexpr int32_t IsFirstAvailable   = 0x82;  // @[HeroInfoData.IsFirstAvailable]
+  static constexpr int32_t HeroKey        = 0x30;  // @[HeroInfoData.HeroKey] [UNCHANGED]
+  static constexpr int32_t HeroNameKey    = 0x38;  // @[HeroInfoData.HeroNameKey] [UNCHANGED]
+  static constexpr int32_t DescriptionKey = 0x40;  // @[HeroInfoData.DescriptionKey] [UNCHANGED]
+  static constexpr int32_t ClassType      = 0x48;  // @[HeroInfoData.ClassType] [UNCHANGED]
+  static constexpr int32_t MainWeaponGearType =
+    0x4C;  // @[HeroInfoData.MainWeaponGearType] [UNCHANGED]
+  static constexpr int32_t SubWeaponGearType =
+    0x50;                                          // @[HeroInfoData.SubWeaponGearType] [UNCHANGED]
+  static constexpr int32_t SkillKey       = 0x54;  // @[HeroInfoData.SkillKey] [UNCHANGED]
+  static constexpr int32_t AttackDamage   = 0x58;  // @[HeroInfoData.AttackDamage] [UNCHANGED]
+  static constexpr int32_t AttackSpeed    = 0x5C;  // @[HeroInfoData.AttackSpeed] [UNCHANGED]
+  static constexpr int32_t CastSpeed      = 0x60;  // @[HeroInfoData.CastSpeed] [UNCHANGED]
+  static constexpr int32_t CriticalChance = 0x64;  // @[HeroInfoData.CriticalChance] [UNCHANGED]
+  static constexpr int32_t CriticalDamage = 0x68;  // @[HeroInfoData.CriticalDamage] [UNCHANGED]
+  static constexpr int32_t CooldownReduction =
+    0x6C;  // @[HeroInfoData.CooldownReduction] [UNCHANGED]
+  static constexpr int32_t MaxHp            = 0x70;  // @[HeroInfoData.MaxHp] [UNCHANGED]
+  static constexpr int32_t Armor            = 0x74;  // @[HeroInfoData.Armor] [UNCHANGED]
+  static constexpr int32_t MovementSpeed    = 0x78;  // @[HeroInfoData.MovementSpeed] [UNCHANGED]
+  static constexpr int32_t UnlockCost       = 0x7C;  // @[HeroInfoData.UnlockCost] [UNCHANGED]
+  static constexpr int32_t IsMeleeHero      = 0x80;  // @[HeroInfoData.IsMeleeHero] [UNCHANGED]
+  static constexpr int32_t IsAvailable      = 0x81;  // @[HeroInfoData.IsAvailable] [UNCHANGED]
+  static constexpr int32_t IsFirstAvailable = 0x82;  // @[HeroInfoData.IsFirstAvailable] [UNCHANGED]
 };
 
 struct Il2CppOffsets
@@ -62,46 +65,52 @@ struct SaveManagerOffsets
 // PlayerSaveData (TypeDefIndex: 844)
 struct PlayerSaveDataOffsets
 {
-  static constexpr int32_t CommonSaveData     = 0x10;  // @[PlayerSaveData.commonSaveData]
-  static constexpr int32_t SettingSaveData    = 0x18;  // @[PlayerSaveData.settingSaveData]
-  static constexpr int32_t BoxData            = 0x20;  // @[PlayerSaveData.BoxData]
-  static constexpr int32_t CurrencySaveDatas  = 0x68;  // @[PlayerSaveData.currenySaveDatas]
-  static constexpr int32_t HeroSaveDatas      = 0x70;  // @[PlayerSaveData.heroSaveDatas]
-  static constexpr int32_t AttributeSaveDatas = 0x80;  // @[PlayerSaveData.attributeSaveDatas]
-  static constexpr int32_t PetSaveData        = 0x88;  // @[PlayerSaveData.PetSaveData]
-  static constexpr int32_t RuneSaveData       = 0x90;  // @[PlayerSaveData.RuneSaveData]
-  static constexpr int32_t InventorySaveDatas = 0x98;  // @[PlayerSaveData.inventorySaveDatas]
-  static constexpr int32_t CubeSaveLevelData  = 0xB8;  // @[PlayerSaveData.cubeSaveLevelData]
+  static constexpr int32_t CommonSaveData  = 0x10;  // @[PlayerSaveData.commonSaveData] [UNCHANGED]
+  static constexpr int32_t SettingSaveData = 0x18;  // @[PlayerSaveData.settingSaveData] [UNCHANGED]
+  static constexpr int32_t BoxData         = 0x20;  // @[PlayerSaveData.BoxData] [UNCHANGED]
+  static constexpr int32_t CurrencySaveDatas =
+    0x68;                                         // @[PlayerSaveData.currenySaveDatas] [UNCHANGED]
+  static constexpr int32_t HeroSaveDatas = 0x70;  // @[PlayerSaveData.heroSaveDatas] [UNCHANGED]
+  static constexpr int32_t AttributeSaveDatas =
+    0x80;                                        // @[PlayerSaveData.attributeSaveDatas] [UNCHANGED]
+  static constexpr int32_t PetSaveData  = 0x88;  // @[PlayerSaveData.PetSaveData] [UNCHANGED]
+  static constexpr int32_t RuneSaveData = 0x90;  // @[PlayerSaveData.RuneSaveData] [UNCHANGED]
+  static constexpr int32_t InventorySaveDatas =
+    0x98;  // @[PlayerSaveData.inventorySaveDatas] [UNCHANGED]
+  static constexpr int32_t CubeSaveLevelData =
+    0xB8;  // @[PlayerSaveData.cubeSaveLevelData] [UNCHANGED]
 };
 
 // HeroSaveData (TypeDefIndex: 1258)
 struct HeroSaveDataOffsets
 {
-  static constexpr int32_t HeroKey   = 0x10;  // @[HeroSaveData.heroKey]
-  static constexpr int32_t HeroLevel = 0x14;  // @[HeroSaveData.HeroLevel]
-  static constexpr int32_t IsUnLock  = 0x18;  // @[HeroSaveData.IsUnLock]
-  static constexpr int32_t HeroExp   = 0x20;  // @[HeroSaveData.HeroExp]
+  static constexpr int32_t HeroKey   = 0x10;  // @[HeroSaveData.heroKey] [UNCHANGED]
+  static constexpr int32_t HeroLevel = 0x14;  // @[HeroSaveData.HeroLevel] [UNCHANGED]
+  static constexpr int32_t IsUnLock  = 0x18;  // @[HeroSaveData.IsUnLock] [UNCHANGED]
+  static constexpr int32_t HeroExp   = 0x20;  // @[HeroSaveData.HeroExp] [UNCHANGED]
 };
 
 // CurrencySaveData (TypeDefIndex: 1257)
 struct CurrencySaveDataOffsets
 {
-  static constexpr int32_t Key      = 0x10;  // @[CurrencySaveData.Key]
-  static constexpr int32_t Quantity = 0x18;  // @[CurrencySaveData.Quantity]
+  static constexpr int32_t Key      = 0x10;  // @[CurrencySaveData.Key] [UNCHANGED]
+  static constexpr int32_t Quantity = 0x18;  // @[CurrencySaveData.Quantity] [UNCHANGED]
 };
 
 // RuneSaveData (TypeDefIndex: 1266)
 struct RuneSaveDataOffsets
 {
-  static constexpr int32_t RuneKey = 0x10;  // @[RuneSaveData.RuneKey]
-  static constexpr int32_t Level   = 0x14;  // @[RuneSaveData.Level]
+  static constexpr int32_t RuneKey = 0x10;  // @[RuneSaveData.RuneKey] [UNCHANGED]
+  static constexpr int32_t Level   = 0x14;  // @[RuneSaveData.Level] [UNCHANGED]
 };
 
 // CubeLevelSaveData
 struct CubeLevelSaveDataOffsets
 {
-  static constexpr int32_t Level = 0x10;  // @[CubeSaveLevelData.Level]
-  static constexpr int32_t Exp   = 0x14;  // @[CubeSaveLevelData.Exp]
+  static constexpr int32_t Level = 0x10;  // @[CubeLevelSaveData.Level] [UNCHANGED]
+  static constexpr int32_t Exp   = 0x14;  // @[CubeLevelSaveData.Exp] [UNCHANGED]
+
+  static constexpr int32_t Monster_Exp = 0x3E0;  // @[Monster.ExpHeuristic] [UNCHANGED]
 };
 
 // =========================================================================
@@ -109,8 +118,8 @@ struct CubeLevelSaveDataOffsets
 // =========================================================================
 struct StageManagerOffsets
 {
-  static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList]
-  static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox]
+  static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList] [UNCHANGED]
+  static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox] [UNCHANGED]
   static constexpr int32_t BoxDropDict = 0x140;  // @[StageManager.BoxDropDict]
 };
 
