@@ -34,6 +34,7 @@ compile_commands.json
 
 # prevent cache being uploaded
 .cache/
+__pycache__/
 
 # archive folder
 archive/
