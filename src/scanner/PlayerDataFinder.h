@@ -68,6 +68,8 @@ public:
   // Find PlayerSaveData by locating a known HeroSaveData and tracing back.
   std::optional<PlayerDataResult> Find();
 
+  void ClearCache() { m_hasCache = false; }
+
   // Find ALL CurrencySaveData instances for a specific key
   std::vector<uintptr_t> FindCurrencySaveDatas(int32_t currencyKey);
 
@@ -88,4 +90,7 @@ private:
   ProcessMemory&   m_mem;
   AOBScanner       m_scanner;
   Il2CppListReader m_listReader;
+
+  bool             m_hasCache = false;
+  PlayerDataResult m_cachedResult;
 };

@@ -6,6 +6,15 @@
 
 std::optional<PlayerDataResult> PlayerDataFinder::Find()
 {
+  if (m_hasCache) {
+    // Basic validation to ensure pointer is still valid
+    auto vtable = m_mem.ReadPointer(m_cachedResult.playerSaveDataAddr);
+    if (vtable && *vtable > 0x10000) {
+      return m_cachedResult;
+    }
+    m_hasCache = false;
+  }
+
   printf("  [Debug] Searching for Knight HeroSaveData pattern...\n");
   // Step 1: Find a HeroSaveData by scanning for hero key = 101 (Knight)
   // Pattern: HeroKey (101 = 0x65), HeroLevel (4 bytes, ignore), IsUnLock (1 byte = 0x01), 7 bytes padding
@@ -19,7 +28,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
     uintptr_t objBase = addr - HeroSaveDataOffsets::HeroKey;
 
     auto level = m_mem.ReadInt32(objBase + HeroSaveDataOffsets::HeroLevel);
-    if (!level || *level < 1 || *level > 500)
+    if (!level || *level < 1 || *level > 9999999)
       continue;
 
     auto unlocked = m_mem.ReadBool(objBase + HeroSaveDataOffsets::IsUnLock);
@@ -51,7 +60,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
             continue;
 
           auto arrLen = m_mem.ReadInt32(arrayBase + Il2CppArrayOffsets::Length);
-          if (!arrLen || *arrLen < 1 || *arrLen > 100)
+          if (!arrLen || *arrLen < 1 || *arrLen > 1000)
             continue;
 
           std::string arrPtrPattern = PointerToPatternString(arrayBase);
@@ -61,7 +70,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
             uintptr_t listBase = listCandAddr - Il2CppListOffsets::Items;
 
             auto listSize = m_mem.ReadInt32(listBase + Il2CppListOffsets::Size);
-            if (!listSize || *listSize < 1 || *listSize > 100)
+            if (!listSize || *listSize < 1 || *listSize > 1000)
               continue;
 
             std::string listPtrPattern = PointerToPatternString(listBase);
@@ -83,7 +92,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
               }
 
               auto currSize = m_mem.ReadInt32(*currencyList + Il2CppListOffsets::Size);
-              if (!currSize || *currSize < 1 || *currSize > 200) {
+              if (!currSize || *currSize < 0 || *currSize > 1000) {
                 continue;
               }
 
@@ -111,7 +120,9 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                   continue;
 
                 // Scan the buffer for the integer 197 (0x000000C5)
-                for (size_t i = Il2CppDictOffsets::Count; i < reg.RegionSize - 0x30; i += 4) {  // 4-byte aligned
+                for (size_t i = Il2CppDictOffsets::Count;
+                     reg.RegionSize >= 0x30 && i < reg.RegionSize - 0x30;
+                     i += 4) {  // 4-byte aligned
                   int32_t val = *reinterpret_cast<int32_t*>(&buffer[i]);
                   if (val == 197) {  // Found a potential dictionary count!
                     uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + i - Il2CppDictOffsets::Count;
@@ -169,6 +180,8 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                 }
               }
 
+              m_cachedResult = result;
+              m_hasCache     = true;
               return result;
             }
           }
