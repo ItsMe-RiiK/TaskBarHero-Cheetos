@@ -181,7 +181,7 @@ void CheetosGUI::DrawUI()
         ImGui::SameLine();
         ImGui::TextDisabled("(?)");
         if (ImGui::IsItemHovered())
-          RenderTooltip("1.0 = 100%, 0.5 = 50%, 100.0% = 10000%");
+          RenderTooltip("1.0 = 100%, 0.5 = 50%, 100.0 = 10000%");
       }
       else if (targets[i].type == StatType::MovementSpeed) {
         ImGui::SameLine();
@@ -391,6 +391,35 @@ void CheetosGUI::DrawUI()
     ImGui::EndDisabled();
   }
   ImGui::Spacing();
+
+  // ---- EXP Multiplier Section ----
+  ImGui::Text("EXP Multiplier");
+  ImGui::Separator();
+
+  ImGui::SetNextItemWidth(150);
+  ImGui::InputFloat("EXP Multiplier", &m_expMultiplierValue, 0.0f, 0.0f, "%.1f");
+  if (m_expMultiplierValue < 1.0f)
+    m_expMultiplierValue = 1.0f;
+  if (m_expMultiplierValue > 99999999.0f)
+    m_expMultiplierValue = 99999999.0f;
+
+  if (ImGui::Button("Apply EXP Multiplier", ImVec2(250, 20))) {
+    AddLog("[EXP Multiplier] Applying Multiplier... (Wait a moment)");
+    float multiToApply = m_expMultiplierValue;
+    std::thread([this, multiToApply]() {
+      auto res = m_expMultiplier.ApplyMaxExp(multiToApply);
+      PostLogFromThread(res.msg);
+    }).detach();
+  }
+  ImGui::SameLine();
+  ImGui::TextDisabled("(?)");
+  if (ImGui::IsItemHovered()) {
+    RenderTooltip(
+      "After activated just kill monster like a normal, and you will see the exp increase rapidly."
+    );
+  }
+  ImGui::Spacing();
+
 
   // ---- Log Section ----
   ImGui::Text("Log");
