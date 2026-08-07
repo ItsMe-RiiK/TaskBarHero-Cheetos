@@ -36,15 +36,15 @@ struct Il2CppOffsets
   static constexpr int32_t HeroInfoData_HeroNameKey = 0x38;
 
   // vo base class (inherited into vh) — confirmed
-  static constexpr int32_t Vo_StatContainer = 0x10;  // -> ze*
+  static constexpr int32_t Vo_StatContainer = 0x10;  // @[vo.StatContainer]
 
   // vh derived class — confirmed
-  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // -> HeroInfoData*
-  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // -> Hero*
+  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[vh.HeroInfoDataRef]
+  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // @[vh.HeroBackRef]
 
   // ze stat container - confirmed
-  static constexpr int32_t Ze_StatsDictA = 0x18;  // Dictionary<StatType,float>*
-  static constexpr int32_t Ze_StatsDictB = 0x20;  // Dictionary<StatType,float>*
+  static constexpr int32_t Ze_StatsDictA = 0x18;  // @[ze.StatsDictA]
+  static constexpr int32_t Ze_StatsDictB = 0x20;  // @[ze.StatsDictB]
 };
 
 // =========================================================================
@@ -55,8 +55,8 @@ struct Il2CppOffsets
 // This is a singleton MonoBehaviour that holds the save data.
 struct SaveManagerOffsets
 {
-  static constexpr int32_t AccountSaveData = 0x20;  // AccountSaveData*
-  static constexpr int32_t PlayerSaveData  = 0x28;  // PlayerSaveData*
+  static constexpr int32_t AccountSaveData = 0x20;  // @[bbb.AccountSaveData]
+  static constexpr int32_t PlayerSaveData  = 0x28;  // @[bbb.PlayerSaveData]
 };
 
 // PlayerSaveData (TypeDefIndex: 844)
@@ -100,8 +100,8 @@ struct RuneSaveDataOffsets
 // CubeLevelSaveData
 struct CubeLevelSaveDataOffsets
 {
-  static constexpr int32_t Level = 0x10;  // int
-  static constexpr int32_t Exp   = 0x14;  // float
+  static constexpr int32_t Level = 0x10;  // @[CubeSaveLevelData.Level]
+  static constexpr int32_t Exp   = 0x14;  // @[CubeSaveLevelData.Exp]
 };
 
 // =========================================================================
@@ -109,9 +109,9 @@ struct CubeLevelSaveDataOffsets
 // =========================================================================
 struct StageManagerOffsets
 {
-  static constexpr int32_t HeroList    = 0x30;   // Hero[]
-  static constexpr int32_t OnGetBox    = 0x100;  // Action<int>
-  static constexpr int32_t BoxDropDict = 0x140;  // Dictionary<EBoxType, float> bdta
+  static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList]
+  static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox]
+  static constexpr int32_t BoxDropDict = 0x140;  // @[StageManager.BoxDropDict]
 };
 
 // EBoxType values
@@ -141,12 +141,21 @@ struct Il2CppArrayOffsets
   // Each element is sizeof(T) for value types, or sizeof(pointer) for ref types
 };
 
+// Standard IL2CPP String header
+struct Il2CppStringOffsets
+{
+  static constexpr int32_t Length = 0x10;  // int length
+  static constexpr int32_t Chars  = 0x14;  // first char starts here
+};
+
 // Standard IL2CPP Dictionary<TKey, TValue> layout
 struct Il2CppDictOffsets
 {
   static constexpr int32_t Entries        = 0x18;  // Entry[] _entries
+  static constexpr int32_t Count          = 0x20;  // int _count
   static constexpr int32_t ArrayLength    = 0x18;  // array header length
   static constexpr int32_t ArrayData      = 0x20;  // array data start
+  static constexpr int32_t FreeCount      = 0x2C;  // int _freeCount
   static constexpr int32_t EntrySize      = 16;    // { int hashCode; int next; TKey; TValue }
   static constexpr int32_t EntryKeyOffset = 8;     // offset to key within entry
   static constexpr int32_t EntryValOffset = 12;    // offset to value within entry

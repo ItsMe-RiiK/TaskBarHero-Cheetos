@@ -70,58 +70,58 @@ public:
 
     static const PatchTarget targets[] = {
       // InjectionDetector
-      {"InjectionDetector.yri", 0x6E9B70},  // internal override detect
-      {"InjectionDetector.yrn", 0x6E9CF0},  // static start
+      {"InjectionDetector.yri", 0x6E9B70},  // @RVA[InjectionDetector.yri]  // internal override detect
+      {"InjectionDetector.yrn", 0x6E9CF0},  // @RVA[InjectionDetector.yrn]  // static start
 
       // SpeedHackDetector
-      {"SpeedHackDetector.yso", 0x6EFAF0},  // static start
-      {"SpeedHackDetector.ysp", 0x6EFB20},
-      {"SpeedHackDetector.ysq", 0x6EFD90},
-      {"SpeedHackDetector.ysr", 0x6EFEB0},
-      {"SpeedHackDetector.yss", 0x6EFFA0},
-      {"SpeedHackDetector.yst", 0x6F0060},
-      {"SpeedHackDetector.ysu", 0x6F00F0},
-      {"SpeedHackDetector.ysv", 0x6F0200},
-      {"SpeedHackDetector.ysw", 0x6F0310},
-      {"SpeedHackDetector.ysx", 0x6F0470},
-      {"SpeedHackDetector.ysy", 0x6F05B0},
-      {"SpeedHackDetector.ysz", 0x6F06E0},
-      {"SpeedHackDetector.yta", 0x6F0800},
-      {"SpeedHackDetector.ytb", 0x6F08F0},
-      {"SpeedHackDetector.ytc", 0x6F0B60},
-      {"SpeedHackDetector.ytd", 0x6F0C20},
-      {"SpeedHackDetector.yte", 0x6F0C70},
-      {"SpeedHackDetector.ytf", 0x6F0D10},
-      {"SpeedHackDetector.Update", 0x6EF560},
-      {"SpeedHackDetector.yri", 0x6EFA40},
-      {"SpeedHackDetector.yre", 0x6EF9E0},
+      {"SpeedHackDetector.yso", 0x6EFAF0},  // @RVA[SpeedHackDetector.yso]  // static start
+      {"SpeedHackDetector.ysp", 0x6EFB20},  // @RVA[SpeedHackDetector.ysp]
+      {"SpeedHackDetector.ysq", 0x6EFD90},  // @RVA[SpeedHackDetector.ysq]
+      {"SpeedHackDetector.ysr", 0x6EFEB0},  // @RVA[SpeedHackDetector.ysr]
+      {"SpeedHackDetector.yss", 0x6EFFA0},  // @RVA[SpeedHackDetector.yss]
+      {"SpeedHackDetector.yst", 0x6F0060},  // @RVA[SpeedHackDetector.yst]
+      {"SpeedHackDetector.ysu", 0x6F00F0},  // @RVA[SpeedHackDetector.ysu]
+      {"SpeedHackDetector.ysv", 0x6F0200},  // @RVA[SpeedHackDetector.ysv]
+      {"SpeedHackDetector.ysw", 0x6F0310},  // @RVA[SpeedHackDetector.ysw]
+      {"SpeedHackDetector.ysx", 0x6F0470},  // @RVA[SpeedHackDetector.ysx]
+      {"SpeedHackDetector.ysy", 0x6F05B0},  // @RVA[SpeedHackDetector.ysy]
+      {"SpeedHackDetector.ysz", 0x6F06E0},  // @RVA[SpeedHackDetector.ysz]
+      {"SpeedHackDetector.yta", 0x6F0800},  // @RVA[SpeedHackDetector.yta]
+      {"SpeedHackDetector.ytb", 0x6F08F0},  // @RVA[SpeedHackDetector.ytb]
+      {"SpeedHackDetector.ytc", 0x6F0B60},  // @RVA[SpeedHackDetector.ytc]
+      {"SpeedHackDetector.ytd", 0x6F0C20},  // @RVA[SpeedHackDetector.ytd]
+      {"SpeedHackDetector.yte", 0x6F0C70},  // @RVA[SpeedHackDetector.yte]
+      {"SpeedHackDetector.ytf", 0x6F0D10},  // @RVA[SpeedHackDetector.ytf]
+      {"SpeedHackDetector.Update", 0x6EF560},  // @RVA[SpeedHackDetector.Update]
+      {"SpeedHackDetector.yri", 0x6EFA40},  // @RVA[SpeedHackDetector.yri]
+      {"SpeedHackDetector.yre", 0x6EF9E0},  // @RVA[SpeedHackDetector.yre]
 
       // TimeCheatingDetector
-      {"TimeCheatingDetector.Update", 0x6EF9A0},
-      {"TimeCheatingDetector.yuw", 0x6F0180},
-      {"TimeCheatingDetector.yux", 0x6F01B0},
-      {"TimeCheatingDetector.yuz", 0x6F0400},
-      {"TimeCheatingDetector.yvs", 0x6F2E60},
-      {"TimeCheatingDetector.yvy", 0x6F33D0},
+      {"TimeCheatingDetector.Update", 0x6EF9A0},  // @RVA[TimeCheatingDetector.Update]
+      {"TimeCheatingDetector.yuw", 0x6F0180},  // @RVA[TimeCheatingDetector.yuw]
+      {"TimeCheatingDetector.yux", 0x6F01B0},  // @RVA[TimeCheatingDetector.yux]
+      {"TimeCheatingDetector.yuz", 0x6F0400},  // @RVA[TimeCheatingDetector.yuz]
+      {"TimeCheatingDetector.yvs", 0x6F2E60},  // @RVA[TimeCheatingDetector.yvs]
+      {"TimeCheatingDetector.yvy", 0x6F33D0},  // @RVA[TimeCheatingDetector.yvy]
 
       // ObscuredCheatingDetector
-      {"ObscuredCheatingDetector.yri", 0x6E9F60},  // internal override detect
-      {"ObscuredCheatingDetector.yrx", 0x6EA020},
-      {"ObscuredCheatingDetector.yry", 0x6EA170},
-      {"ObscuredCheatingDetector.yrz", 0x6EA1C0},  // static start method
-      {"ObscuredCheatingDetector.ysa", 0x6EA2D0},  // stop?
-      {"ObscuredCheatingDetector.ysb", 0x6EA3E0},
-      {"ObscuredCheatingDetector.ysd", 0x6EA650},  // some internal detect logic
-      {"ObscuredCheatingDetector.yse", 0x6EA7E0},  // obsolete
-      {"ObscuredCheatingDetector.ysf", 0x6EA8C0},  // more logic
+      {"ObscuredCheatingDetector.yri", 0x6E9F60},  // @RVA[ObscuredCheatingDetector.yri]  // internal override detect
+      {"ObscuredCheatingDetector.yrx", 0x6EA020},  // @RVA[ObscuredCheatingDetector.yrx]
+      {"ObscuredCheatingDetector.yry", 0x6EA170},  // @RVA[ObscuredCheatingDetector.yry]
+      {"ObscuredCheatingDetector.yrz", 0x6EA1C0},  // @RVA[ObscuredCheatingDetector.yrz]  // static start method
+      {"ObscuredCheatingDetector.ysa", 0x6EA2D0},  // @RVA[ObscuredCheatingDetector.ysa]  // stop?
+      {"ObscuredCheatingDetector.ysb", 0x6EA3E0},  // @RVA[ObscuredCheatingDetector.ysb]
+      {"ObscuredCheatingDetector.ysd", 0x6EA650},  // @RVA[ObscuredCheatingDetector.ysd]  // some internal detect logic
+      {"ObscuredCheatingDetector.yse", 0x6EA7E0},  // @RVA[ObscuredCheatingDetector.yse]  // obsolete
+      {"ObscuredCheatingDetector.ysf", 0x6EA8C0},  // @RVA[ObscuredCheatingDetector.ysf]  // more logic
 
       // WallHackDetector
-      {"WallHackDetector.Update", 0x6F7A20},
-      {"WallHackDetector.FixedUpdate", 0x6F6DD0},
-      {"WallHackDetector.yxf", 0x6F8310},
-      {"WallHackDetector.yxg", 0x6F8340},
-      {"WallHackDetector.yxh", 0x6F8570},
-      {"WallHackDetector.yri", 0x6F7ED0},
+      {"WallHackDetector.Update", 0x6F7A20},  // @RVA[WallHackDetector.Update]
+      {"WallHackDetector.FixedUpdate", 0x6F6DD0},  // @RVA[WallHackDetector.FixedUpdate]
+      {"WallHackDetector.yxf", 0x6F8310},  // @RVA[WallHackDetector.yxf]
+      {"WallHackDetector.yxg", 0x6F8340},  // @RVA[WallHackDetector.yxg]
+      {"WallHackDetector.yxh", 0x6F8570},  // @RVA[WallHackDetector.yxh]
+      {"WallHackDetector.yri", 0x6F7ED0},  // @RVA[WallHackDetector.yri]
     };
 
     for (const auto& t : targets) {

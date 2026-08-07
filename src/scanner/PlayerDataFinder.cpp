@@ -111,21 +111,21 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                   continue;
 
                 // Scan the buffer for the integer 197 (0x000000C5)
-                for (size_t i = 0x20; i < reg.RegionSize - 0x30; i += 4) {  // 4-byte aligned
+                for (size_t i = Il2CppDictOffsets::Count; i < reg.RegionSize - 0x30; i += 4) {  // 4-byte aligned
                   int32_t val = *reinterpret_cast<int32_t*>(&buffer[i]);
                   if (val == 197) {  // Found a potential dictionary count!
-                    uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + i - 0x20;
+                    uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + i - Il2CppDictOffsets::Count;
 
                     // Perform safety heuristics
-                    auto entriesPtr = m_mem.ReadPointer(dictAddr + 0x18);
+                    auto entriesPtr = m_mem.ReadPointer(dictAddr + Il2CppDictOffsets::Entries);
                     if (!entriesPtr || *entriesPtr == 0)
                       continue;
 
-                    auto freeCount = m_mem.ReadInt32(dictAddr + 0x2C);
+                    auto freeCount = m_mem.ReadInt32(dictAddr + Il2CppDictOffsets::FreeCount);
                     if (!freeCount || *freeCount < 0 || *freeCount > 1000)
                       continue;
 
-                    auto entriesLen = m_mem.ReadInt32(*entriesPtr + 0x18);
+                    auto entriesLen = m_mem.ReadInt32(*entriesPtr + Il2CppArrayOffsets::Length);
                     if (!entriesLen || *entriesLen < 197 || *entriesLen > 10000)
                       continue;
 
@@ -194,7 +194,7 @@ std::vector<uintptr_t> PlayerDataFinder::FindCurrencySaveDatas(int32_t currencyK
 
   auto hits = m_scanner.Scan(pattern, true);
   for (auto addr : hits) {
-    uintptr_t objBase = addr - 0x10;  // offset of Key
+    uintptr_t objBase = addr - CurrencySaveDataOffsets::Key;  // offset of Key
     // Validate vtable
     auto vtable = m_mem.ReadPointer(objBase);
     if (!vtable || *vtable < 0x10000)

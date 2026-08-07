@@ -66,11 +66,11 @@ public:
         if (!strPtr || *strPtr == 0)
           continue;
 
-        auto strLen = m_mem.ReadInt32(*strPtr + 0x10);
+        auto strLen = m_mem.ReadInt32(*strPtr + Il2CppStringOffsets::Length);
         if (!strLen || *strLen <= 8 || *strLen >= 30)
           continue;
 
-        std::wstring s = m_mem.ReadUtf16(*strPtr + 0x14, (size_t) std::min<int32_t>(*strLen, 20));
+        std::wstring s = m_mem.ReadUtf16(*strPtr + Il2CppStringOffsets::Chars, (size_t) std::min<int32_t>(*strLen, 20));
         std::wstring expected = L"HeroName_" + std::to_wstring(heroId);
 
         if (s.find(expected) != std::wstring::npos) {
