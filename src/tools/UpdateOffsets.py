@@ -51,6 +51,7 @@ def main():
 
     current_class = None
     last_rva = None
+    last_float_offset = None
 
     class_def_re = re.compile(r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*class\s+([A-Za-z0-9_]+)")
     field_re = re.compile(r"^\s*(?:public|private|protected|internal|static|readonly)*\s+(?:[A-Za-z0-9_<>\[\], ]+)\s+([A-Za-z0-9_]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)")
@@ -62,6 +63,7 @@ def main():
         if c_match:
             current_class = c_match.group(1)
             last_rva = None
+            last_float_offset = None
             continue
         
         if current_class:
@@ -70,6 +72,14 @@ def main():
             if f_match:
                 fname = f_match.group(1)
                 offset = f_match.group(2)
+                
+                # Heuristic for Monster.ExpHeuristic
+                if "float " in line:
+                    last_float_offset = offset
+                if "EStageType " in line and current_class == "Monster":
+                    if last_float_offset and ("Monster", "ExpHeuristic") in needed_offsets:
+                        needed_offsets[("Monster", "ExpHeuristic")] = last_float_offset
+
                 if (current_class, fname) in needed_offsets:
                     needed_offsets[(current_class, fname)] = offset
                 last_rva = None
