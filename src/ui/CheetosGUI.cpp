@@ -187,7 +187,7 @@ void CheetosGUI::DrawUI()
         ImGui::SameLine();
         ImGui::TextDisabled("(?)");
         if (ImGui::IsItemHovered())
-          RenderTooltip("Don't use Movement Speed if you are using the Speedhack!");
+          RenderTooltip("u can close this app if only enabling this without speedhack");
       }
 
       // Type-safe clamping
@@ -305,7 +305,7 @@ void CheetosGUI::DrawUI()
     }
 
     ImGui::Spacing();
-    ImGui::Text("Individual Runes (%zu found)", runes.size());
+    ImGui::Text("Runes (%zu found)", runes.size());
 
     // Table for Runes
     if (
@@ -379,6 +379,11 @@ void CheetosGUI::DrawUI()
     }
     AddLog(m_speedhackEnabled ? "[Speedhack] Enabled." : "[Speedhack] Disabled.");
   }
+  ImGui::SameLine();
+  ImGui::TextDisabled("(?)");
+  if (ImGui::IsItemHovered()) {
+    RenderTooltip("Dont close this app while speedhack is enabled, or the game will crash");
+  }
 
   // ImGui Slider for Speed
   if (m_speedhackEnabled) {
@@ -415,7 +420,7 @@ void CheetosGUI::DrawUI()
   ImGui::TextDisabled("(?)");
   if (ImGui::IsItemHovered()) {
     RenderTooltip(
-      "After activated just kill monster like a normal, and you will see the exp increase rapidly."
+      "After activated just kill monster like a normal, and you will see the exp increase rapidly or if u dont see it, wait until the hero reached max lvl (101). just wait for it."
     );
   }
   ImGui::Spacing();
