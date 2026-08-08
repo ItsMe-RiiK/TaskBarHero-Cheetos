@@ -55,11 +55,35 @@ jobs:
             NOTES="* No source code or build configuration changes in this release."
           fi
           
+          # Generate full release notes without path filters
+          FULL_NOTES=$(git log $COMMIT_RANGE --pretty=format:"* %s (%h)")
+          
+          if [ -z "$FULL_NOTES" ]; then
+            FULL_NOTES="* No changes."
+          fi
+          
+          # Generate GitHub compare link
+          if [ -z "$PREV_TAG" ]; then
+            COMPARE_LINK="https://github.com/${{ github.repository }}/commits/$TAG"
+          else
+            COMPARE_LINK="https://github.com/${{ github.repository }}/compare/$PREV_TAG...$TAG"
+          fi
+          
           # Construct the new release body
           BODY="Latest build for **$MAJOR_VERSION** (Currently tracking \`$TAG\`)
 
-          ## Changelog for $TAG
-          $NOTES"
+          ## Source Changes for $TAG
+          $NOTES
+
+          ## Full Changelog
+          <details>
+          <summary>Click to view full changelog</summary>
+          
+          $FULL_NOTES
+          
+          </details>
+          
+          **Full Commit History**: $COMPARE_LINK"
           
           # Create the release for this major version (fails gracefully if it already exists)
           gh release create "$MAJOR_VERSION" --title "Cheetos $MAJOR_VERSION" --notes "$BODY" || true
