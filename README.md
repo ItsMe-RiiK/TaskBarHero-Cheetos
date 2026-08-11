@@ -3,11 +3,11 @@
 # TaskBarHero - Cheetos
 
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
-[![Cheetos Version](https://img.shields.io/badge/version-2.0.1-blue)](#)
+[![Cheetos Version](https://img.shields.io/badge/version-2.0.2-blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
-[![Latest Version](https://img.shields.io/badge/latest-1.01.04.-blue)](#)
+[![Latest Version](https://img.shields.io/badge/latest-1.01.05-blue)](#)
 
 A feature-rich, interactive graphical memory tool for **TaskBarHero**. 
 
@@ -19,7 +19,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 **TaskBarHero - Cheetos** directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of enhancements. Everything is controlled from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
 
-> **Note:** This project has been tested and verified on game version **1.01.04**. The project will be updated if changes to the game affect the memory offsets.
+> **Note:** This project has been tested and verified on game version **1.01.05**. The project will be updated if changes to the game affect the memory offsets.
 
 ---
 
