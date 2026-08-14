@@ -5,6 +5,7 @@ cd "$(dirname "$0")/.."
 
 DUMP_FILE="resources/dump/dump.cs"
 HEADER_FILE="src/core/Il2CppOffsets.h"
+AC_FILE="src/features/AntiCheatBypass.h"
 UPDATER_SCRIPT="src/tools/UpdateOffsets.py"
 
 echo "==========================================="
@@ -23,7 +24,7 @@ if [ ! -f "$UPDATER_SCRIPT" ]; then
 fi
 
 echo "[*] Found dump.cs! Extracting offsets..."
-python3 "$UPDATER_SCRIPT" "$DUMP_FILE" "$HEADER_FILE"
+python3 "$UPDATER_SCRIPT" "$DUMP_FILE" "$HEADER_FILE" "$AC_FILE"
 
 echo ""
 echo "[*] Done! Don't forget to rebuild the project."

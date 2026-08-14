@@ -69,89 +69,170 @@ public:
     };
 
     static const PatchTarget targets[] = {
-      // InjectionDetector
-      {"InjectionDetector.yri",
-       0x6E9B70},  // @RVA[InjectionDetector.yri]  // internal override detect
-      {"InjectionDetector.yrn", 0x6E9CF0},  // @RVA[InjectionDetector.yrn]  // static start
-
-      // SpeedHackDetector
-      {"SpeedHackDetector.yso", 0x6EFAF0},     // @RVA[SpeedHackDetector.yso]  // static start
-      {"SpeedHackDetector.ysp", 0x6EFB20},     // @RVA[SpeedHackDetector.ysp]
-      {"SpeedHackDetector.ysq", 0x6EFD90},     // @RVA[SpeedHackDetector.ysq]
-      {"SpeedHackDetector.ysr", 0x6EFEB0},     // @RVA[SpeedHackDetector.ysr]
-      {"SpeedHackDetector.yss", 0x6EFFA0},     // @RVA[SpeedHackDetector.yss]
-      {"SpeedHackDetector.yst", 0x6F0060},     // @RVA[SpeedHackDetector.yst]
-      {"SpeedHackDetector.ysu", 0x6F00F0},     // @RVA[SpeedHackDetector.ysu]
-      {"SpeedHackDetector.ysv", 0x6F0200},     // @RVA[SpeedHackDetector.ysv]
-      {"SpeedHackDetector.ysw", 0x6F0310},     // @RVA[SpeedHackDetector.ysw]
-      {"SpeedHackDetector.ysx", 0x6F0470},     // @RVA[SpeedHackDetector.ysx]
-      {"SpeedHackDetector.ysy", 0x6F05B0},     // @RVA[SpeedHackDetector.ysy]
-      {"SpeedHackDetector.ysz", 0x6F06E0},     // @RVA[SpeedHackDetector.ysz]
-      {"SpeedHackDetector.yta", 0x6F0800},     // @RVA[SpeedHackDetector.yta]
-      {"SpeedHackDetector.ytb", 0x6F08F0},     // @RVA[SpeedHackDetector.ytb]
-      {"SpeedHackDetector.ytc", 0x6F0B60},     // @RVA[SpeedHackDetector.ytc]
-      {"SpeedHackDetector.ytd", 0x6F0C20},     // @RVA[SpeedHackDetector.ytd]
-      {"SpeedHackDetector.yte", 0x6F0C70},     // @RVA[SpeedHackDetector.yte]
-      {"SpeedHackDetector.ytf", 0x6F0D10},     // @RVA[SpeedHackDetector.ytf]
-      {"SpeedHackDetector.Update", 0x6EF560},  // @RVA[SpeedHackDetector.Update]
-      {"SpeedHackDetector.yri", 0x6EFA40},     // @RVA[SpeedHackDetector.yri]
-      {"SpeedHackDetector.yre", 0x6EF9E0},     // @RVA[SpeedHackDetector.yre]
-
-      // TimeCheatingDetector
-      {"TimeCheatingDetector.Update", 0x6EF9A0},  // @RVA[TimeCheatingDetector.Update]
-      {"TimeCheatingDetector.yuw", 0x6F0180},     // @RVA[TimeCheatingDetector.yuw]
-      {"TimeCheatingDetector.yux", 0x6F01B0},     // @RVA[TimeCheatingDetector.yux]
-      {"TimeCheatingDetector.yuz", 0x6F0400},     // @RVA[TimeCheatingDetector.yuz]
-      {"TimeCheatingDetector.yvs", 0x6F2E60},     // @RVA[TimeCheatingDetector.yvs]
-      {"TimeCheatingDetector.yvy", 0x6F33D0},     // @RVA[TimeCheatingDetector.yvy]
-
-      // ObscuredCheatingDetector
-      {"ObscuredCheatingDetector.yri",
-       0x6E9F60},  // @RVA[ObscuredCheatingDetector.yri]  // internal override detect
-      {"ObscuredCheatingDetector.yrx", 0x6EA020},  // @RVA[ObscuredCheatingDetector.yrx]
-      {"ObscuredCheatingDetector.yry", 0x6EA170},  // @RVA[ObscuredCheatingDetector.yry]
-      {"ObscuredCheatingDetector.yrz",
-       0x6EA1C0},  // @RVA[ObscuredCheatingDetector.yrz]  // static start method
-      {"ObscuredCheatingDetector.ysa", 0x6EA2D0},  // @RVA[ObscuredCheatingDetector.ysa]  // stop?
-      {"ObscuredCheatingDetector.ysb", 0x6EA3E0},  // @RVA[ObscuredCheatingDetector.ysb]
-      {"ObscuredCheatingDetector.ysd",
-       0x6EA650},  // @RVA[ObscuredCheatingDetector.ysd]  // some internal detect logic
-      {"ObscuredCheatingDetector.yse",
-       0x6EA7E0},  // @RVA[ObscuredCheatingDetector.yse]  // obsolete
-      {"ObscuredCheatingDetector.ysf",
-       0x6EA8C0},  // @RVA[ObscuredCheatingDetector.ysf]  // more logic
-
       // Direct Obscured Types Bypass (Bypass op_Implicit completely)
-      {"ObscuredInt.op_Implicit", 0x6DA210},    // @RVA[ObscuredInt.op_Implicit(ObscuredInt)]
-      {"ObscuredFloat.op_Implicit", 0x6D8440},  // @RVA[ObscuredFloat.op_Implicit(ObscuredFloat)]
-
-      // WallHackDetector
-      {"WallHackDetector.Update", 0x6F7A20},       // @RVA[WallHackDetector.Update]
-      {"WallHackDetector.FixedUpdate", 0x6F6DD0},  // @RVA[WallHackDetector.FixedUpdate]
-      {"WallHackDetector.yxf", 0x6F8310},          // @RVA[WallHackDetector.yxf]
-      {"WallHackDetector.yxg", 0x6F8340},          // @RVA[WallHackDetector.yxg]
-      {"WallHackDetector.yxh", 0x6F8570},          // @RVA[WallHackDetector.yxh]
-      {"WallHackDetector.yri", 0x6F7ED0},          // @RVA[WallHackDetector.yri]
+      {"ObscuredInt.op_Implicit", 0x72D370},     // @RVA[ObscuredInt.op_Implicit] [UNCHANGED]
+      {"ObscuredFloat.op_Implicit", 0x72B0A0},   // @RVA[ObscuredFloat.op_Implicit] [UNCHANGED]
+      {"ObscuredDouble.op_Implicit", 0x72A2D0},  // @RVA[ObscuredDouble.op_Implicit] [UNCHANGED]
+      {"ObscuredLong.op_Implicit", 0x72DC70},    // @RVA[ObscuredLong.op_Implicit]
+                                                 // @ACTK_AUTOGEN_START
+      {"InjectionDetector.yum", 0x73CC70},
+      {"InjectionDetector.yun", 0x73CCF0},
+      {"InjectionDetector.yuo", 0x73CD70},
+      {"InjectionDetector.yup", 0x73CDF0},
+      {"InjectionDetector.yuh", 0x73CAF0},
+      {"ObscuredCheatingDetector.yuy", 0x73D140},
+      {"ObscuredCheatingDetector.yuz", 0x73D250},
+      {"ObscuredCheatingDetector.yvc", 0x73D5D0},
+      {"ObscuredCheatingDetector.yvd", 0x73D760},
+      {"ObscuredCheatingDetector.yve", 0x73D840},
+      {"ObscuredCheatingDetector.yuh", 0x73CEE0},
+      {"SpeedHackDetector.yvt", 0x743070},
+      {"SpeedHackDetector.yvu", 0x743180},
+      {"SpeedHackDetector.yvv", 0x743290},
+      {"SpeedHackDetector.yvw", 0x7433F0},
+      {"SpeedHackDetector.yvx", 0x743530},
+      {"SpeedHackDetector.yvy", 0x743660},
+      {"SpeedHackDetector.yvz", 0x743780},
+      {"SpeedHackDetector.Update", 0x7424E0},
+      {"SpeedHackDetector.yuh", 0x7429C0},
+      {"SpeedHackDetector.yud", 0x742960},
+      {"SpeedHackDetector.ywc", 0x743BA0},
+      {"SpeedHackDetector.ywe", 0x743C90},
+      {"SpeedHackDetector.ywf", 0x743CD0},
+      {"SpeedHackDetector.ywg", 0x743CF0},
+      {"TimeCheatingDetector.ywq", 0x6B1620},
+      {"TimeCheatingDetector.yws", 0x758A80},
+      {"TimeCheatingDetector.ywu", 0x6B1620},
+      {"TimeCheatingDetector.yww", 0x758BD0},
+      {"TimeCheatingDetector.ywy", 0x6B1620},
+      {"TimeCheatingDetector.yxa", 0x758CC0},
+      {"TimeCheatingDetector.yxf", 0x759120},
+      {"TimeCheatingDetector.yxc", 0x759040},
+      {"TimeCheatingDetector.yxd", 0x7590D0},
+      {"TimeCheatingDetector.yxj", 0x744430},
+      {"TimeCheatingDetector.yxk", 0x7444D0},
+      {"TimeCheatingDetector.yxm", 0x744580},
+      {"TimeCheatingDetector.yxo", 0x744650},
+      {"TimeCheatingDetector.yxq", 0x744670},
+      {"TimeCheatingDetector.yxs", 0x7446B0},
+      {"TimeCheatingDetector.yxu", 0x7446F0},
+      {"TimeCheatingDetector.Update", 0x743F20},
+      {"TimeCheatingDetector.yxy", 0x744980},
+      {"TimeCheatingDetector.yxz", 0x744A90},
+      {"TimeCheatingDetector.yym", 0x745590},
+      {"TimeCheatingDetector.yyp", 0x745CA0},
+      {"TimeCheatingDetector.yuh", 0x744350},
+      {"TimeCheatingDetector.yue", 0x744300},
+      {"TimeCheatingDetector.yud", 0x744290},
+      {"TimeCheatingDetector.yyy", 0x7463C0},
+      {"TimeCheatingDetector.yyz", 0x746500},
+      {"TimeCheatingDetector.yza", 0x746590},
+      {"TimeCheatingDetector.yzb", 0x746650},
+      {"TimeCheatingDetector.yzc", 0x746710},
+      {"TimeCheatingDetector.yzd", 0x7467C0},
+      {"TimeCheatingDetector.yzf", 0x6B1620},
+      {"TimeCheatingDetector.yzg", 0x6B1620},
+      {"TimeCheatingDetector.yzh", 0x6B1620},
+      {"TimeCheatingDetector.yzi", 0x6B1620},
+      {"WallHackDetector.yzn", 0x6B1620},
+      {"WallHackDetector.yzp", 0x76C9E0},
+      {"WallHackDetector.yzr", 0x6B1620},
+      {"WallHackDetector.yzt", 0x76CAE0},
+      {"WallHackDetector.yzx", 0x74AF20},
+      {"WallHackDetector.yzz", 0x74B000},
+      {"WallHackDetector.zab", 0x74B0E0},
+      {"WallHackDetector.zad", 0x74B1C0},
+      {"WallHackDetector.zaj", 0x74B740},
+      {"WallHackDetector.zak", 0x74B850},
+      {"WallHackDetector.zal", 0x74B960},
+      {"WallHackDetector.FixedUpdate", 0x749D50},
+      {"WallHackDetector.Update", 0x74A9A0},
+      {"WallHackDetector.yuh", 0x74AE50},
+      {"WallHackDetector.yue", 0x74ACC0},
+      {"WallHackDetector.yud", 0x74AC50},
+      {"WallHackDetector.zan", 0x74BCE0},
+      {"WallHackDetector.zap", 0x74D3E0},
+      {"WallHackDetector.zas", 0x74D610},
+      {"WallHackDetector.zat", 0x74D6D0},
+      {"WallHackDetector.zau", 0x74D7C0},
+      {"WallHackDetector.zav", 0x74D860},
+      {"WallHackDetector.zaw", 0x74D8F0},
+      {"WallHackDetector.zax", 0x74D950},
+      {"WallHackDetector.zay", 0x74D9B0},
+      {"WallHackDetector.zaz", 0x74DB50},
+      {"WallHackDetector.zba", 0x74DD20},
+      {"WallHackDetector.zbb", 0x74DDE0},
+      // @ACTK_AUTOGEN_END
     };
 
     for (const auto& t : targets) {
       uintptr_t addr = gaBase + t.rva;
 
+      // Skip missing RVAs
+      if (t.rva == 0)
+        continue;
+
       // Check if it's a direct bypass for Obscured types
       bool isDirectBypass = (std::string(t.name).find("op_Implicit") != std::string::npos);
 
       // Write instructions
-      uint8_t retInstr[7];
+      uint8_t retInstr[16];
       size_t  instrSize = 3;
 
       if (isDirectBypass) {
-        // mov eax, dword ptr [rcx + 4] (8B 41 04)
-        // xor eax, dword ptr [rcx + 8] (33 41 08)
+        if (std::string(t.name).find("ObscuredFloat") != std::string::npos) {
+          // struct ObscuredFloat { int hash (0x0), int hiddenValue (0x4), int currentCryptoKey (0x8) }
+          // mov eax, dword ptr [rcx + 4] (8B 41 04)
+          // xor eax, dword ptr [rcx + 8] (33 41 08)
+          // movd xmm0, eax (66 0F 6E C0)
+          // ret (C3)
+          // Completely bypasses hash checks and returns decrypted float in xmm0
+          uint8_t bypassInstr[12] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08,
+                                     0x66, 0x0F, 0x6E, 0xC0, 0xC3};
+          memcpy(retInstr, bypassInstr, 11);
+          instrSize = 11;
+        }
+        else if (std::string(t.name).find("ObscuredDouble") != std::string::npos) {
+          // struct ObscuredDouble { int hash (0x0), long hiddenValue (0x8), long currentCryptoKey (0x10) }
+          // mov rax, qword ptr [rcx + 8]  (48 8B 41 08)
+          // xor rax, qword ptr [rcx + 10] (48 33 41 10)
+          // movq xmm0, rax                (66 48 0F 6E C0)
+          // ret (C3)
+          uint8_t bypassInstr[14] = {0x48, 0x8B, 0x41, 0x08, 0x48, 0x33, 0x41,
+                                     0x10, 0x66, 0x48, 0x0F, 0x6E, 0xC0, 0xC3};
+          memcpy(retInstr, bypassInstr, 14);
+          instrSize = 14;
+        }
+        else if (std::string(t.name).find("ObscuredLong") != std::string::npos) {
+          // struct ObscuredLong { int hash (0x0), long hiddenValue (0x8), long currentCryptoKey (0x10) }
+          // mov rax, qword ptr [rcx + 8]  (48 8B 41 08)
+          // xor rax, qword ptr [rcx + 10] (48 33 41 10)
+          // ret (C3)
+          // Completely bypasses hash checks and returns decrypted long in rax
+          uint8_t bypassInstr[9] = {0x48, 0x8B, 0x41, 0x08, 0x48, 0x33, 0x41, 0x10, 0xC3};
+          memcpy(retInstr, bypassInstr, 9);
+          instrSize = 9;
+        }
+        else {
+          // struct ObscuredInt { int hash (0x0), int hiddenValue (0x4), int currentCryptoKey (0x8) }
+          // mov eax, dword ptr [rcx + 4] (8B 41 04)
+          // xor eax, dword ptr [rcx + 8] (33 41 08)
+          // ret (C3)
+          // Completely bypasses hash checks and returns decrypted int in eax
+          uint8_t bypassInstr[7] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08, 0xC3};
+          memcpy(retInstr, bypassInstr, 7);
+          instrSize = 7;
+        }
+      }
+      else if (std::string(t.name).find("ObscuredLong") != std::string::npos) {
+        // struct ObscuredLong { int hash (0x0), long hiddenValue (0x8), long currentCryptoKey (0x10) }
+        // mov rax, qword ptr [rcx + 8]  (48 8B 41 08)
+        // xor rax, qword ptr [rcx + 10] (48 33 41 10)
         // ret (C3)
-        // This completely bypasses hash checks and immediately returns decrypted value
-        uint8_t bypassInstr[7] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08, 0xC3};
-        memcpy(retInstr, bypassInstr, 7);
-        instrSize = 7;
+        // Completely bypasses hash checks and returns decrypted long in rax
+        uint8_t bypassInstr[9] = {0x48, 0x8B, 0x41, 0x08, 0x48, 0x33, 0x41, 0x10, 0xC3};
+        memcpy(retInstr, bypassInstr, 9);
+        instrSize = 9;
       }
       else {
         // XOR EAX, EAX; RET instruction (31 C0 C3)

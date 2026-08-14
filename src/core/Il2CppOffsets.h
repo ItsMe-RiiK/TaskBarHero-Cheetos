@@ -39,27 +39,27 @@ struct Il2CppOffsets
   static constexpr int32_t HeroInfoData_HeroNameKey = 0x38;
 
   // vo base class (inherited into vh) — confirmed
-  static constexpr int32_t Vo_StatContainer = 0x10;  // @[vo.StatContainer]
+  static constexpr int32_t Vo_StatContainer = 0x0;  // @[vv.<bfns>k__BackingField]
 
   // vh derived class — confirmed
-  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[vh.HeroInfoDataRef]
-  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // @[vh.HeroBackRef]
+  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[vo.bflj] [UNCHANGED]
+  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // @[vo.bflu] [UNCHANGED]
 
   // ze stat container - confirmed
-  static constexpr int32_t Ze_StatsDictA = 0x18;  // @[ze.StatsDictA]
-  static constexpr int32_t Ze_StatsDictB = 0x20;  // @[ze.StatsDictB]
+  static constexpr int32_t Ze_StatsDictA = 0x18;  // @[zo.bgdy] [UNCHANGED]
+  static constexpr int32_t Ze_StatsDictB = 0x20;  // @[zo.bgdz] [UNCHANGED]
 };
 
 // =========================================================================
 // Save Data Offsets
 // =========================================================================
 
-// Save Manager (class bbb : ns<bbb>, TypeDefIndex: 1503)
+// Save Manager (class bbl : nu<bbl>, TypeDefIndex: 1536)
 // This is a singleton MonoBehaviour that holds the save data.
 struct SaveManagerOffsets
 {
-  static constexpr int32_t AccountSaveData = 0x20;  // @[bbb.AccountSaveData]
-  static constexpr int32_t PlayerSaveData  = 0x28;  // @[bbb.PlayerSaveData]
+  static constexpr int32_t AccountSaveData = 0x20;  // @[bbl.bgwd] [UNCHANGED]
+  static constexpr int32_t PlayerSaveData  = 0x28;  // @[bbl.bgwe] [UNCHANGED]
 };
 
 // PlayerSaveData (TypeDefIndex: 844)
@@ -120,7 +120,7 @@ struct StageManagerOffsets
 {
   static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList] [UNCHANGED]
   static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox] [UNCHANGED]
-  static constexpr int32_t BoxDropDict = 0x140;  // @[StageManager.BoxDropDict]
+  static constexpr int32_t BoxDropDict = 0x140;  // @[StageManager.bdwn] [UNCHANGED]
 };
 
 // EBoxType values
