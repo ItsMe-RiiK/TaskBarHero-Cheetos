@@ -3,7 +3,7 @@
 # TaskBarHero - Cheetos
 
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
-[![Cheetos Version](https://img.shields.io/badge/version-2.0.2-blue)](#)
+[![Cheetos Version](https://img.shields.io/badge/version-2.0.3-blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
@@ -27,11 +27,11 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 | Feature | Description | Status | Type |
 |---------|-------------|--------|-------|
-| **Bypass Anti-Cheat** | Neutralizes anticheat detector methods when attached. | ✅ Works | Automatic |
-| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, and Movement Speed into all active heroes. | ✅ Works | Repeatable |
-| **Rune Unlocker** | Safely unlock and max-level all runes for free. | ✅ Works | Interactive |
-| **Speedhack** | Increases the global speed of the game. | ✅ Works | Toggle |
-| **EXP Multiplier** | Multiplies the EXP earned from killing monsters. | ✅ Works | Interactive |
+| **Bypass Anti-Cheat** | Neutralizes anticheat detector methods when attached. |<span title="Works">✅</span> | Automatic |
+| **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, and Movement Speed into all active heroes. |<span title="Works">✅</span> | Repeatable |
+| **Rune Unlocker** | Safely unlock and max-level all runes for free. | <span title="Maintenance">🛠️</span> | Interactive |
+| **Speedhack** | Increases the global speed of the game. | <span title="Maintenance">🛠️</span> | Toggle |
+| **EXP Multiplier** | Multiplies the EXP earned from killing monsters. |<span title="Works">✅</span>| Interactive |
 
 ### Technical Capabilities
 - **Seamless GUI:** A beautifully rendered floating window (via OpenGL3/GLFW) for real-time interaction.
