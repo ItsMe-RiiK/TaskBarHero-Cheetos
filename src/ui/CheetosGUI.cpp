@@ -130,7 +130,7 @@ void CheetosGUI::DrawUI()
 
         // Re-apply essential patches to new process
         AddLog(m_antiCheat.Apply());
-        InjectSpeedhack();
+        // InjectSpeedhack();
 
         // Sync current UI state with the game
         SetSpeedhackEnable(m_speedhackEnabled);

@@ -39,7 +39,7 @@ struct Il2CppOffsets
   static constexpr int32_t HeroInfoData_HeroNameKey = 0x38;
 
   // vo base class (inherited into vh) — confirmed
-  static constexpr int32_t Vo_StatContainer = 0x0;  // @[vv.<bfns>k__BackingField]
+  static constexpr int32_t Vo_StatContainer = 0x10;  // @[vv.<bfns>k__BackingField]
 
   // vh derived class — confirmed
   static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[vo.bflj] [UNCHANGED]
@@ -54,7 +54,7 @@ struct Il2CppOffsets
 // Save Data Offsets
 // =========================================================================
 
-// Save Manager (class bbl : nu<bbl>, TypeDefIndex: 1536)
+// Save Manager
 // This is a singleton MonoBehaviour that holds the save data.
 struct SaveManagerOffsets
 {
@@ -120,7 +120,7 @@ struct StageManagerOffsets
 {
   static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList] [UNCHANGED]
   static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox] [UNCHANGED]
-  static constexpr int32_t BoxDropDict = 0x140;  // @[StageManager.bdwn] [UNCHANGED]
+  static constexpr int32_t BoxDropDict = 0x10;   // @[StageManager.bdta] [UNCHANGED]
 };
 
 // EBoxType values
