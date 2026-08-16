@@ -130,7 +130,7 @@ void CheetosGUI::DrawUI()
 
         // Re-apply essential patches to new process
         AddLog(m_antiCheat.Apply());
-        // InjectSpeedhack();
+        InjectSpeedhack();
 
         // Sync current UI state with the game
         SetSpeedhackEnable(m_speedhackEnabled);
@@ -310,11 +310,13 @@ void CheetosGUI::DrawUI()
     // Table for Runes
     if (
       ImGui::BeginTable(
-        "RuneTable", 4, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY,
+        "RuneTable", 4,
+        ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY
+          | ImGuiTableFlags_Resizable,
         ImVec2(0, 150)
       )
     ) {
-      ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 40.0f);
+      ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthFixed, 80.0f);
       ImGui::TableSetupColumn("Status", ImGuiTableColumnFlags_WidthFixed, 70.0f);
       ImGui::TableSetupColumn("Upgrade", ImGuiTableColumnFlags_WidthFixed, 90.0f);
       ImGui::TableSetupColumn("Action", ImGuiTableColumnFlags_WidthStretch);
