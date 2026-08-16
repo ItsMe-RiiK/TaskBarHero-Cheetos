@@ -3,6 +3,7 @@
 #include "../core/Il2CppOffsets.h"
 #include <cstdio>
 #include <cstring>
+#include <algorithm>
 
 std::optional<PlayerDataResult> PlayerDataFinder::Find()
 {
@@ -54,7 +55,8 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
     if (!ptrHits.empty()) {
       printf("  [Debug]   -> Found %zu pointers to Knight.\n", ptrHits.size());
       for (auto ptrAddr : ptrHits) {
-        for (int idx = 0; idx < 50; idx++) {
+        // Knight is the starting hero, so it's always at index 0 in the HeroSaveDatas array!
+        for (int idx = 0; idx < 1; idx++) {
           uintptr_t arrayBase = ptrAddr - Il2CppArrayOffsets::Data - (idx * sizeof(uintptr_t));
           if (arrayBase == 0)
             continue;
@@ -96,6 +98,22 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                 continue;
               }
 
+              auto runeSize = m_mem.ReadInt32(*runeList + Il2CppListOffsets::Size);
+              if (!runeSize || *runeSize < 1 || *runeSize > 1000)
+                continue;
+
+              auto runeItemsPtr = m_mem.ReadPointer(*runeList + Il2CppListOffsets::Items);
+              if (!runeItemsPtr || *runeItemsPtr == 0)
+                continue;
+
+              auto firstRunePtr = m_mem.ReadPointer(*runeItemsPtr + Il2CppArrayOffsets::Data);
+              if (!firstRunePtr || *firstRunePtr == 0)
+                continue;
+
+              auto firstRuneKey = m_mem.ReadInt32(*firstRunePtr + RuneSaveDataOffsets::RuneKey);
+              if (!firstRuneKey || *firstRuneKey <= 0 || *firstRuneKey > 99999999)
+                continue;
+
               printf(
                 "  [Debug]           -> SUCCESS! PlayerSaveData found @ 0x%llX\n",
                 (unsigned long long) psdBase
@@ -135,14 +153,41 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                     if (freeCount < 0 || freeCount > 1000)
                       continue;
 
+                    uintptr_t bucketsPtr = *reinterpret_cast<uintptr_t*>(
+                      &buffer[dictOffset + Il2CppDictOffsets::Buckets]
+                    );
+                    uintptr_t entriesPtr = *reinterpret_cast<uintptr_t*>(
+                      &buffer[dictOffset + Il2CppDictOffsets::Entries]
+                    );
+
+                    // Typical x64 user-space pointers are between 0x100000 and 0x7FFFFFFFFFFF
+                    if (bucketsPtr < 0x100000 || bucketsPtr > 0x7FFFFFFFFFFF)
+                      continue;
+                    if (entriesPtr < 0x100000 || entriesPtr > 0x7FFFFFFFFFFF)
+                      continue;
+
+                    // Ultra-fast check if pointer is actually in a valid memory region using binary search
+                    auto isValidPtr = [&](uintptr_t ptr) {
+                      auto it = std::lower_bound(
+                        regions.begin(), regions.end(), ptr,
+                        [](const MEMORY_BASIC_INFORMATION& mbi, uintptr_t val) {
+                          return (uintptr_t) mbi.BaseAddress + mbi.RegionSize <= val;
+                        }
+                      );
+                      return it != regions.end() && ptr >= (uintptr_t) it->BaseAddress;
+                    };
+
+                    if (!isValidPtr(bucketsPtr) || !isValidPtr(entriesPtr)) {
+                      continue;
+                    }
+
                     uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + dictOffset;
 
                     // Perform safety heuristics
-                    auto entriesPtr = m_mem.ReadPointer(dictAddr + Il2CppDictOffsets::Entries);
-                    if (!entriesPtr || *entriesPtr == 0)
+                    if (entriesPtr == 0)
                       continue;
 
-                    auto entriesLen = m_mem.ReadInt32(*entriesPtr + Il2CppArrayOffsets::Length);
+                    auto entriesLen = m_mem.ReadInt32(entriesPtr + Il2CppArrayOffsets::Length);
                     if (!entriesLen || *entriesLen < val || *entriesLen > 10000)
                       continue;
 
@@ -151,6 +196,17 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                     auto                   outerEntries = dictReader.ReadOuterEntries(dictAddr);
 
                     if (outerEntries.size() == static_cast<size_t>(val)) {
+                      // Validate that this dictionary contains a known valid rune key from our save data!
+                      bool hasPlayerRune = false;
+                      for (const auto& pair : outerEntries) {
+                        if (pair.first == *firstRuneKey) {
+                          hasPlayerRune = true;
+                          break;
+                        }
+                      }
+                      if (!hasPlayerRune)
+                        continue;  // This is the wrong dictionary!
+
                       // Check if the keys look like rune keys (e.g. 101, 102... or > 0 at least)
                       // And the values must be valid inner dictionaries!
                       bool isValid         = true;
