@@ -43,7 +43,10 @@ def main():
         print("[-] No @[Class.Field] or @RVA[Class.Method] tags found in header files.")
         sys.exit(0)
 
-    print(f"[*] Found {len(needed_offsets)} field tags and {len(needed_rvas)} RVA tags. Scanning dump.cs...")
+    print(
+        f"[*] Found {len(needed_offsets)} field tags and {len(needed_rvas)} "
+        f"RVA tags. Scanning dump.cs..."
+    )
 
     # Step 2: Scan dump.cs
     with open(dump_path, 'r', encoding='utf-8') as f:
@@ -53,8 +56,13 @@ def main():
     last_rva = None
     last_float_offset = None
 
-    class_def_re = re.compile(r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*class\s+([A-Za-z0-9_]+)")
-    field_re = re.compile(r"^\s*(?:public|private|protected|internal|static|readonly)*\s+(?:[A-Za-z0-9_<>\[\], ]+)\s+([A-Za-z0-9_]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)")
+    class_def_re = re.compile(
+        r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*class\s+([A-Za-z0-9_]+)"
+    )
+    field_re = re.compile(
+        r"^\s*(?:public|private|protected|internal|static|readonly)*\s+"
+        r"(?:[A-Za-z0-9_<>\[\], ]+)\s+([A-Za-z0-9_]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)"
+    )
     rva_comment_re = re.compile(r"//\s*RVA:\s*(0x[0-9A-Fa-f]+)")
     method_re = re.compile(r"\s+([A-Za-z0-9_]+)\s*\(")
 
@@ -125,10 +133,15 @@ def main():
     print("[*] Updating header files...")
     
     # regex matches: = 0xABC; // @[Class.Field]
-    field_replace_re = re.compile(r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])(?: \[(?:CHANGED|UNCHANGED)\])?")
-    
+    field_replace_re = re.compile(
+        r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])"
+        r"(?: \[(?:CHANGED|UNCHANGED)\])?"
+    )
     # regex matches: , 0xABC}, // @RVA[Class.Method]
-    rva_replace_re = re.compile(r"(,\s*)(0x[0-9A-Fa-f]+)(\s*\}\s*,\s*//\s*@RVA\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])(?: \[(?:CHANGED|UNCHANGED)\])?")
+    rva_replace_re = re.compile(
+        r"(,\s*)(0x[0-9A-Fa-f]+)(\s*\}\s*,\s*//\s*@RVA\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])"
+        r"(?: \[(?:CHANGED|UNCHANGED)\])?"
+    )
 
     def field_replacer(match):
         prefix = match.group(1)
