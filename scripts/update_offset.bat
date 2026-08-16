@@ -7,6 +7,7 @@ cd /d "%~dp0.."
 set "DUMP_FILE=resources\dump\dump.cs"
 set "HEADER_FILE=src\core\Il2CppOffsets.h"
 set "UPDATER_SCRIPT=src\tools\UpdateOffsets.py"
+set "AC_FILE=src\features\AntiCheatBypass.h"
 
 echo ===========================================
 echo   TaskBarHero - Offset Auto-Updater
@@ -24,7 +25,7 @@ if not exist "%UPDATER_SCRIPT%" (
 )
 
 echo [*] Found dump.cs! Extracting offsets...
-python "%UPDATER_SCRIPT%" "%DUMP_FILE%" "%HEADER_FILE%"
+python "%UPDATER_SCRIPT%" "%DUMP_FILE%" "%HEADER_FILE%" "%AC_FILE%"
 
 echo.
 echo [*] Done! Don't forget to rebuild the project.
