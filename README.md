@@ -21,6 +21,13 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 > **Note:** This project has been tested and verified on game version **1.01.05**. The project will be updated if changes to the game affect the memory offsets.
 
+<details>
+<summary>Preview image</summary>
+
+![Preview image](./resources/images/preview.png)
+
+</details>
+
 ---
 
 ## Features
@@ -97,8 +104,6 @@ The launch scripts are located inside the `scripts/` directory. Run them from th
 - **Linux:** `./scripts/launch_linux.sh` *(Requires `protontricks` to inject into the Steam Proton container)*
 - **macOS:** `./scripts/launch_macos.sh` *(Requires Wine)*
 
----
-
 ## Support & Contributing
 
 Suggestions and contributions are always welcome! If you encounter any issues, bugs, or have any idea for a new feature, please use the **Issues** tab below. If you enjoy using this tool and want to support its development, consider buying me a coffee via [PayPal](https://www.paypal.com/paypalme/MuhamadSyakir)
@@ -107,7 +112,5 @@ Suggestions and contributions are always welcome! If you encounter any issues, b
 - **[Request a Feature](../../issues/new?template=feature-request.yml)**
 - **[Ask a Question](../../discussions)**
 
----
-
 ## License
-This project is licensed under the [MIT License](license).
+This project is licensed under [MIT License](license)
