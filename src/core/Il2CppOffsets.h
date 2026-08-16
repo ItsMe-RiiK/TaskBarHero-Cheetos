@@ -160,6 +160,7 @@ struct Il2CppStringOffsets
 // Standard IL2CPP Dictionary<TKey, TValue> layout
 struct Il2CppDictOffsets
 {
+  static constexpr int32_t Buckets        = 0x10;  // int[] _buckets
   static constexpr int32_t Entries        = 0x18;  // Entry[] _entries
   static constexpr int32_t Count          = 0x20;  // int _count
   static constexpr int32_t ArrayLength    = 0x18;  // array header length
