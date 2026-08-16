@@ -17,7 +17,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
 
   printf("  [Debug] Searching for Knight HeroSaveData pattern...\n");
   // Step 1: Find a HeroSaveData by scanning for hero key = 101 (Knight)
-  // Pattern: HeroKey (101 = 0x65), HeroLevel (4 bytes, ignore), IsUnLock (1 byte = 0x01), 7 bytes padding
+  // Pattern: HeroKey (101 = 0x65), HeroLevel (4 bytes, ignore), IsUnLock (1 byte = 0x01), 7 bytes zero padding
   std::string pattern = "65 00 00 00 ?? ?? ?? ?? 01 00 00 00 00 00 00 00";
   auto        hits    = m_scanner.Scan(pattern, true);
 
@@ -54,7 +54,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
     if (!ptrHits.empty()) {
       printf("  [Debug]   -> Found %zu pointers to Knight.\n", ptrHits.size());
       for (auto ptrAddr : ptrHits) {
-        for (int idx = 0; idx < 6; idx++) {
+        for (int idx = 0; idx < 50; idx++) {
           uintptr_t arrayBase = ptrAddr - Il2CppArrayOffsets::Data - (idx * sizeof(uintptr_t));
           if (arrayBase == 0)
             continue;
@@ -87,7 +87,7 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
               if (!currencyList || *currencyList == 0) {
                 continue;
               }
-              if (!runeList || *runeList == 0) {
+              if (!runeList) {  // Just ensure we could read the pointer, allow *runeList to be 0
                 continue;
               }
 
@@ -119,32 +119,38 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                 if (!m_mem.ReadBytes((uintptr_t) reg.BaseAddress, buffer.data(), reg.RegionSize))
                   continue;
 
-                // Scan the buffer for the integer 197 (0x000000C5)
+                // Scan the buffer for the integer (e.g. 197 or similar for runes)
                 for (size_t i = Il2CppDictOffsets::Count;
                      reg.RegionSize >= 0x30 && i < reg.RegionSize - 0x30;
                      i += 4) {  // 4-byte aligned
                   int32_t val = *reinterpret_cast<int32_t*>(&buffer[i]);
-                  if (val == 197) {  // Found a potential dictionary count!
-                    uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + i - Il2CppDictOffsets::Count;
+                  // Accept a reasonable range of total runes just in case it's no longer exactly 197
+                  if (val >= 100 && val <= 500) {
+                    size_t dictOffset = i - Il2CppDictOffsets::Count;
+
+                    // Ultra-fast local buffer heuristics before any RPC!
+                    int32_t freeCount = *reinterpret_cast<int32_t*>(
+                      &buffer[dictOffset + Il2CppDictOffsets::FreeCount]
+                    );
+                    if (freeCount < 0 || freeCount > 1000)
+                      continue;
+
+                    uintptr_t dictAddr = (uintptr_t) reg.BaseAddress + dictOffset;
 
                     // Perform safety heuristics
                     auto entriesPtr = m_mem.ReadPointer(dictAddr + Il2CppDictOffsets::Entries);
                     if (!entriesPtr || *entriesPtr == 0)
                       continue;
 
-                    auto freeCount = m_mem.ReadInt32(dictAddr + Il2CppDictOffsets::FreeCount);
-                    if (!freeCount || *freeCount < 0 || *freeCount > 1000)
-                      continue;
-
                     auto entriesLen = m_mem.ReadInt32(*entriesPtr + Il2CppArrayOffsets::Length);
-                    if (!entriesLen || *entriesLen < 197 || *entriesLen > 10000)
+                    if (!entriesLen || *entriesLen < val || *entriesLen > 10000)
                       continue;
 
                     // Now let's try to read it as the outer dictionary
                     Il2CppDictionaryReader dictReader(m_mem);
                     auto                   outerEntries = dictReader.ReadOuterEntries(dictAddr);
 
-                    if (outerEntries.size() == 197) {
+                    if (outerEntries.size() == static_cast<size_t>(val)) {
                       // Check if the keys look like rune keys (e.g. 101, 102... or > 0 at least)
                       // And the values must be valid inner dictionaries!
                       bool isValid         = true;
