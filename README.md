@@ -3,7 +3,7 @@
 # TaskBarHero - Cheetos
 
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
-[![Cheetos Version](https://img.shields.io/badge/version-2.0.4-blue)](#)
+[![Cheetos Version](https://img.shields.io/badge/version-2.0.5-blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
@@ -30,7 +30,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 | **Bypass Anti-Cheat** | Neutralizes anticheat detector methods when attached. |<span title="Works">✅</span> | Automatic |
 | **God Mode** | One-shot injection of max HP, Attack Speed, Crit, Armor, and Movement Speed into all active heroes. |<span title="Works">✅</span> | Repeatable |
 | **Rune Unlocker** | Safely unlock and max-level all runes for free. | <span title="Works">✅</span> | Interactive |
-| **Speedhack** | Increases the global speed of the game. | <span title="Maintenance">🛠️</span> | Toggle |
+| **Speedhack** | Increases the global speed of the game. | <span title="Works">✅</span> | Toggle |
 | **EXP Multiplier** | Multiplies the EXP earned from killing monsters. |<span title="Works">✅</span>| Interactive |
 
 ### Technical Capabilities
