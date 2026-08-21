@@ -49,9 +49,6 @@ def main():
     )
 
     # Step 2: Scan dump.cs
-    with open(dump_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-
     current_class = None
     last_rva = None
     last_float_offset = None
@@ -66,49 +63,50 @@ def main():
     rva_comment_re = re.compile(r"//\s*RVA:\s*(0x[0-9A-Fa-f]+)")
     method_re = re.compile(r"\s+([A-Za-z0-9_]+)\s*\(")
 
-    for line in lines:
-        c_match = class_def_re.search(line)
-        if c_match:
-            current_class = c_match.group(1)
-            last_rva = None
-            last_float_offset = None
-            continue
-        
-        if current_class:
-            # Check for field
-            f_match = field_re.search(line)
-            if f_match:
-                fname = f_match.group(1)
-                offset = f_match.group(2)
-                
-                # Heuristic for Monster.ExpHeuristic
-                if "float " in line:
-                    last_float_offset = offset
-                if "EStageType " in line and current_class == "Monster":
-                    if last_float_offset and ("Monster", "ExpHeuristic") in needed_offsets:
-                        needed_offsets[("Monster", "ExpHeuristic")] = last_float_offset
+    with open(dump_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            c_match = class_def_re.search(line)
+            if c_match:
+                current_class = c_match.group(1)
+                last_rva = None
+                last_float_offset = None
+                continue
+            
+            if current_class:
+                # Check for field
+                f_match = field_re.search(line)
+                if f_match:
+                    fname = f_match.group(1)
+                    offset = f_match.group(2)
+                    
+                    # Heuristic for Monster.ExpHeuristic
+                    if "float " in line:
+                        last_float_offset = offset
+                    if "EStageType " in line and current_class == "Monster":
+                        if last_float_offset and ("Monster", "ExpHeuristic") in needed_offsets:
+                            needed_offsets[("Monster", "ExpHeuristic")] = last_float_offset
 
-                if (current_class, fname) in needed_offsets:
-                    needed_offsets[(current_class, fname)] = offset
-                last_rva = None
-                continue
-                
-            # Check for RVA comment
-            r_match = rva_comment_re.search(line)
-            if r_match:
-                last_rva = r_match.group(1)
-                continue
-                
-            # Check for method if we have an RVA
-            if last_rva:
-                m_match = method_re.search(line)
-                if m_match:
-                    mname = m_match.group(1)
-                    if (current_class, mname) in needed_rvas:
-                        # If a class has multiple overloads, take the first one found.
-                        if needed_rvas[(current_class, mname)] is None:
-                            needed_rvas[(current_class, mname)] = last_rva
-                last_rva = None
+                    if (current_class, fname) in needed_offsets:
+                        needed_offsets[(current_class, fname)] = offset
+                    last_rva = None
+                    continue
+                    
+                # Check for RVA comment
+                r_match = rva_comment_re.search(line)
+                if r_match:
+                    last_rva = r_match.group(1)
+                    continue
+                    
+                # Check for method if we have an RVA
+                if last_rva:
+                    m_match = method_re.search(line)
+                    if m_match:
+                        mname = m_match.group(1)
+                        if (current_class, mname) in needed_rvas:
+                            # If a class has multiple overloads, take the first one found.
+                            if needed_rvas[(current_class, mname)] is None:
+                                needed_rvas[(current_class, mname)] = last_rva
+                    last_rva = None
 
     # Step 3: Verify missing
     missing = False
@@ -174,8 +172,10 @@ def main():
         new_content = field_replace_re.sub(field_replacer, content)
         new_content = rva_replace_re.sub(rva_replacer, new_content)
         
-        with open(h, 'w', encoding='utf-8') as f:
+        temp_h = h + ".tmp"
+        with open(temp_h, 'w', encoding='utf-8') as f:
             f.write(new_content)
+        os.replace(temp_h, h)
             
         print(f"[*] Successfully updated {h}!")
 
