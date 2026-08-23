@@ -35,7 +35,7 @@ def main():
 
         for match in tag_field_re.finditer(content):
             needed_offsets[(match.group(1), match.group(2))] = None
-            
+
         for match in tag_rva_re.finditer(content):
             needed_rvas[(match.group(1), match.group(2))] = None
 
@@ -71,14 +71,14 @@ def main():
                 last_rva = None
                 last_float_offset = None
                 continue
-            
+
             if current_class:
                 # Check for field
                 f_match = field_re.search(line)
                 if f_match:
                     fname = f_match.group(1)
                     offset = f_match.group(2)
-                    
+
                     # Heuristic for Monster.ExpHeuristic
                     if "float " in line:
                         last_float_offset = offset
@@ -90,13 +90,13 @@ def main():
                         needed_offsets[(current_class, fname)] = offset
                     last_rva = None
                     continue
-                    
+
                 # Check for RVA comment
                 r_match = rva_comment_re.search(line)
                 if r_match:
                     last_rva = r_match.group(1)
                     continue
-                    
+
                 # Check for method if we have an RVA
                 if last_rva:
                     m_match = method_re.search(line)
@@ -116,7 +116,7 @@ def main():
             missing = True
         else:
             print(f"  [+] Field {cls}.{fld} -> {off}")
-            
+
     for (cls, mth), rva in needed_rvas.items():
         if rva is None:
             print(f"  [!] Missing RVA for {cls}.{mth}")
@@ -126,10 +126,10 @@ def main():
 
     if missing:
         print("[-] Not all offsets/RVAs were found. Make sure names match exactly.")
-    
+
     # Step 4: Patch headers
     print("[*] Updating header files...")
-    
+
     # regex matches: = 0xABC; // @[Class.Field]
     field_replace_re = re.compile(
         r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])"
@@ -168,15 +168,15 @@ def main():
     for h in header_paths:
         with open(h, 'r', encoding='utf-8') as f:
             content = f.read()
-            
+
         new_content = field_replace_re.sub(field_replacer, content)
         new_content = rva_replace_re.sub(rva_replacer, new_content)
-        
+
         temp_h = h + ".tmp"
         with open(temp_h, 'w', encoding='utf-8') as f:
             f.write(new_content)
         os.replace(temp_h, h)
-            
+
         print(f"[*] Successfully updated {h}!")
 
 if __name__ == "__main__":
