@@ -137,13 +137,13 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                 if (!m_mem.ReadBytes((uintptr_t) reg.BaseAddress, buffer.data(), reg.RegionSize))
                   continue;
 
-                // Scan the buffer for the integer (e.g. 197 or similar for runes)
+                // Scan the buffer for the integer (e.g. 241 total runes)
                 for (size_t i = Il2CppDictOffsets::Count;
                      reg.RegionSize >= 0x30 && i < reg.RegionSize - 0x30;
                      i += 4) {  // 4-byte aligned
                   int32_t val = *reinterpret_cast<int32_t*>(&buffer[i]);
-                  // Accept a reasonable range of total runes just in case it's no longer exactly 197
-                  if (val >= 100 && val <= 500) {
+                  // Accept a reasonable range of total runes just in case it's no longer exactly 241 total runes
+                  if (val >= 100 && val <= 245) {
                     size_t dictOffset = i - Il2CppDictOffsets::Count;
 
                     // Ultra-fast local buffer heuristics before any RPC!
