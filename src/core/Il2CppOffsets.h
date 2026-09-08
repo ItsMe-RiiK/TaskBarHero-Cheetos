@@ -42,12 +42,12 @@ struct Il2CppOffsets
   static constexpr int32_t Vo_StatContainer = 0x10;  // @[vv.<bfns>k__BackingField]
 
   // vh derived class — confirmed
-  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[vo.bflj] [UNCHANGED]
-  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // @[vo.bflu] [UNCHANGED]
+  static constexpr int32_t Vh_HeroInfoDataRef = 0x30;  // @[wg.bghy] [UNCHANGED]
+  static constexpr int32_t Vh_HeroBackRef     = 0x88;  // @[wg.bgij] [UNCHANGED]
 
   // ze stat container - confirmed
-  static constexpr int32_t Ze_StatsDictA = 0x18;  // @[zo.bgdy] [UNCHANGED]
-  static constexpr int32_t Ze_StatsDictB = 0x20;  // @[zo.bgdz] [UNCHANGED]
+  static constexpr int32_t Ze_StatsDictA = 0x18;  // @[bam.bhat] [UNCHANGED]
+  static constexpr int32_t Ze_StatsDictB = 0x20;  // @[bam.bhau] [UNCHANGED]
 };
 
 // =========================================================================
@@ -58,8 +58,8 @@ struct Il2CppOffsets
 // This is a singleton MonoBehaviour that holds the save data.
 struct SaveManagerOffsets
 {
-  static constexpr int32_t AccountSaveData = 0x20;  // @[bbl.bgwd] [UNCHANGED]
-  static constexpr int32_t PlayerSaveData  = 0x28;  // @[bbl.bgwe] [UNCHANGED]
+  static constexpr int32_t AccountSaveData = 0x20;  // @[bck.bhtn] [UNCHANGED]
+  static constexpr int32_t PlayerSaveData  = 0x28;  // @[bck.bhto] [UNCHANGED]
 };
 
 // PlayerSaveData (TypeDefIndex: 844)
@@ -67,18 +67,18 @@ struct PlayerSaveDataOffsets
 {
   static constexpr int32_t CommonSaveData  = 0x10;  // @[PlayerSaveData.commonSaveData] [UNCHANGED]
   static constexpr int32_t SettingSaveData = 0x18;  // @[PlayerSaveData.settingSaveData] [UNCHANGED]
-  static constexpr int32_t BoxData         = 0x20;  // @[PlayerSaveData.BoxData] [UNCHANGED]
+  static constexpr int32_t BoxData = 0x20;  // @[PlayerSaveData.BoxBucketUseBoxList] [UNCHANGED]
   static constexpr int32_t CurrencySaveDatas =
-    0x68;                                         // @[PlayerSaveData.currenySaveDatas] [UNCHANGED]
-  static constexpr int32_t HeroSaveDatas = 0x70;  // @[PlayerSaveData.heroSaveDatas] [UNCHANGED]
+    0x60;                                         // @[PlayerSaveData.currenySaveDatas] [UNCHANGED]
+  static constexpr int32_t HeroSaveDatas = 0x68;  // @[PlayerSaveData.heroSaveDatas] [UNCHANGED]
   static constexpr int32_t AttributeSaveDatas =
-    0x80;                                        // @[PlayerSaveData.attributeSaveDatas] [UNCHANGED]
-  static constexpr int32_t PetSaveData  = 0x88;  // @[PlayerSaveData.PetSaveData] [UNCHANGED]
-  static constexpr int32_t RuneSaveData = 0x90;  // @[PlayerSaveData.RuneSaveData] [UNCHANGED]
+    0x78;                                        // @[PlayerSaveData.attributeSaveDatas] [UNCHANGED]
+  static constexpr int32_t PetSaveData  = 0x80;  // @[PlayerSaveData.PetSaveData] [UNCHANGED]
+  static constexpr int32_t RuneSaveData = 0x88;  // @[PlayerSaveData.RuneSaveData] [UNCHANGED]
   static constexpr int32_t InventorySaveDatas =
-    0x98;  // @[PlayerSaveData.inventorySaveDatas] [UNCHANGED]
+    0x90;  // @[PlayerSaveData.inventorySaveDatas] [UNCHANGED]
   static constexpr int32_t CubeSaveLevelData =
-    0xB8;  // @[PlayerSaveData.cubeSaveLevelData] [UNCHANGED]
+    0xB0;  // @[PlayerSaveData.cubeSaveLevelData] [UNCHANGED]
 };
 
 // HeroSaveData (TypeDefIndex: 1258)
@@ -110,7 +110,7 @@ struct CubeLevelSaveDataOffsets
   static constexpr int32_t Level = 0x10;  // @[CubeLevelSaveData.Level] [UNCHANGED]
   static constexpr int32_t Exp   = 0x14;  // @[CubeLevelSaveData.Exp] [UNCHANGED]
 
-  static constexpr int32_t Monster_Exp = 0x3E0;  // @[Monster.ExpHeuristic] [UNCHANGED]
+  static constexpr int32_t Monster_Exp = 0x400;  // @[Monster.ExpHeuristic] [UNCHANGED]
 };
 
 // =========================================================================
@@ -119,8 +119,8 @@ struct CubeLevelSaveDataOffsets
 struct StageManagerOffsets
 {
   static constexpr int32_t HeroList    = 0x30;   // @[StageManager.HeroList] [UNCHANGED]
-  static constexpr int32_t OnGetBox    = 0x100;  // @[StageManager.OnGetBox] [UNCHANGED]
-  static constexpr int32_t BoxDropDict = 0x10;   // @[StageManager.bdta] [UNCHANGED]
+  static constexpr int32_t OnGetBox    = 0x110;  // @[StageManager.OnGetBox] [UNCHANGED]
+  static constexpr int32_t BoxDropDict = 0x150;  // @[StageManager.bepc] [UNCHANGED]
 };
 
 // EBoxType values
@@ -165,7 +165,7 @@ struct Il2CppDictOffsets
   static constexpr int32_t Count          = 0x20;  // int _count
   static constexpr int32_t ArrayLength    = 0x18;  // array header length
   static constexpr int32_t ArrayData      = 0x20;  // array data start
-  static constexpr int32_t FreeCount      = 0x2C;  // int _freeCount
+  static constexpr int32_t FreeCount      = 0x28;  // int _freeCount
   static constexpr int32_t EntrySize      = 16;    // { int hashCode; int next; TKey; TValue }
   static constexpr int32_t EntryKeyOffset = 8;     // offset to key within entry
   static constexpr int32_t EntryValOffset = 12;    // offset to value within entry

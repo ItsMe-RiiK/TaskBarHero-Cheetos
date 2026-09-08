@@ -70,17 +70,17 @@ public:
 
     static const PatchTarget targets[] = {
       // Direct Obscured Types Bypass (Bypass op_Implicit completely)
-      // {"ObscuredInt.op_Implicit", 0x72D370},    // @RVA[ObscuredInt.op_Implicit]
-      // {"ObscuredFloat.op_Implicit", 0x72B0A0},  // @RVA[ObscuredFloat.op_Implicit]
-      // {"ObscuredDouble.op_Implicit", 0x72A2D0}, // @RVA[ObscuredDouble.op_Implicit]
-      // {"ObscuredLong.op_Implicit", 0x72DC70},   // @RVA[ObscuredLong.op_Implicit]
+      // {"ObscuredInt.op_Implicit", 0x7351C0},    // @RVA[ObscuredInt.op_Implicit] [UNCHANGED]
+      // {"ObscuredFloat.op_Implicit", 0x733030},  // @RVA[ObscuredFloat.op_Implicit] [UNCHANGED]
+      // {"ObscuredDouble.op_Implicit", 0x732240}, // @RVA[ObscuredDouble.op_Implicit] [UNCHANGED]
+      // {"ObscuredLong.op_Implicit", 0x735B70},   // @RVA[ObscuredLong.op_Implicit] [UNCHANGED]
 
       // Detector Core Methods (Override of ACTkDetectorBase StartDetection/Update)
-      {"InjectionDetector.yuh", 0x73CAF0},         // @RVA[InjectionDetector.yuh] [UNCHANGED]
-      {"SpeedHackDetector.yuh", 0x7429C0},         // @RVA[SpeedHackDetector.yuh] [UNCHANGED]
-      {"TimeCheatingDetector.yuh", 0x744350},      // @RVA[TimeCheatingDetector.yuh] [UNCHANGED]
-      {"ObscuredCheatingDetector.yuh", 0x73CEE0},  // @RVA[ObscuredCheatingDetector.yuh] [UNCHANGED]
-      {"WallHackDetector.yuh", 0x74AE50},          // @RVA[WallHackDetector.yuh] [UNCHANGED]
+      {"InjectionDetector.zkh", 0x744A50},         // @RVA[InjectionDetector.zkh] [UNCHANGED]
+      {"SpeedHackDetector.zkh", 0x74A920},         // @RVA[SpeedHackDetector.zkh] [UNCHANGED]
+      {"TimeCheatingDetector.zkh", 0x74C2B0},      // @RVA[TimeCheatingDetector.zkh] [UNCHANGED]
+      {"ObscuredCheatingDetector.zkh", 0x744E40},  // @RVA[ObscuredCheatingDetector.zkh] [UNCHANGED]
+      {"WallHackDetector.zkh", 0x752DB0},          // @RVA[WallHackDetector.zkh] [UNCHANGED]
 
       // Additional Unity Lifecycle Methods used by detectors
       {"SpeedHackDetector.Update", 0x7424E0},

@@ -143,7 +143,8 @@ std::optional<PlayerDataResult> PlayerDataFinder::Find()
                      i += 4) {  // 4-byte aligned
                   int32_t val = *reinterpret_cast<int32_t*>(&buffer[i]);
                   // Accept a reasonable range of total runes just in case it's no longer exactly 241 total runes
-                  if (val >= 100 && val <= 245) {
+                  // Im pretty sure the runes after update exactly 241 and confirmed. before update it was 197
+                  if (val >= 200 && val <= 250) {
                     size_t dictOffset = i - Il2CppDictOffsets::Count;
 
                     // Ultra-fast local buffer heuristics before any RPC!

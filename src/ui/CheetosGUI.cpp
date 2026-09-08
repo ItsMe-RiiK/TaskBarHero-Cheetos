@@ -246,7 +246,8 @@ void CheetosGUI::DrawUI()
           }
         }
         if (m_playerDataAddr != 0) {
-          auto runeListPtr = m_mem.ReadPointer(m_playerDataAddr + 0x90);
+          auto runeListPtr =
+            m_mem.ReadPointer(m_playerDataAddr + PlayerSaveDataOffsets::RuneSaveData);
           if (runeListPtr && *runeListPtr != 0) {
             m_runeUnlocker.SetRuneListAddr(*runeListPtr);
             m_runeUnlocker.ScanRunes(m_playerFinder, m_runeMaxLevels);

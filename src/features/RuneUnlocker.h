@@ -9,7 +9,7 @@
 /* -----------------------------------------------------------------------
  * Rune Unlocker — unlocks (if fresh start account) and levels up all runes in the rune tree.
  *
- * Runes are stored in PlayerSaveData -> List<RuneSaveData> at offset 0x90.
+ * Runes are stored in PlayerSaveData -> List<RuneSaveData> at offset 0x88.
  * Each RuneSaveData has:
  *   0x10: int RuneKey
  *   0x14: int Level   (0 = locked, >0 = unlocked+leveled)

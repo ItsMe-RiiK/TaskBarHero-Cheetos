@@ -54,7 +54,7 @@ def main():
     last_float_offset = None
 
     class_def_re = re.compile(
-        r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*class\s+([A-Za-z0-9_]+)"
+        r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*(?:class|struct)\s+([A-Za-z0-9_]+)"
     )
     field_re = re.compile(
         r"^\s*(?:public|private|protected|internal|static|readonly)*\s+"
