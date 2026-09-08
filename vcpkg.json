@@ -1,15 +1,15 @@
 {
-  "name": "tbh-cheetos",
-  "version": "2.0.5",
-  "dependencies": [
-    "minhook",
-    "glfw3",
-    {
-      "name": "imgui",
-      "features": [
-        "glfw-binding",
-        "opengl3-binding"
-      ]
-    }
-  ]
+    "name": "tbh-cheetos",
+    "version": "2.1.5",
+    "dependencies": [
+        "minhook",
+        "glfw3",
+        {
+            "name": "imgui",
+            "features": [
+                "glfw-binding",
+                "opengl3-binding"
+            ]
+        }
+    ]
 }
