@@ -19,7 +19,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 **TaskBarHero - Cheetos** directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of enhancements. Everything is controlled from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
 
-> **Note:** This project has been tested and verified on game version **1.01.05**. The project will be updated if changes to the game affect the memory offsets.
+> **Note:** This project has been tested and verified on game version **1.2.1**. The project will be updated if changes to the game affect the memory offsets.
 
 <details>
 <summary>Preview image</summary>
