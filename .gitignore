@@ -1,42 +1,293 @@
+## =========================================================================
+## GLOBAL COMPILE, LOGS, & TEMPORARY FILES
+## =========================================================================
+# Logs & Temp
+*.log
+*.log.*
+*.tmp
+*.bak
+*.swp
+.cache/
+.cache
+
 # Build directories
 build/
+Build/
 build-*/
-out/
-bin/
-obj/
 
-# Vcpkg
-vcpkg_installed/
-.vcpkg/
-vcpkg/
+# Object files & Prerequisites
+*.d
+*.o
+*.ko
+*.obj
+*.elf
+*.slo
+*.lo
+*.os
 
-# Visual Studio & IDEs
-.vs/
-*.user
-*.suo
-*.db
-*.opendb
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries (Static & Shared)
+*.lib
+*.a
+*.la
+*.lai
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Linker & Debug output
+*.ilk
+*.map
+*.exp
+*.dwo
+*.su
+*.idb
+*.pdb
+*.dSYM/
+*.def
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# VSCode/Studio
 .vscode/
+.vs/
+
+# Agents
+.agents/
+.skills/
 
 # ImGui & Settings
 imgui.ini
-
-# Scratch / Debug files
-*.log
 
 # local resources folder
 analysis/
 dump/
 CheatEngine/
 
-# custom local
+## =========================================================================
+## C / C++
+## =========================================================================
+# Kernel Module Compile Results & Fortran
+*.mod*
+*.smod
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
 compile_commands.json
 
-# prevent cache being uploaded
-.cache/
+# vcpkg & testing
+vcpkg_installed/
+Testing/
+
+## =========================================================================
+## ARCH LINUX PACKAGE
+## =========================================================================
+*.tar
+*.tar.*
+*.jar
+*.msi
+*.deb
+*.zip
+*.tgz
+*.sig
+pkg/
+
+## =========================================================================
+## ANDROID
+## =========================================================================
+# Gradle & Local Config
+.gradle/
+local.properties
+
+# Android Studio & Build
+captures/
+.externalNativeBuild/
+.cxx/
+*.aab
+*.apk
+output-metadata.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore & Services
+*.jks
+*.keystore
+google-services.json
+
+# Profiling
+*.hprof
+
+## =========================================================================
+## LUA / LUAU
+## =========================================================================
+luac.out
+*.src.rock
+coverage.out
+profile.out
+profile.svg
+trace.json
+
+## =========================================================================
+## PYTHON & ECOSYSTEM
+## =========================================================================
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[codz]
+*$py.class
 
-# archive folder
-archive/
+# Distribution / packaging
+.Python
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-*test*
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django & Flask
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter & IPython
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pixi
+__pypackages__/
+
+# Project configs (Spyder, Rope, Pyre, mypy, etc)
+.spyderproject
+.spyproject
+.ropeproject
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+# Misc Python tools
+.pdm-python
+.pdm-build/
+celerybeat-schedule
+celerybeat.pid
+*.sage.py
+tempCodeRunnerFile.py
+.ruff_cache/
+.pypirc
+
+## =========================================================================
+## DATABASES / BROKERS / MISC
+## =========================================================================
+# Redis
+*.rdb
+*.aof
+*.pid
+
+# RabbitMQ & ActiveMQ
+mnesia/
+rabbitmq/
+rabbitmq-data/
+activemq-data/
+
+# Marimo & Streamlit
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+.streamlit/secrets.toml
+
+# MkDocs & GitHub Pages
+/site
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+/vendor
+Gemfile.lock
+
+# Abstra
+.abstra/

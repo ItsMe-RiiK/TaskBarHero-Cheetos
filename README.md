@@ -1,5 +1,5 @@
 <div align="center">
-  
+
 # TaskBarHero - Cheetos
 
 [![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
@@ -7,9 +7,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
-[![Latest Version](https://img.shields.io/badge/latest-1.2.1-blue)](#)
+[![Latest Version](https://img.shields.io/badge/latest-1.2.2-blue)](#)
 
-A feature-rich, interactive graphical memory tool for **TaskBarHero**. 
+An internal cheat tool for **TaskBarHero** that working directly into the memory.
 
 </div>
 
@@ -19,7 +19,7 @@ A feature-rich, interactive graphical memory tool for **TaskBarHero**.
 
 **TaskBarHero - Cheetos** directly interacts with the game's memory using the Win32 API and IL2CPP metadata to provide a comprehensive suite of enhancements. Everything is controlled from a single lightweight, blazing-fast GUI built with **Dear ImGui**.
 
-> **Note:** This project has been tested and verified on game version **1.2.1**. The project will be updated if changes to the game affect the memory offsets.
+> **Note:** This project has been tested and verified on latest game version. The project will be updated if changes to the game affect the memory offsets.
 
 <details>
 <summary>Preview image</summary>
@@ -91,7 +91,7 @@ cmake --build build -j
 
 ## Usage
 
-Run the tool while **the game** is actively running. 
+Run the tool while **the game** is actively running.
 
 If you downloaded the `.zip` release, simply execute the launch script from the root folder:
 - **Windows:** `.\launch.bat` *(Run as Administrator)*

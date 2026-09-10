@@ -1,13 +1,14 @@
 AccessModifierOffset: -2
 AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Left
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveDeclarations: Consecutive
 AlignEscapedNewlines: DontAlign
 AlignOperands: AlignAfterOperator
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortEnumsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: false
 
 BreakTemplateDeclarations: Yes
@@ -22,14 +23,14 @@ BraceWrapping:
   AfterStruct: true
   AfterControlStatement: false
   BeforeElse: true
-  AfterEnum: false
-  AfterNamespace: false
+  AfterEnum: true
+  AfterNamespace: true
 
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
-BreakStringLiterals: false
+BreakStringLiterals: true
 
-ColumnLimit: 100
+ColumnLimit: 140
 ContinuationIndentWidth: 2
 Cpp11BracedListStyle: true
 CompactNamespaces: true
