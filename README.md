@@ -2,8 +2,8 @@
 
 # TaskBarHero - Cheetos
 
-[![Build Status](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos/actions)
-[![Cheetos Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FItsMe-RiiK%2FTaskBarHero-Cheetos%2Fmain%2Fvcpkg.json&query=%24.version&label=Version&color=blue)](#)
+[![Build Status](https://github.com/RiiK26/TaskBarHero-Cheetos/actions/workflows/build.yml/badge.svg)](https://github.com/RiiK26/TaskBarHero-Cheetos/actions)
+[![Cheetos Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FRiiK26%2FTaskBarHero-Cheetos%2Fmain%2Fvcpkg.json&query=%24.version&label=Version&color=blue)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-green)](#)
 [![Game Version](https://img.shields.io/badge/Tested%20on-latest%20game%20version-orange)](#)
@@ -67,7 +67,7 @@ An internal cheat tool for **TaskBarHero** that working directly into the memory
 
 #### 1. Clone the repository
 ```bash
-git clone --recursive https://github.com/ItsMe-RiiK/TaskBarHero-Cheetos.git
+git clone --recursive https://github.com/RiiK26/TaskBarHero-Cheetos.git
 cd TaskBarHero-Cheetos
 ```
 
