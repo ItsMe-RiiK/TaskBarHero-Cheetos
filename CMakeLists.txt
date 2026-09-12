@@ -85,12 +85,10 @@ set(CPACK_GENERATOR "ZIP")
 install(TARGETS ${EXE_NAME} speedhack RUNTIME DESTINATION .)
 install(FILES
     "${CMAKE_SOURCE_DIR}/scripts/launch.bat"
-    "${CMAKE_BINARY_DIR}/README.txt"
     DESTINATION .
 )
 install(PROGRAMS
     "${CMAKE_SOURCE_DIR}/scripts/launch_linux.sh"
-    "${CMAKE_SOURCE_DIR}/scripts/launch_macos.sh"
     DESTINATION .
 )
 
