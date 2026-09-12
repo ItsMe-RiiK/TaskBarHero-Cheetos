@@ -1,5 +1,6 @@
 #include "CheetosGUI.h"
 #include "../tools/Security.h"
+#include "../core/AOBScanner.h"  // IWYU pragma: keep
 
 #ifndef EXPECTED_DLL_HASH
   #define EXPECTED_DLL_HASH ""
@@ -65,8 +66,7 @@ void CheetosGUI::Run()
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::SetNextWindowSize(io.DisplaySize);
     ImGui::Begin(
-      "Cheetos Controls", nullptr,
-      ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove
+      "Cheetos Controls", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove
     );
 
     DrawUI();
@@ -79,8 +79,7 @@ void CheetosGUI::Run()
     glfwGetFramebufferSize(window, &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
     glClearColor(
-      clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
-      clear_color.w
+      clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w
     );
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -99,15 +98,18 @@ void CheetosGUI::Run()
   m_mem.Close();
 }
 
+void CheetosGUI::RenderTooltip(const char* text)
+{
+  ImGui::BeginTooltip();
+  ImGui::PushTextWrapPos(ImGui::GetFontSize() * 25.0f);
+  ImGui::TextUnformatted(text);
+  ImGui::PopTextWrapPos();
+  ImGui::EndTooltip();
+}
+
 void CheetosGUI::DrawUI()
 {
-  auto RenderTooltip = [](const char* text) {
-    ImGui::BeginTooltip();
-    ImGui::PushTextWrapPos(ImGui::GetFontSize() * 25.0f);
-    ImGui::TextUnformatted(text);
-    ImGui::PopTextWrapPos();
-    ImGui::EndTooltip();
-  };
+
 
   // ---- Top Bar: Process Status ----
   bool isAttached = m_mem.IsAttached();
@@ -213,13 +215,31 @@ void CheetosGUI::DrawUI()
     std::vector<float> valuesToApply = m_statValues;
 
     std::thread([this, valuesToApply]() {
+      // Save original stats BEFORE applying god mode (for 3003 fix)
+      if (!m_godModeActive) {
+        SaveOriginalStats();
+      }
       std::string result = m_godMode.Apply(m_heroFinder, valuesToApply);
+      m_godModeActive    = true;
       PostLogFromThread(result);
       m_isScanning = false;
     }).detach();
   }
   if (m_isScanning) {
     ImGui::EndDisabled();
+  }
+
+  // Restore button
+  if (m_godModeActive) {
+    ImGui::SameLine();
+    if (ImGui::Button("Restore Stats", ImVec2(120, 20))) {
+      RestoreOriginalStats();
+      AddLog("[GodMode] Original stats restored.");
+    }
+    ImGui::SameLine();
+    ImGui::TextDisabled("(?)");
+    if (ImGui::IsItemHovered())
+      RenderTooltip("Restores original stat values");
   }
 
   ImGui::Spacing();
@@ -238,7 +258,12 @@ void CheetosGUI::DrawUI()
       AddLog("[Rune] Starting memory scan in background...");
 
       std::thread([this]() {
-        if (m_playerDataAddr == 0 || m_runeMaxLevels.empty()) {
+        // Clear stale cache and retry up to 2 times
+        for (int attempt = 0; attempt < 2 && m_playerDataAddr == 0; attempt++) {
+          if (attempt > 0) {
+            m_playerFinder.ClearCache();
+            PostLogFromThread("[Rune] Retrying scan (attempt " + std::to_string(attempt + 1) + ")...");
+          }
           auto result = m_playerFinder.Find();
           if (result) {
             m_playerDataAddr = result->playerSaveDataAddr;
@@ -246,8 +271,7 @@ void CheetosGUI::DrawUI()
           }
         }
         if (m_playerDataAddr != 0) {
-          auto runeListPtr =
-            m_mem.ReadPointer(m_playerDataAddr + PlayerSaveDataOffsets::RuneSaveData);
+          auto runeListPtr = m_mem.ReadPointer(m_playerDataAddr + PlayerSaveDataOffsets::RuneSaveData);
           if (runeListPtr && *runeListPtr != 0) {
             m_runeUnlocker.SetRuneListAddr(*runeListPtr);
             m_runeUnlocker.ScanRunes(m_playerFinder, m_runeMaxLevels);
@@ -269,7 +293,9 @@ void CheetosGUI::DrawUI()
   ImGui::TextDisabled("(?)");
   if (ImGui::IsItemHovered()) {
     RenderTooltip(
-      "IMPORTANT: After upgrading runes, you MUST close both the game AND this app to trigger Steam Cloud Sync. If the app is still running, Steam will think the game is still open and won't sync!"
+      "IMPORTANT: After upgrading runes, you MUST close both the game AND this app to trigger "
+      "Steam Cloud Sync. If the app is still running, Steam will think the game is still open and "
+      "won't sync!"
     );
   }
 
@@ -312,8 +338,7 @@ void CheetosGUI::DrawUI()
     if (
       ImGui::BeginTable(
         "RuneTable", 4,
-        ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY
-          | ImGuiTableFlags_Resizable,
+        ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY | ImGuiTableFlags_Resizable,
         ImVec2(0, 150)
       )
     ) {
@@ -423,11 +448,11 @@ void CheetosGUI::DrawUI()
   ImGui::TextDisabled("(?)");
   if (ImGui::IsItemHovered()) {
     RenderTooltip(
-      "After activated just kill monster like a normal, and you will see the exp increase rapidly or if u dont see it, wait until the hero reached max lvl (101). just wait for it."
+      "After activated just kill monster like a normal, and you will see the exp increase rapidly "
+      "or if u dont see it, wait until the hero reached max lvl (101). just wait for it."
     );
   }
   ImGui::Spacing();
-
 
   // ---- Log Section ----
   ImGui::Text("Log");
@@ -485,8 +510,7 @@ void CheetosGUI::InjectSpeedhack()
     return;
   }
 
-  LPVOID pRemoteMem =
-    VirtualAllocEx(m_mem.Handle(), NULL, strlen(dllPath) + 1, MEM_COMMIT, PAGE_READWRITE);
+  LPVOID pRemoteMem = VirtualAllocEx(m_mem.Handle(), NULL, strlen(dllPath) + 1, MEM_COMMIT, PAGE_READWRITE);
   if (!pRemoteMem)
     return;
 
@@ -496,9 +520,8 @@ void CheetosGUI::InjectSpeedhack()
   HMODULE hKernel32    = GetModuleHandle("kernel32.dll");
   LPVOID  pLoadLibrary = (LPVOID) GetProcAddress(hKernel32, "LoadLibraryA");
 
-  HANDLE hThread = CreateRemoteThread(
-    m_mem.Handle(), NULL, 0, (LPTHREAD_START_ROUTINE) pLoadLibrary, pRemoteMem, 0, NULL
-  );
+  HANDLE hThread =
+    CreateRemoteThread(m_mem.Handle(), NULL, 0, (LPTHREAD_START_ROUTINE) pLoadLibrary, pRemoteMem, 0, NULL);
   if (hThread) {
     WaitForSingleObject(hThread, INFINITE);
     CloseHandle(hThread);
@@ -574,4 +597,54 @@ void CheetosGUI::SetSpeedhackEnable(bool enable)
       }
     }
   }
+}
+
+void CheetosGUI::SaveOriginalStats()
+{
+  m_statBackups.clear();
+
+  auto results = m_heroFinder.FindAll(true);
+  if (results.empty())
+    return;
+
+  const auto& targets = GodMode::GetAllTargets();
+  for (const auto& hr : results) {
+    for (const auto& target : targets) {
+      if (!m_godMode.IsStatEnabled(target.type))
+        continue;
+
+      auto it = hr.stats.find(target.type);
+      if (it != hr.stats.end()) {
+        StatBackup backup;
+        backup.address       = it->second.address;
+        backup.originalValue = it->second.value;
+        m_statBackups.push_back(backup);
+      }
+    }
+  }
+
+  if (!m_statBackups.empty()) {
+    PostLogFromThread("[GodMode] Saved " + std::to_string(m_statBackups.size()) + " original stat values for restore.");
+  }
+}
+
+void CheetosGUI::RestoreOriginalStats()
+{
+  if (m_statBackups.empty() || !m_mem.IsAttached()) {
+    m_godModeActive = false;
+    return;
+  }
+
+  int restored = 0;
+  for (const auto& backup : m_statBackups) {
+    if (m_mem.WriteFloat(backup.address, backup.originalValue)) {
+      restored++;
+    }
+  }
+
+  PostLogFromThread(
+    "[GodMode] Restored " + std::to_string(restored) + "/" + std::to_string(m_statBackups.size()) + " stats."
+  );
+  m_statBackups.clear();
+  m_godModeActive = false;
 }

@@ -63,9 +63,11 @@
  * ysh<T>() to compare fakeValue with the decrypted value and the hash.
  * ========================================================================= */
 
-namespace ObscuredOffsets {
+namespace ObscuredOffsets
+{
   // ObscuredLong
-  namespace Long {
+  namespace Long
+  {
     constexpr int Hash      = 0x00;
     constexpr int Hidden    = 0x08;
     constexpr int CryptoKey = 0x10;
@@ -74,7 +76,8 @@ namespace ObscuredOffsets {
   }  // namespace Long
 
   // ObscuredInt
-  namespace Int {
+  namespace Int
+  {
     constexpr int Hash      = 0x00;
     constexpr int Hidden    = 0x04;
     constexpr int CryptoKey = 0x08;
@@ -83,7 +86,8 @@ namespace ObscuredOffsets {
   }  // namespace Int
 
   // ObscuredFloat
-  namespace Float {
+  namespace Float
+  {
     constexpr int Hash      = 0x00;
     constexpr int Hidden    = 0x04;
     constexpr int CryptoKey = 0x08;
@@ -92,7 +96,8 @@ namespace ObscuredOffsets {
   }  // namespace Float
 
   // ObscuredDouble
-  namespace Double {
+  namespace Double
+  {
     constexpr int Hash      = 0x00;
     constexpr int Hidden    = 0x08;
     constexpr int CryptoKey = 0x10;
@@ -418,9 +423,8 @@ public:
       return;
     }
     printf(
-      "[%s @ 0x%llX] hash=%08X hidden=%d key=%d fake=%d decrypted=%d hashValid=%s\n", label,
-      (unsigned long long) addr, r->hash, r->hiddenValue, r->cryptoKey, r->fakeValue,
-      r->decryptedValue, r->hashValid ? "YES" : "NO"
+      "[%s @ 0x%llX] hash=%08X hidden=%d key=%d fake=%d decrypted=%d hashValid=%s\n", label, (unsigned long long) addr,
+      r->hash, r->hiddenValue, r->cryptoKey, r->fakeValue, r->decryptedValue, r->hashValid ? "YES" : "NO"
     );
   }
 
@@ -433,8 +437,8 @@ public:
     }
     printf(
       "[%s @ 0x%llX] hash=%08X hidden=%lld key=%lld fake=%.2f decrypted=%.2f hashValid=%s\n", label,
-      (unsigned long long) addr, r->hash, (long long) r->hiddenValue, (long long) r->cryptoKey,
-      r->fakeValue, r->decryptedValue, r->hashValid ? "YES" : "NO"
+      (unsigned long long) addr, r->hash, (long long) r->hiddenValue, (long long) r->cryptoKey, r->fakeValue,
+      r->decryptedValue, r->hashValid ? "YES" : "NO"
     );
   }
 

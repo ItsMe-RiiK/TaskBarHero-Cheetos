@@ -8,21 +8,6 @@
 #include <optional>
 #include <vector>
 
-/* -----------------------------------------------------------------------
- * Finds the PlayerSaveData instance in memory by locating known
- * HeroSaveData objects and tracing the pointer chain back up.
- * 
- *   1. Scan for HeroSaveData instances by looking for known hero key
- *      patterns (101, 201, 301, etc.) at the expected offset.
- *   2. Scan for pointers to those HeroSaveData instances → these live
- *      in the backing array of List<HeroSaveData>.
- *   3. Scan for pointers to the backing array → these are List._items.
- *   4. The List pointer at PlayerSaveData+0x70 points to the List.
- *
- * Once PlayerSaveData is found, all sub-lists (currency, runes, etc.)
- * can be accessed via known offsets.
- * ----------------------------------------------------------------------- */
-
 struct PlayerDataResult
 {
   uintptr_t          playerSaveDataAddr = 0;
@@ -75,6 +60,11 @@ public:
 
   // Bruteforce search for an ObscuredLong by its exact decrypted value
   std::vector<uintptr_t> FindObscuredLongByValue(int64_t exactValue);
+
+  // Bruteforce search for all memory locations containing the exact Exp and Level
+  // Helper methods to write obscured types
+  void WriteObscuredInt(uintptr_t addr, int32_t value);
+  void WriteObscuredFloat(uintptr_t addr, float value);
 
   // ---------------------------------------------------------------------------
   // Hero Scanner

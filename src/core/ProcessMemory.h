@@ -24,8 +24,7 @@ public:
     Close();
     m_pid    = pid;
     m_handle = OpenProcess(
-      PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION
-        | PROCESS_CREATE_THREAD,
+      PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION | PROCESS_CREATE_THREAD,
       FALSE, pid
     );
     return m_handle != nullptr;
@@ -51,9 +50,7 @@ public:
     while (VirtualQueryEx(m_handle, (LPCVOID) addr, &mbi, sizeof(mbi))) {
       bool committed = mbi.State == MEM_COMMIT;
       bool readable =
-        (mbi.Protect
-         & (PAGE_READONLY | PAGE_READWRITE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE))
-        != 0;
+        (mbi.Protect & (PAGE_READONLY | PAGE_READWRITE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE)) != 0;
       bool notGuard = (mbi.Protect & PAGE_GUARD) == 0;
       bool notCow   = (mbi.Protect & (PAGE_WRITECOPY | PAGE_EXECUTE_WRITECOPY)) == 0;
       bool writable = (mbi.Protect & (PAGE_READWRITE | PAGE_EXECUTE_READWRITE)) != 0;
@@ -80,8 +77,7 @@ public:
   bool WriteBytes(uintptr_t addr, const void* data, size_t size) const
   {
     SIZE_T bytesWritten = 0;
-    return WriteProcessMemory(m_handle, (LPVOID) addr, data, size, &bytesWritten)
-        && bytesWritten == size;
+    return WriteProcessMemory(m_handle, (LPVOID) addr, data, size, &bytesWritten) && bytesWritten == size;
   }
 
   // ---------------------------------------------------------------------------
@@ -106,10 +102,7 @@ public:
     return v;
   }
 
-  bool WriteInt32(uintptr_t addr, int32_t value) const
-  {
-    return WriteBytes(addr, &value, sizeof(value));
-  }
+  bool WriteInt32(uintptr_t addr, int32_t value) const { return WriteBytes(addr, &value, sizeof(value)); }
 
   // ---------------------------------------------------------------------------
   // Int64 (for currency Quantity which is stored as C# long)
@@ -122,10 +115,7 @@ public:
     return v;
   }
 
-  bool WriteInt64(uintptr_t addr, int64_t value) const
-  {
-    return WriteBytes(addr, &value, sizeof(value));
-  }
+  bool WriteInt64(uintptr_t addr, int64_t value) const { return WriteBytes(addr, &value, sizeof(value)); }
 
   // ---------------------------------------------------------------------------
   // Float
@@ -138,10 +128,7 @@ public:
     return v;
   }
 
-  bool WriteFloat(uintptr_t addr, float value) const
-  {
-    return WriteBytes(addr, &value, sizeof(value));
-  }
+  bool WriteFloat(uintptr_t addr, float value) const { return WriteBytes(addr, &value, sizeof(value)); }
 
   // ---------------------------------------------------------------------------
   // Double (for HeroExp which is stored as C# double)
@@ -154,10 +141,7 @@ public:
     return v;
   }
 
-  bool WriteDouble(uintptr_t addr, double value) const
-  {
-    return WriteBytes(addr, &value, sizeof(value));
-  }
+  bool WriteDouble(uintptr_t addr, double value) const { return WriteBytes(addr, &value, sizeof(value)); }
 
   // ---------------------------------------------------------------------------
   // Bool

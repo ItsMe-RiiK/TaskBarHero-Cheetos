@@ -157,8 +157,7 @@ BOOL WINAPI hkQueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
     lpPerformanceCount->QuadPart = g_Anchors.qpcFake;  // Prevent drift jumps
   }
   else {
-    lpPerformanceCount->QuadPart =
-      g_Anchors.qpcFake + (LONGLONG) ((double) delta * g_Anchors.speed);
+    lpPerformanceCount->QuadPart = g_Anchors.qpcFake + (LONGLONG) ((double) delta * g_Anchors.speed);
   }
   Unlock();
 
@@ -293,18 +292,12 @@ DWORD WINAPI MainThread(LPVOID lpParam)
     return 0;
 
   MH_CreateHookApi(
-    L"kernel32.dll", "QueryPerformanceCounter", (LPVOID) &hkQueryPerformanceCounter,
-    (LPVOID*) &oQueryPerformanceCounter
+    L"kernel32.dll", "QueryPerformanceCounter", (LPVOID) &hkQueryPerformanceCounter, (LPVOID*) &oQueryPerformanceCounter
   );
+  MH_CreateHookApi(L"kernel32.dll", "GetTickCount", (LPVOID) &hkGetTickCount, (LPVOID*) &oGetTickCount);
+  MH_CreateHookApi(L"kernel32.dll", "GetTickCount64", (LPVOID) &hkGetTickCount64, (LPVOID*) &oGetTickCount64);
   MH_CreateHookApi(
-    L"kernel32.dll", "GetTickCount", (LPVOID) &hkGetTickCount, (LPVOID*) &oGetTickCount
-  );
-  MH_CreateHookApi(
-    L"kernel32.dll", "GetTickCount64", (LPVOID) &hkGetTickCount64, (LPVOID*) &oGetTickCount64
-  );
-  MH_CreateHookApi(
-    L"kernel32.dll", "GetSystemTimeAsFileTime", (LPVOID) &hkGetSystemTimeAsFileTime,
-    (LPVOID*) &oGetSystemTimeAsFileTime
+    L"kernel32.dll", "GetSystemTimeAsFileTime", (LPVOID) &hkGetSystemTimeAsFileTime, (LPVOID*) &oGetSystemTimeAsFileTime
   );
   MH_CreateHookApi(L"winmm.dll", "timeGetTime", (LPVOID) &hkTimeGetTime, (LPVOID*) &oTimeGetTime);
 
@@ -313,8 +306,7 @@ DWORD WINAPI MainThread(LPVOID lpParam)
     FARPROC pPrecise = GetProcAddress(hKernel32, "GetSystemTimePreciseAsFileTime");
     if (pPrecise) {
       MH_CreateHook(
-        (LPVOID) pPrecise, (LPVOID) &hkGetSystemTimePreciseAsFileTime,
-        (LPVOID*) &oGetSystemTimePreciseAsFileTime
+        (LPVOID) pPrecise, (LPVOID) &hkGetSystemTimePreciseAsFileTime, (LPVOID*) &oGetSystemTimePreciseAsFileTime
       );
     }
   }

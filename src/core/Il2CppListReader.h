@@ -26,10 +26,7 @@ public:
   }
 
   // Returns the actual size (_size) of the list.
-  std::optional<int32_t> GetSize(uintptr_t listPtr) const
-  {
-    return m_mem.ReadInt32(listPtr + Il2CppListOffsets::Size);
-  }
+  std::optional<int32_t> GetSize(uintptr_t listPtr) const { return m_mem.ReadInt32(listPtr + Il2CppListOffsets::Size); }
 
   // Reads all element pointers from a List<T> where T is a reference type.
   // Returns a vector of pointers to the individual T instances.

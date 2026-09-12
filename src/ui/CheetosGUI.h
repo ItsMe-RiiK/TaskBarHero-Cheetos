@@ -3,8 +3,6 @@
 #include "../features/GodMode.h"
 #include "features/AntiCheatBypass.h"
 #include "features/ExpMultiplier.h"
-
-#include "features/GodMode.h"
 #include "features/RuneUnlocker.h"
 #include "scanner/HeroFinder.h"
 #include "scanner/PlayerDataFinder.h"
@@ -32,7 +30,6 @@ public:
       m_runeUnlocker(mem),
       m_antiCheat(mem),
       m_expMultiplier(mem),
-
       m_heroFinder(mem),
       m_playerFinder(mem)
   {
@@ -42,38 +39,54 @@ public:
 
 private:
   void DrawUI();
+  void RenderTooltip(const char* text);
 
   void AddLog(const std::string& text);
-
   void PostLogFromThread(const std::string& msg);
 
   void InjectSpeedhack();
-
   void SetSpeedhack(float speed);
-
   void SetSpeedhackEnable(bool enable);
 
-  ProcessMemory&  m_mem;
-  GodMode         m_godMode;
-  RuneUnlocker    m_runeUnlocker;
-  AntiCheatBypass m_antiCheat;
-  ExpMultiplier   m_expMultiplier;
+  void DisableGodMode();
+  void UnlockAllRunes();
 
-  HeroFinder         m_heroFinder;
-  PlayerDataFinder   m_playerFinder;
+  void SaveOriginalStats();
+  void RestoreOriginalStats();
+
+  ProcessMemory&   m_mem;
+  GodMode          m_godMode;
+  RuneUnlocker     m_runeUnlocker;
+  AntiCheatBypass  m_antiCheat;
+  ExpMultiplier    m_expMultiplier;
+  HeroFinder       m_heroFinder;
+  PlayerDataFinder m_playerFinder;
+
+  uintptr_t          m_playerDataAddr = 0;
   std::map<int, int> m_runeMaxLevels;
-  float              m_expMultiplierValue = 99999.0f;
 
-
-  uintptr_t m_playerDataAddr = 0;
+  // Runes State
+  bool              m_hasUnlockedRunes = false;
+  std::atomic<bool> m_isRuneScanning{false};
 
   // UI State
+  float             m_expMultiplierValue = 99999.0f;
+  bool              m_speedhackEnabled   = false;
+  float             m_speedValue         = 1.0f;
+  bool              m_enableGodMode      = false;
+  std::atomic<bool> m_isScanning{false};
+
   std::vector<uint8_t> m_statStates;
   std::vector<float>   m_statValues;
-  std::atomic<bool>    m_isScanning{false};
-  std::atomic<bool>    m_isRuneScanning{false};
-  bool                 m_speedhackEnabled = false;
-  float                m_speedValue       = 1.0f;
+
+  // GodMode stat backup (for restore on detach)
+  struct StatBackup
+  {
+    uintptr_t address;
+    float     originalValue;
+  };
+  std::vector<StatBackup> m_statBackups;
+  bool                    m_godModeActive = false;
 
   // Log State
   std::vector<std::string> m_logHistory;

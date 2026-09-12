@@ -25,13 +25,11 @@ std::string RuneUnlocker::DumpRunes(PlayerDataFinder& finder)
       maxLevel = ri.level;
   }
 
-  return "[Runes] Total: " + std::to_string(m_runes.size())
-       + " | Unlocked: " + std::to_string(unlocked) + " | Locked: " + std::to_string(locked)
-       + " | Max Level seen: " + std::to_string(maxLevel);
+  return "[Runes] Total: " + std::to_string(m_runes.size()) + " | Unlocked: " + std::to_string(unlocked)
+       + " | Locked: " + std::to_string(locked) + " | Max Level seen: " + std::to_string(maxLevel);
 }
 
-const std::vector<RuneSaveInfo>&
-RuneUnlocker::ScanRunes(PlayerDataFinder& finder, const std::map<int, int>& maxLevels)
+const std::vector<RuneSaveInfo>& RuneUnlocker::ScanRunes(PlayerDataFinder& finder, const std::map<int, int>& maxLevels)
 {
   if (m_runeListAddr != 0) {
     m_runes         = finder.ReadRunes(m_runeListAddr);
@@ -54,15 +52,14 @@ std::string RuneUnlocker::UpgradeRune(int32_t runeKey, int32_t addAmount)
         newLevel = maxLevel;
 
       if (ri.level >= maxLevel) {
-        return "[Runes] Rune " + std::to_string(runeKey) + " is already at Max Level ("
-             + std::to_string(maxLevel) + ").";
+        return "[Runes] Rune " + std::to_string(runeKey) + " is already at Max Level (" + std::to_string(maxLevel)
+             + ").";
       }
 
       uintptr_t levelAddr = ri.addr + RuneSaveDataOffsets::Level;
       if (m_mem.WriteInt32(levelAddr, newLevel)) {
         ri.level = newLevel;  // Update cache
-        return "[Runes] Upgraded rune " + std::to_string(runeKey) + " to level "
-             + std::to_string(newLevel);
+        return "[Runes] Upgraded rune " + std::to_string(runeKey) + " to level " + std::to_string(newLevel);
       }
       return "[Runes] Failed to write memory for rune " + std::to_string(runeKey);
     }
@@ -120,8 +117,8 @@ std::string RuneUnlocker::UpgradeAllUnlocked(int32_t addAmount)
     }
   }
 
-  return "[Runes] Upgraded " + std::to_string(successCount) + " unlocked runes. Skipped "
-       + std::to_string(skippedMax) + " maxed runes.";
+  return "[Runes] Upgraded " + std::to_string(successCount) + " unlocked runes. Skipped " + std::to_string(skippedMax)
+       + " maxed runes.";
 }
 
 std::string RuneUnlocker::UpgradeAllToMax()
@@ -152,8 +149,7 @@ std::string RuneUnlocker::UpgradeAllToMax()
   }
 
   return "[Runes] Blasted " + std::to_string(successCount) + " runes to Max Level! Skipped "
-       + std::to_string(skippedMax)
-       + " maxed. NOTE: To trigger Steam Cloud Sync, fully CLOSE the game AND this app.";
+       + std::to_string(skippedMax) + " maxed. NOTE: To trigger Steam Cloud Sync, fully CLOSE the game AND this app.";
 }
 
 int RuneUnlocker::GetMaxLevelForRune(int runeKey) const

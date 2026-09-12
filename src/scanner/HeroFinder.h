@@ -21,24 +21,16 @@ struct HeroResult
   std::unordered_map<StatType, Il2CppStatDictionary::StatData> stats;
 };
 
-/* -----------------------------------------------------------------------
- * Confirmed IL2CPP chain:
- *
- *   HeroInfoData (found via ID pattern)
- *     <- pointer found at vh+0x30 (found via AOB)
- *   vh instance
- *     +0x10 (inherited from vo) -> ze* (stat container)
- *   ze instance
- *     +0x18 or +0x20 -> Dictionary<StatType,float>*
- *   Dictionary
- *     +0x18 -> entries array -> length at +0x18, data at +0x20, 16 bytes/entry
- * ----------------------------------------------------------------------- */
 class HeroFinder
 {
 public:
   inline static const std::map<int, std::string> HeroMap = {
-    {101, "Knight"}, {201, "Ranger"}, {301, "Sorcerer"},
-    {401, "Priest"}, {501, "Hunter"}, {601, "Slayer"},
+    {101, "Knight"  },
+    {201, "Ranger"  },
+    {301, "Sorcerer"},
+    {401, "Priest"  },
+    {501, "Hunter"  },
+    {601, "Slayer"  },
   };
 
   explicit HeroFinder(ProcessMemory& mem) :
@@ -70,9 +62,7 @@ public:
         if (!strLen || *strLen <= 8 || *strLen >= 30)
           continue;
 
-        std::wstring s = m_mem.ReadUtf16(
-          *strPtr + Il2CppStringOffsets::Chars, (size_t) std::min<int32_t>(*strLen, 20)
-        );
+        std::wstring s = m_mem.ReadUtf16(*strPtr + Il2CppStringOffsets::Chars, (size_t) std::min<int32_t>(*strLen, 20));
         std::wstring expected = L"HeroName_" + std::to_wstring(heroId);
 
         if (s.find(expected) != std::wstring::npos) {
@@ -96,8 +86,7 @@ public:
           continue;
 
         // ---- Phase 4: read one of the two stat dictionaries ----
-        int32_t dictFieldOffset =
-          useStatsDictB ? Il2CppOffsets::Ze_StatsDictB : Il2CppOffsets::Ze_StatsDictA;
+        int32_t dictFieldOffset = useStatsDictB ? Il2CppOffsets::Ze_StatsDictB : Il2CppOffsets::Ze_StatsDictA;
 
         auto dictPtr = m_mem.ReadPointer(*zePtr + dictFieldOffset);
         if (!dictPtr || *dictPtr == 0)

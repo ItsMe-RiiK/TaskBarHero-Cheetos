@@ -4,31 +4,6 @@
 #include <cstdint>
 #include <string>
 
-/* -----------------------------------------------------------------------
- * Anti-Cheat Bypass — disables CodeStage ACTk detectors.
- *
- * The game uses ACTk (Anti-Cheat Toolkit) with these detectors:
- *   - SpeedHackDetector
- *   - InjectionDetector
- *   - ObscuredCheatingDetector
- *   - TimeCheatingDetector
- *   - WallHackDetector
- *
- * All detectors inherit from ACTkDetectorBase<T> which inherits from
- * dfh<T> (Unity MonoBehaviour singleton).
- *
- *   1. Find GameAssembly.dll in memory
- *   2. Locate detector Start/Update methods via known RVAs
- *   3. Patch the first byte to RET (0xC3) to disable them
- *
- * RVAs from dump.cs (confirmed):
- *   InjectionDetector:
- *     .ctor:     RVA 0x6E9B30
- *     yri():     RVA 0x6E9B70  (internal override, likely the detect method)
- *     yrn():     RVA 0x6E9CF0  (static start method)
- *
- * Note: RVAs are relative to GameAssembly.dll base address.
- * ----------------------------------------------------------------------- */
 class AntiCheatBypass
 {
 public:
@@ -69,23 +44,23 @@ public:
     };
 
     static const PatchTarget targets[] = {
-      // Direct Obscured Types Bypass (Bypass op_Implicit completely)
-      // {"ObscuredInt.op_Implicit", 0x7351C0},    // @RVA[ObscuredInt.op_Implicit] [UNCHANGED]
-      // {"ObscuredFloat.op_Implicit", 0x733030},  // @RVA[ObscuredFloat.op_Implicit] [UNCHANGED]
-      // {"ObscuredDouble.op_Implicit", 0x732240}, // @RVA[ObscuredDouble.op_Implicit] [UNCHANGED]
-      // {"ObscuredLong.op_Implicit", 0x735B70},   // @RVA[ObscuredLong.op_Implicit] [UNCHANGED]
+      // Direct Obscured Types Bypass (Bypass op_Implicit completely Causing Crash or atleast broken UI)
+      // {"ObscuredInt.op_Implicit",      0x732830}, // @RVA[ObscuredInt.op_Implicit] [UNCHANGED]
+      // {"ObscuredFloat.op_Implicit",    0x7306A0}, // @RVA[ObscuredFloat.op_Implicit] [UNCHANGED]
+      // {"ObscuredDouble.op_Implicit",   0x72F8B0}, // @RVA[ObscuredDouble.op_Implicit] [UNCHANGED]
+      // {"ObscuredLong.op_Implicit",     0x7331E0}, // @RVA[ObscuredLong.op_Implicit] [UNCHANGED]
 
       // Detector Core Methods (Override of ACTkDetectorBase StartDetection/Update)
-      {"InjectionDetector.zkh", 0x744A50},         // @RVA[InjectionDetector.zkh] [UNCHANGED]
-      {"SpeedHackDetector.zkh", 0x74A920},         // @RVA[SpeedHackDetector.zkh] [UNCHANGED]
-      {"TimeCheatingDetector.zkh", 0x74C2B0},      // @RVA[TimeCheatingDetector.zkh] [UNCHANGED]
-      {"ObscuredCheatingDetector.zkh", 0x744E40},  // @RVA[ObscuredCheatingDetector.zkh] [UNCHANGED]
-      {"WallHackDetector.zkh", 0x752DB0},          // @RVA[WallHackDetector.zkh] [UNCHANGED]
+      {"InjectionDetector.zkh",        0x7420C0}, // @RVA[InjectionDetector.zkh] [UNCHANGED]
+      {"SpeedHackDetector.zkh",        0x747F90}, // @RVA[SpeedHackDetector.zkh] [UNCHANGED]
+      {"TimeCheatingDetector.zkh",     0x749920}, // @RVA[TimeCheatingDetector.zkh] [UNCHANGED]
+      {"ObscuredCheatingDetector.zkh", 0x7424B0}, // @RVA[ObscuredCheatingDetector.zkh] [UNCHANGED]
+      {"WallHackDetector.zkh",         0x750420}, // @RVA[WallHackDetector.zkh] [UNCHANGED]
 
       // Additional Unity Lifecycle Methods used by detectors
-      {"SpeedHackDetector.Update", 0x7424E0},
-      {"TimeCheatingDetector.Update", 0x743F20},
-      {"WallHackDetector.Update", 0x74A9A0},
+      {"SpeedHackDetector.Update",     0x7424E0},
+      {"TimeCheatingDetector.Update",  0x743F20},
+      {"WallHackDetector.Update",      0x74A9A0},
       {"WallHackDetector.FixedUpdate", 0x749D50},
     };
 
@@ -121,8 +96,7 @@ public:
           // movd xmm0, eax               (66 0F 6E C0)
           // ret (C3)
           // Completely bypasses hash checks and returns decrypted float in xmm0
-          uint8_t bypassInstr[11] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08,
-                                     0x66, 0x0F, 0x6E, 0xC0, 0xC3};
+          uint8_t bypassInstr[11] = {0x8B, 0x41, 0x04, 0x33, 0x41, 0x08, 0x66, 0x0F, 0x6E, 0xC0, 0xC3};
           memcpy(retInstr, bypassInstr, 11);
           instrSize = 11;
         }
@@ -138,7 +112,7 @@ public:
           instrSize = 9;
         }
         else {
-          // struct ObscuredInt { int hash (0x0), int hiddenValue (0x4), int currentCryptoKey (0x8) }
+          // struct ObscuredInt { int hash (0x0), int hiddenValue (0x4), int currentCryptoKey (0x8), int fakeValue (0xC) }
           // passed by pointer in RCX
 
           // mov eax, dword ptr [rcx + 4] (8B 41 04)
@@ -159,11 +133,7 @@ public:
       DWORD oldProtect = 0;
 
       // Need to change memory protection first since code pages are typically RX
-      if (
-        VirtualProtectEx(
-          m_mem.Handle(), (LPVOID) addr, instrSize, PAGE_EXECUTE_READWRITE, &oldProtect
-        )
-      ) {
+      if (VirtualProtectEx(m_mem.Handle(), (LPVOID) addr, instrSize, PAGE_EXECUTE_READWRITE, &oldProtect)) {
         if (m_mem.WriteBytes(addr, retInstr, instrSize)) {
           patchCount++;
           details += "  Patched " + std::string(t.name) + " @ 0x" + ToHex(addr) + "\n";

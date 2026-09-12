@@ -8,8 +8,8 @@
 
 #pragma comment(lib, "advapi32.lib")
 
-namespace Security {
-
+namespace Security
+{
   bool VerifyFileHashSha256(const std::string& filePath, const std::string& expectedHashHex)
   {
     if (expectedHashHex.empty()) {

@@ -21,8 +21,8 @@ def main():
             sys.exit(1)
 
     # Regexes for extracting tags from headers
-    tag_field_re = re.compile(r"//\s*@\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]")
-    tag_rva_re = re.compile(r"//\s*@RVA\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]")
+    tag_field_re = re.compile(r"//\s*@\[([^\]\.]+)\.([^\]]+)\]")
+    tag_rva_re = re.compile(r"//\s*@RVA\[([^\]\.]+)\.([^\]]+)\]")
 
     needed_offsets = {} # (ClassName, FieldName) -> None
     needed_rvas = {}    # (ClassName, MethodName) -> None
@@ -54,14 +54,14 @@ def main():
     last_float_offset = None
 
     class_def_re = re.compile(
-        r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*(?:class|struct)\s+([A-Za-z0-9_]+)"
+        r"^\s*(?:public|private|protected|internal)?\s*(?:sealed|abstract|static)?\s*(?:class|struct)\s+([^:\s]+)"
     )
     field_re = re.compile(
         r"^\s*(?:public|private|protected|internal|static|readonly)*\s+"
-        r"(?:[A-Za-z0-9_<>\[\], ]+)\s+([A-Za-z0-9_]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)"
+        r"(?:[A-Za-z0-9_<>\[\], ]+)\s+([^;\s]+)\s*;\s*//\s*(0x[0-9A-Fa-f]+)"
     )
     rva_comment_re = re.compile(r"//\s*RVA:\s*(0x[0-9A-Fa-f]+)")
-    method_re = re.compile(r"\s+([A-Za-z0-9_]+)\s*\(")
+    method_re = re.compile(r"\s+([^\(\s]+)\s*\(")
 
     with open(dump_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -132,12 +132,12 @@ def main():
 
     # regex matches: = 0xABC; // @[Class.Field]
     field_replace_re = re.compile(
-        r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])"
+        r"(=\s*)(0x[0-9A-Fa-f]+)(\s*;\s*//\s*@\[[^\]\.]+\.[^\]]+\])"
         r"(?: \[(?:CHANGED|UNCHANGED)\])?"
     )
     # regex matches: , 0xABC}, // @RVA[Class.Method]
     rva_replace_re = re.compile(
-        r"(,\s*)(0x[0-9A-Fa-f]+)(\s*\}\s*,\s*//\s*@RVA\[[A-Za-z0-9_]+\.[A-Za-z0-9_]+\])"
+        r"(,\s*)(0x[0-9A-Fa-f]+)(\s*\}\s*,\s*//\s*@RVA\[[^\]\.]+\.[^\]]+\])"
         r"(?: \[(?:CHANGED|UNCHANGED)\])?"
     )
 
@@ -145,7 +145,7 @@ def main():
         prefix = match.group(1)
         old_hex = match.group(2)
         suffix = match.group(3)
-        m = re.search(r"@\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]", suffix)
+        m = re.search(r"@\[([^\]\.]+)\.([^\]]+)\]", suffix)
         if m:
             new_hex = needed_offsets.get((m.group(1), m.group(2)))
             if new_hex:
@@ -157,7 +157,7 @@ def main():
         prefix = match.group(1)
         old_hex = match.group(2)
         suffix = match.group(3)
-        m = re.search(r"@RVA\[([A-Za-z0-9_]+)\.([A-Za-z0-9_]+)\]", suffix)
+        m = re.search(r"@RVA\[([^\]\.]+)\.([^\]]+)\]", suffix)
         if m:
             new_hex = needed_rvas.get((m.group(1), m.group(2)))
             if new_hex:

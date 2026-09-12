@@ -3,7 +3,8 @@
 #include <string>
 #include <unordered_map>
 
-enum class StatType : int32_t {
+enum class StatType : int32_t
+{
   NONE                       = 0,
   AttackDamage               = 1,
   AttackSpeed                = 2,
@@ -73,15 +74,15 @@ enum class StatType : int32_t {
 inline const std::unordered_map<std::string, StatType>& StatNameToType()
 {
   static const std::unordered_map<std::string, StatType> m = {
-    {"MHP", StatType::MaxHp},
-    {"DPS", StatType::AttackDamage},
-    {"ATK_SPD", StatType::AttackSpeed},
-    {"CRIT_CHANCE", StatType::CriticalChance},
-    {"CRIT_DMG", StatType::CriticalDamage},
-    {"ARMOR", StatType::Armor},
-    {"MOV_SPD", StatType::MovementSpeed},
-    {"CAST_SPD", StatType::CastSpeed},
-    {"CDR", StatType::CooldownReduction},
+    {"MHP",         StatType::MaxHp            },
+    {"DPS",         StatType::AttackDamage     },
+    {"ATK_SPD",     StatType::AttackSpeed      },
+    {"CRIT_CHANCE", StatType::CriticalChance   },
+    {"CRIT_DMG",    StatType::CriticalDamage   },
+    {"ARMOR",       StatType::Armor            },
+    {"MOV_SPD",     StatType::MovementSpeed    },
+    {"CAST_SPD",    StatType::CastSpeed        },
+    {"CDR",         StatType::CooldownReduction},
   };
   return m;
 }

@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <memory>
 
 // Pattern element: value + whether it's a wildcard ("??" in CE's AOB syntax)
 struct PatternByte
@@ -46,35 +47,38 @@ public:
   }
 
   // requireWritable mirrors "+W" in CE's protection flags string.
-  std::vector<uintptr_t>
-  Scan(const std::vector<PatternByte>& pattern, bool requireWritable = true) const
+  std::vector<uintptr_t> Scan(const std::vector<PatternByte>& pattern, bool requireWritable = true) const
   {
     std::vector<uintptr_t> hits;
     if (pattern.empty())
       return hits;
 
-    auto                 regions = m_mem.EnumerateRegions(requireWritable);
-    std::vector<uint8_t> buf;
+    auto regions = m_mem.EnumerateRegions(requireWritable);
+
+    size_t maxRegionSize = 0;
+    for (const auto& mbi : regions) {
+      if (mbi.RegionSize > maxRegionSize && mbi.RegionSize <= (256ull * 1024 * 1024))
+        maxRegionSize = mbi.RegionSize;
+    }
+    if (maxRegionSize == 0)
+      return hits;
+
+    std::unique_ptr<uint8_t[]> buf(new uint8_t[maxRegionSize]);
 
     for (const auto& mbi : regions) {
       size_t regionSize = mbi.RegionSize;
-      if (regionSize == 0 || regionSize > (256ull * 1024 * 1024))
+      if (regionSize == 0 || regionSize > maxRegionSize)
         continue;  // skip absurd regions
-      buf.resize(regionSize);
 
       SIZE_T bytesRead = 0;
-      if (
-        !ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.data(), regionSize, &bytesRead)
-        || bytesRead == 0
-      ) {
+      if (!ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.get(), regionSize, &bytesRead) || bytesRead == 0) {
         continue;
       }
-      buf.resize(bytesRead);
 
-      if (buf.size() < pattern.size())
+      if (bytesRead < pattern.size())
         continue;
 
-      for (size_t i = 0; i + pattern.size() <= buf.size(); i++) {
+      for (size_t i = 0; i + pattern.size() <= bytesRead; i++) {
         bool match = true;
         for (size_t j = 0; j < pattern.size(); j++) {
           if (!pattern[j].wildcard && buf[i + j] != pattern[j].value) {
@@ -95,27 +99,31 @@ public:
   {
     std::vector<uintptr_t> hits;
     auto                   regions = m_mem.EnumerateRegions(true);
-    std::vector<uint8_t>   buf;
+
+    size_t maxRegionSize = 0;
+    for (const auto& mbi : regions) {
+      if (mbi.RegionSize > maxRegionSize && mbi.RegionSize <= (256ull * 1024 * 1024))
+        maxRegionSize = mbi.RegionSize;
+    }
+    if (maxRegionSize == 0)
+      return hits;
+
+    std::unique_ptr<uint8_t[]> buf(new uint8_t[maxRegionSize]);
 
     for (const auto& mbi : regions) {
       size_t regionSize = mbi.RegionSize;
-      if (regionSize == 0 || regionSize > (256ull * 1024 * 1024))
+      if (regionSize == 0 || regionSize > maxRegionSize)
         continue;
 
-      buf.resize(regionSize);
       SIZE_T bytesRead = 0;
-      if (
-        !ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.data(), regionSize, &bytesRead)
-        || bytesRead == 0
-      ) {
+      if (!ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.get(), regionSize, &bytesRead) || bytesRead == 0) {
         continue;
       }
-      buf.resize(bytesRead);
 
-      if (buf.size() < 24)
+      if (bytesRead < 24)
         continue;
 
-      for (size_t i = 8; i + 24 <= buf.size(); i += 8) {
+      for (size_t i = 8; i + 24 <= bytesRead; i += 8) {
         int64_t hidden;
         int64_t key;
         std::memcpy(&hidden, &buf[i], sizeof(int64_t));
@@ -129,9 +137,9 @@ public:
           std::memcpy(&fakeValue, &buf[i + 16], sizeof(int64_t));
           int32_t calcHash = (int32_t) (targetValue ^ (targetValue >> 32));
           printf(
-            "[DEBUG] Found ObscuredLong! target: %lld, found: %lld, fakeValue: %lld, realHash: %08X, calcHash: %08X\n",
-            (long long) targetValue, (long long) decrypted, (long long) fakeValue, realHash,
-            calcHash
+            "[DEBUG] Found ObscuredLong! target: %lld, found: %lld, fakeValue: %lld, realHash: "
+            "%08X, calcHash: %08X\n",
+            (long long) targetValue, (long long) decrypted, (long long) fakeValue, realHash, calcHash
           );
 
           hits.push_back((uintptr_t) mbi.BaseAddress + i);
@@ -146,27 +154,31 @@ public:
   {
     std::vector<uintptr_t> hits;
     auto                   regions = m_mem.EnumerateRegions(true);
-    std::vector<uint8_t>   buf;
+
+    size_t maxRegionSize = 0;
+    for (const auto& mbi : regions) {
+      if (mbi.RegionSize > maxRegionSize && mbi.RegionSize <= (256ull * 1024 * 1024))
+        maxRegionSize = mbi.RegionSize;
+    }
+    if (maxRegionSize == 0)
+      return hits;
+
+    std::unique_ptr<uint8_t[]> buf(new uint8_t[maxRegionSize]);
 
     for (const auto& mbi : regions) {
       size_t regionSize = mbi.RegionSize;
-      if (regionSize == 0 || regionSize > (256ull * 1024 * 1024))
+      if (regionSize == 0 || regionSize > maxRegionSize)
         continue;
 
-      buf.resize(regionSize);
       SIZE_T bytesRead = 0;
-      if (
-        !ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.data(), regionSize, &bytesRead)
-        || bytesRead == 0
-      ) {
+      if (!ReadProcessMemory(m_mem.Handle(), mbi.BaseAddress, buf.get(), regionSize, &bytesRead) || bytesRead == 0) {
         continue;
       }
-      buf.resize(bytesRead);
 
-      if (buf.size() < 24)
+      if (bytesRead < 24)
         continue;
 
-      for (size_t i = 0; i + 24 <= buf.size(); i += 8) {
+      for (size_t i = 0; i + 24 <= bytesRead; i += 8) {
         int64_t hidden;
         int64_t key;
         std::memcpy(&hidden, &buf[i], sizeof(int64_t));

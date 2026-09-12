@@ -32,10 +32,7 @@ ExpMultiplier::Result ExpMultiplier::ApplyMaxExp(float multiplier)
 
   char buf[256];
   if (updatedHeroes > 0) {
-    snprintf(
-      buf, sizeof(buf), "[EXP Multiplier] EXP Multiplier applied to %d active heroes!",
-      updatedHeroes
-    );
+    snprintf(buf, sizeof(buf), "[EXP Multiplier] EXP Multiplier applied to %d active heroes!", updatedHeroes);
     return {true, buf};
   }
   else {

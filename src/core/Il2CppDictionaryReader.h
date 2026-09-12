@@ -32,10 +32,7 @@ public:
   }
 
   // Returns the total number of valid entries in the dictionary.
-  std::optional<int32_t> GetCount(uintptr_t dictPtr) const
-  {
-    return m_mem.ReadInt32(dictPtr + 0x20);
-  }
+  std::optional<int32_t> GetCount(uintptr_t dictPtr) const { return m_mem.ReadInt32(dictPtr + 0x20); }
 
   // Reads the outer dictionary: Dictionary<int, Dictionary<...>>
   // Returns a vector of pairs: <RuneKey, InnerDictionaryPtr>

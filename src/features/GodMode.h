@@ -70,20 +70,20 @@ public:
       }
     }
 
-    return "[GodMode] Injected " + std::to_string(writeCount) + " stats across "
-         + std::to_string(results.size()) + " heroes.";
+    return "[GodMode] Injected " + std::to_string(writeCount) + " stats across " + std::to_string(results.size())
+         + " heroes.";
   }
 
   static const std::vector<CheatTarget>& GetAllTargets()
   {
     static const std::vector<CheatTarget> targets = {
-      {StatType::MaxHp, 999999999.0f, 1.0f, 2000000000.0f, "Max HP"},
-      {StatType::AttackSpeed, 999999999.0f, 0.1f, 2000000000.0f, "Attack Speed"},
-      {StatType::CriticalChance, 1.0f, 0.0f, 100.0f, "Crit Chance (%)"},  // 100%
-      {StatType::CriticalDamage, 999999999.0f, 0.0f, 2000000000.0f, "Crit Damage"},
-      {StatType::Armor, 999999999.0f, 0.0f, 2000000000.0f, "Armor"},
-      {StatType::MovementSpeed, 999999999.0f, 0.0f, 1000000000.0f, "Movement Speed"},
-      {StatType::CastSpeed, 999999999.0f, 0.1f, 2000000000.0f, "Cast Speed"},
+      {StatType::MaxHp,          999999999.0f, 1.0f, 2000000000.0f, "Max HP"         },
+      {StatType::AttackSpeed,    999999999.0f, 0.1f, 2000000000.0f, "Attack Speed"   },
+      {StatType::CriticalChance, 1.0f,         0.0f, 100.0f,        "Crit Chance (%)"}, // 100%
+      {StatType::CriticalDamage, 999999999.0f, 0.0f, 2000000000.0f, "Crit Damage"    },
+      {StatType::Armor,          999999999.0f, 0.0f, 2000000000.0f, "Armor"          },
+      {StatType::MovementSpeed,  999999999.0f, 0.0f, 1000000000.0f, "Movement Speed" },
+      {StatType::CastSpeed,      999999999.0f, 0.1f, 2000000000.0f, "Cast Speed"     },
     };
     return targets;
   }
