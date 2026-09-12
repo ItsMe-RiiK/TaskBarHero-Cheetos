@@ -62,10 +62,8 @@ build-*/
 .vscode/
 .vs/
 
-# Agents
-.agents/
-.skills/
-
+# Custom Project folder and files
+## =========================================================================
 # ImGui & Settings
 imgui.ini
 
