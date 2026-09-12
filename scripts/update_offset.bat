@@ -6,7 +6,7 @@ cd /d "%~dp0.."
 
 set "DUMP_FILE=resources\dump\dump.cs"
 set "HEADER_FILE=src\core\Il2CppOffsets.h"
-set "UPDATER_SCRIPT=src\tools\UpdateOffsets.py"
+set "UPDATER_SCRIPT=resources\tools\UpdateOffsets.py"
 set "AC_FILE=src\features\AntiCheatBypass.h"
 
 echo ===========================================

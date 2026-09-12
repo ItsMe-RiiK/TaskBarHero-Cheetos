@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 DUMP_FILE="resources/dump/dump.cs"
 HEADER_FILE="src/core/Il2CppOffsets.h"
 AC_FILE="src/features/AntiCheatBypass.h"
-UPDATER_SCRIPT="src/tools/UpdateOffsets.py"
+UPDATER_SCRIPT="resources/tools/UpdateOffsets.py"
 
 echo "==========================================="
 echo "   TaskBarHero - Offset Auto-Updater"

@@ -1,5 +1,5 @@
 #include "CheetosGUI.h"
-#include "../tools/Security.h"
+#include "../utils/Security.h"
 #include "../core/AOBScanner.h"  // IWYU pragma: keep
 
 #ifndef EXPECTED_DLL_HASH
