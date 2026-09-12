@@ -1,6 +1,6 @@
 {
 	"name": "tbh-cheetos",
-	"version": "2.2.0",
+	"version": "2.2.5",
 	"dependencies": [
 		"minhook",
 		"glfw3",
