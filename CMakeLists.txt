@@ -72,6 +72,13 @@ elseif(MINGW)
     target_link_libraries(${EXE_NAME} PRIVATE comctl32 psapi)
 endif()
 
+# Generate README from template
+configure_file(
+    "${CMAKE_SOURCE_DIR}/resources/templates/README.txt.in"
+    "${CMAKE_BINARY_DIR}/README.txt"
+    @ONLY
+)
+
 # --- CPack Configuration for Release Packaging ---
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/license")
@@ -85,6 +92,7 @@ set(CPACK_GENERATOR "ZIP")
 install(TARGETS ${EXE_NAME} speedhack RUNTIME DESTINATION .)
 install(FILES
     "${CMAKE_SOURCE_DIR}/scripts/launch.bat"
+    "${CMAKE_BINARY_DIR}/README.txt"
     DESTINATION .
 )
 install(PROGRAMS
