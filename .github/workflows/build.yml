@@ -34,13 +34,13 @@ jobs:
           cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=${{ github.workspace }}/cmake/mingw-toolchain.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DAPP_VERSION="${{ steps.version.outputs.version }}"
 
       - name: Build and Generate Scripts
-        run: cmake --build build
+        run: cmake --build build --config Release
 
       - name: Package with CPack
         run: |
           cd build
           cpack
-          
+
       - name: Upload Release Artifact
         uses: actions/upload-artifact@v7
         with:
